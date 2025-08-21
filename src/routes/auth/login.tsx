@@ -25,7 +25,7 @@ import { auth } from '@/lib/auth';
 export const Route = createFileRoute('/auth/login')({
   component: LoginPage,
   loader: async ({ context }) => {
-    const session = context.session?.session;
+    const session = context.session;
 
     if (session) {
       throw redirect({ to: '/dashboard' });

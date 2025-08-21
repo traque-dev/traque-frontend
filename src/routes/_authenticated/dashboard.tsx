@@ -3,6 +3,7 @@ import {
   Outlet,
   useRouterState,
 } from '@tanstack/react-router';
+import { Fragment } from 'react';
 import { AppSidebar } from '@/components/app-sidebar';
 import {
   Breadcrumb,
@@ -53,7 +54,7 @@ function Dashboard() {
                   <Breadcrumb>
                     <BreadcrumbList>
                       {breadcrumbs.map((breadcrumb, index) => (
-                        <>
+                        <Fragment key={breadcrumb.path}>
                           <BreadcrumbItem key={breadcrumb.path}>
                             <BreadcrumbLink href={breadcrumb.path}>
                               {breadcrumb.title}
@@ -62,7 +63,7 @@ function Dashboard() {
                           {index < breadcrumbs.length - 1 && (
                             <BreadcrumbSeparator className="hidden md:block" />
                           )}
-                        </>
+                        </Fragment>
                       ))}
                     </BreadcrumbList>
                   </Breadcrumb>

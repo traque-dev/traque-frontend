@@ -43,8 +43,8 @@ function App() {
           <RouterProvider
             router={router}
             context={{
-              session,
-              user: session?.user,
+              session: session?.session ?? null,
+              user: session?.user ?? null,
             }}
           />
           <Toaster />

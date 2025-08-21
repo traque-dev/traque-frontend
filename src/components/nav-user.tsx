@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { Link } from '@tanstack/react-router';
-import { useMemo } from 'react';
+import { Link, useRouter } from '@tanstack/react-router';
+import { useEffect, useMemo } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -15,24 +15,34 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { auth } from '@/lib/auth';
-import { router } from '@/main';
+
 import { HamburgerMenuLinear } from './icons/hamburger-menu-linear';
 import { Logout3Linear } from './icons/logout-3-linear';
 import { UserRoundedLinear } from './icons/user-rounded-linear';
 
 export function NavUser() {
+  const router = useRouter();
   const { isMobile } = useSidebar();
 
   const { data: session } = auth.useSession();
 
   const user = session?.user;
 
+  useEffect(() => {
+    if (session?.session) return;
+
+    router.invalidate();
+  }, [session]);
+
   const { mutate: signOut } = useMutation({
     mutationFn: async () => {
-      await auth.signOut();
-    },
-    onSuccess: () => {
-      router.invalidate();
+      const { data, error } = await auth.signOut();
+
+      if (error) {
+        throw new Error(error.message ?? 'Something went wrong');
+      }
+
+      return data;
     },
   });
 
