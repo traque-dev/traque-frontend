@@ -1,5 +1,5 @@
+import type { Organization } from 'better-auth/plugins/organization';
 import { ChevronsUpDown, Plus } from 'lucide-react';
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -25,6 +25,17 @@ export function OrganizationSwitcher() {
   const { data: organizations } = auth.useListOrganizations();
 
   const { data: activeOrganization } = auth.useActiveOrganization();
+
+  const onOrganizationSelect = async (organization: Organization) => {
+    if (activeOrganization?.id === organization.id) {
+      return;
+    }
+
+    await auth.organization.setActive({
+      organizationId: organization.id,
+    });
+    router.invalidate();
+  };
 
   return (
     <SidebarMenu>
@@ -71,19 +82,14 @@ export function OrganizationSwitcher() {
               <DropdownMenuItem
                 key={organization.id}
                 onClick={async () => {
-                  await auth.organization.setActive({
-                    organizationId: organization.id,
-                  });
-                  router.invalidate();
+                  onOrganizationSelect(organization);
                 }}
                 className="gap-2 p-2"
               >
-                {/* <div className="flex size-6 items-center justify-center rounded-md border overflow-hidden"> */}
                 <Avatar>
                   <AvatarImage src={organization.logo ?? undefined} />
                   <AvatarFallback>{organization.name.charAt(0)}</AvatarFallback>
                 </Avatar>
-                {/* </div> */}
                 {organization.name}
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>

@@ -1,7 +1,6 @@
 import {
   createFileRoute,
   Outlet,
-  redirect,
   useRouterState,
 } from '@tanstack/react-router';
 import { AppSidebar } from '@/components/app-sidebar';
@@ -18,29 +17,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { auth } from '@/lib/auth';
 
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute('/_authenticated/dashboard')({
   component: Dashboard,
   pendingComponent: () => null,
-  beforeLoad: async () => {
-    const { data: session } = await auth.getSession();
-    if (!session) {
-      throw redirect({ to: '/auth/login' });
-    }
-
-    const { data: activeOrganization } =
-      await auth.organization.getFullOrganization();
-
-    if (!activeOrganization) {
-      const { data: organizations } = await auth.organization.list();
-      if (organizations && organizations.length > 0) {
-        await auth.organization.setActive({
-          organizationId: organizations[0].id,
-        });
-      }
-    }
-  },
 });
 
 function Dashboard() {

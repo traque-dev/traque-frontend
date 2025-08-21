@@ -19,7 +19,7 @@ export const router = createRouter({
     user: null,
     queryClient,
   },
-  defaultPreload: 'intent',
+  defaultPreload: false,
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
@@ -32,7 +32,9 @@ declare module '@tanstack/react-router' {
 }
 
 function App() {
-  const { data: session } = auth.useSession();
+  const { data: session, isPending } = auth.useSession();
+
+  if (isPending) return null;
 
   return (
     <StrictMode>

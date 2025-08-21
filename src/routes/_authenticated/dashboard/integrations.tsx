@@ -1,15 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { ComingSoon } from '@/components/coming-soon';
 
-export const Route = createFileRoute('/dashboard/issues')({
-  component: IssuesPage,
+export const Route = createFileRoute('/_authenticated/dashboard/integrations')({
+  component: RouteComponent,
 });
 
-function IssuesPage() {
+function RouteComponent() {
   return (
     <div className="p-6">
       <ComingSoon
-        title="Issues"
+        title="Integrations"
         description="We're putting the finishing touches on this feature. Thanks for your patience!"
         eta="2025-08-24"
       />

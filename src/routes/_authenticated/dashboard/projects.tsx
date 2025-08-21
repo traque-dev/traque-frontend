@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/card';
 import { auth } from '@/lib/auth';
 
-export const Route = createFileRoute('/dashboard/projects')({
+export const Route = createFileRoute('/_authenticated/dashboard/projects')({
   component: RouteComponent,
   loader: async () => {
     const { data: activeOrganization } =

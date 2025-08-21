@@ -3,7 +3,7 @@ import { getProjects } from '@/api/projects';
 import { ProjectExceptionsChart } from '@/components/project-exceptions-chart';
 import { auth } from '@/lib/auth';
 
-export const Route = createFileRoute('/dashboard/')({
+export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: DashboardPage,
   loader: async () => {
     const { data: activeOrganization } =

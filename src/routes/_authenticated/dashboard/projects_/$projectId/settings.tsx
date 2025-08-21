@@ -22,7 +22,7 @@ import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
 
 export const Route = createFileRoute(
-  '/dashboard/projects_/$projectId/settings',
+  '/_authenticated/dashboard/projects_/$projectId/settings',
 )({
   component: RouteComponent,
   loader: async ({ params }) => {
