@@ -1,17 +1,17 @@
 import {
   createFileRoute,
   Outlet,
-  useRouterState,
+  // useRouterState,
 } from '@tanstack/react-router';
-import { Fragment } from 'react';
+// import { Fragment } from 'react';
 import { AppSidebar } from '@/components/app-sidebar';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+// import {
+//   Breadcrumb,
+//   BreadcrumbItem,
+//   BreadcrumbLink,
+//   BreadcrumbList,
+//   BreadcrumbSeparator,
+// } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
@@ -25,16 +25,16 @@ export const Route = createFileRoute('/_authenticated/dashboard')({
 });
 
 function Dashboard() {
-  const { matches } = useRouterState();
+  // const { matches } = useRouterState();
 
-  const breadcrumbs = matches
-    .filter((match) => match.loaderData?.title)
-    .map(({ pathname, loaderData }) => {
-      return {
-        title: loaderData?.title,
-        path: pathname,
-      };
-    });
+  // const breadcrumbs = matches
+  //   .filter((match) => match.loaderData?.title)
+  //   .map(({ pathname, loaderData }) => {
+  //     return {
+  //       title: loaderData?.title,
+  //       path: pathname,
+  //     };
+  //   });
 
   return (
     <SidebarProvider>
@@ -51,7 +51,7 @@ function Dashboard() {
                     orientation="vertical"
                     className="me-2 data-[orientation=vertical]:h-4"
                   />
-                  <Breadcrumb>
+                  {/* <Breadcrumb>
                     <BreadcrumbList>
                       {breadcrumbs.map((breadcrumb, index) => (
                         <Fragment key={breadcrumb.path}>
@@ -66,7 +66,7 @@ function Dashboard() {
                         </Fragment>
                       ))}
                     </BreadcrumbList>
-                  </Breadcrumb>
+                  </Breadcrumb> */}
                 </div>
               </div>
             </header>
