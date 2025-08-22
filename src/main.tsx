@@ -17,6 +17,7 @@ export const router = createRouter({
   context: {
     session: null,
     user: null,
+    activeOrganization: null,
     queryClient,
   },
   defaultPreload: false,

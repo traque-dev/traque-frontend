@@ -15,10 +15,13 @@ export async function getProjectIssues(
   pageable: Pageable<Issue>,
   filters?: IssueFilters,
 ): Promise<Page<Issue>> {
-  const query = qs.stringify({
-    ...pageable,
-    ...filters,
-  });
+  const query = qs.stringify(
+    {
+      ...pageable,
+      ...filters,
+    },
+    { arrayFormat: 'comma', skipNull: true, skipEmptyString: true },
+  );
 
   const url = `/api/v1/organizations/${organizationId}/projects/${projectId}/issues?${query}`;
 

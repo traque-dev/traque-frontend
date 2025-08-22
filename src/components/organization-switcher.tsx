@@ -1,3 +1,4 @@
+import { useNavigate } from '@tanstack/react-router';
 import type { Organization } from 'better-auth/plugins/organization';
 import { ChevronsUpDown, Plus } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -21,6 +22,7 @@ import { router } from '@/main';
 
 export function OrganizationSwitcher() {
   const { isMobile } = useSidebar();
+  const navigate = useNavigate();
 
   const { data: organizations } = auth.useListOrganizations();
 
@@ -35,6 +37,9 @@ export function OrganizationSwitcher() {
       organizationId: organization.id,
     });
     router.invalidate();
+    navigate({
+      to: '/dashboard',
+    });
   };
 
   return (
