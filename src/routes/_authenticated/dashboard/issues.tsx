@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   createFileRoute,
+  Link,
   notFound,
   redirect,
   useNavigate,
@@ -8,6 +9,7 @@ import {
 import type { ColumnDef, SortingState } from '@tanstack/react-table';
 import { type } from 'arktype';
 import {
+  ArrowRight,
   Calendar as CalendarIcon,
   FilterIcon,
   SortAscIcon,
@@ -188,6 +190,21 @@ function IssuesPage() {
         header: 'Events',
         cell: ({ getValue }) => String(getValue()),
         enableSorting: true,
+      },
+      {
+        accessorKey: 'id',
+        header: '',
+        cell: ({ row }) => (
+          <Link
+            to="/dashboard/issues/$issueId"
+            params={{ issueId: row.original.id! }}
+            search={{ projectId: projectId! }}
+          >
+            <Button variant="ghost" size="icon" className="size-6">
+              <ArrowRight className="size-3" />
+            </Button>
+          </Link>
+        ),
       },
     ],
     [],

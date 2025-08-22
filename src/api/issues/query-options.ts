@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
-import { getProjectIssues } from '@/api/issues';
+import { getProjectIssueById, getProjectIssues } from '@/api/issues';
 import type { IssueFilters } from '@/api/issues/types';
 import type { Issue } from '@/types/issue';
 import type { Organization } from '@/types/organization';
@@ -29,4 +29,14 @@ export const getProjectIssuesQueryOptions = (
     queryFn: () =>
       getProjectIssues(organizationId, projectId, pageable, filters),
     staleTime: 30_000,
+  });
+
+export const getProjectIssueByIdQueryOptions = (
+  organizationId: Organization['id'],
+  projectId: Project['id'],
+  issueId: Issue['id'],
+) =>
+  queryOptions({
+    queryKey: ['issues', organizationId, projectId, issueId],
+    queryFn: () => getProjectIssueById(organizationId, projectId, issueId),
   });

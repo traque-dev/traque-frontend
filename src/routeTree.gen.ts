@@ -22,6 +22,7 @@ import { Route as AuthenticatedDashboardIssuesRouteImport } from './routes/_auth
 import { Route as AuthenticatedDashboardIntegrationsRouteImport } from './routes/_authenticated/dashboard/integrations'
 import { Route as AuthenticatedDashboardExceptionsRouteImport } from './routes/_authenticated/dashboard/exceptions'
 import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_authenticated/dashboard/events'
+import { Route as AuthenticatedDashboardIssuesIssueIdIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/index'
 import { Route as AuthenticatedDashboardProjectsProjectIdSettingsRouteImport } from './routes/_authenticated/dashboard/projects_/$projectId/settings'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -95,6 +96,12 @@ const AuthenticatedDashboardEventsRoute =
     path: '/events',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardIssuesIssueIdIndexRoute =
+  AuthenticatedDashboardIssuesIssueIdIndexRouteImport.update({
+    id: '/issues_/$issueId/',
+    path: '/issues/$issueId/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardProjectsProjectIdSettingsRoute =
   AuthenticatedDashboardProjectsProjectIdSettingsRouteImport.update({
     id: '/projects_/$projectId/settings',
@@ -116,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
+  '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -130,6 +138,7 @@ export interface FileRoutesByTo {
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
+  '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -147,6 +156,7 @@ export interface FileRoutesById {
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/projects_/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
+  '/_authenticated/dashboard/issues_/$issueId/': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/settings/account'
     | '/dashboard/'
     | '/dashboard/projects/$projectId/settings'
+    | '/dashboard/issues/$issueId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/settings/account'
     | '/dashboard'
     | '/dashboard/projects/$projectId/settings'
+    | '/dashboard/issues/$issueId'
   id:
     | '__root__'
     | '/'
@@ -194,6 +206,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/account'
     | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/projects_/$projectId/settings'
+    | '/_authenticated/dashboard/issues_/$issueId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -297,6 +310,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardEventsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/issues_/$issueId/': {
+      id: '/_authenticated/dashboard/issues_/$issueId/'
+      path: '/issues/$issueId'
+      fullPath: '/dashboard/issues/$issueId'
+      preLoaderRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/projects_/$projectId/settings': {
       id: '/_authenticated/dashboard/projects_/$projectId/settings'
       path: '/projects/$projectId/settings'
@@ -315,6 +335,7 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardProjectsRoute: typeof AuthenticatedDashboardProjectsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
+  AuthenticatedDashboardIssuesIssueIdIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
@@ -329,6 +350,8 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
     AuthenticatedDashboardProjectsProjectIdSettingsRoute:
       AuthenticatedDashboardProjectsProjectIdSettingsRoute,
+    AuthenticatedDashboardIssuesIssueIdIndexRoute:
+      AuthenticatedDashboardIssuesIssueIdIndexRoute,
   }
 
 const AuthenticatedDashboardRouteWithChildren =
