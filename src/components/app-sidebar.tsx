@@ -19,7 +19,6 @@ import {
   ChartSquareLinear,
   CodeLinear,
   DangerLinear,
-  FlameLinear,
   WidgetAddLinear,
 } from './icons';
 import { OrganizationSwitcher } from './organization-switcher';
