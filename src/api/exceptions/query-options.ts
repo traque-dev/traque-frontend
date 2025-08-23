@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query';
+import { queryOptions, skipToken } from '@tanstack/react-query';
 import type { Exception } from '@/types/exception';
 import type { Issue } from '@/types/issue';
 import type { Organization } from '@/types/organization';
@@ -29,7 +29,9 @@ export const getExceptionByIdQueryOptions = (
 ) =>
   queryOptions({
     queryKey: ['exception', organizationId, projectId, exceptionId],
-    queryFn: () => getExceptionById(organizationId, projectId, exceptionId),
+    queryFn: exceptionId
+      ? () => getExceptionById(organizationId, projectId, exceptionId)
+      : skipToken,
   });
 
 export const getExceptionDailyStatisticsQueryOptions = (

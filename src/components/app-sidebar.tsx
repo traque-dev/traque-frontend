@@ -52,11 +52,11 @@ const data = {
           url: '/dashboard/issues',
           icon: DangerLinear,
         },
-        {
-          title: 'Exceptions',
-          url: '/dashboard/exceptions',
-          icon: FlameLinear,
-        },
+        // {
+        //   title: 'Exceptions',
+        //   url: '/dashboard/exceptions',
+        //   icon: FlameLinear,
+        // },
         {
           title: 'Events',
           url: '/dashboard/events',

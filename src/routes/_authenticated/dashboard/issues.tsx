@@ -207,7 +207,7 @@ function IssuesPage() {
         ),
       },
     ],
-    [],
+    [projectId],
   );
 
   const handleSortingChange = (next: SortingState) => {

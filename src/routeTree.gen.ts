@@ -24,6 +24,7 @@ import { Route as AuthenticatedDashboardExceptionsRouteImport } from './routes/_
 import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_authenticated/dashboard/events'
 import { Route as AuthenticatedDashboardIssuesIssueIdIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/index'
 import { Route as AuthenticatedDashboardProjectsProjectIdSettingsRouteImport } from './routes/_authenticated/dashboard/projects_/$projectId/settings'
+import { Route as AuthenticatedDashboardIssuesIssueIdExceptionsIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/exceptions/index'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -108,6 +109,12 @@ const AuthenticatedDashboardProjectsProjectIdSettingsRoute =
     path: '/projects/$projectId/settings',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute =
+  AuthenticatedDashboardIssuesIssueIdExceptionsIndexRouteImport.update({
+    id: '/issues_/$issueId/exceptions/',
+    path: '/issues/$issueId/exceptions/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/dashboard/issues/$issueId/exceptions': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -139,6 +147,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/dashboard/issues/$issueId/exceptions': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -157,6 +166,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/projects_/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/_authenticated/dashboard/issues_/$issueId/': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/_authenticated/dashboard/issues_/$issueId/exceptions/': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/issues/$issueId'
+    | '/dashboard/issues/$issueId/exceptions'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/issues/$issueId'
+    | '/dashboard/issues/$issueId/exceptions'
   id:
     | '__root__'
     | '/'
@@ -207,6 +219,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/projects_/$projectId/settings'
     | '/_authenticated/dashboard/issues_/$issueId/'
+    | '/_authenticated/dashboard/issues_/$issueId/exceptions/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -324,6 +337,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/issues_/$issueId/exceptions/': {
+      id: '/_authenticated/dashboard/issues_/$issueId/exceptions/'
+      path: '/issues/$issueId/exceptions'
+      fullPath: '/dashboard/issues/$issueId/exceptions'
+      preLoaderRoute: typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
   }
 }
 
@@ -336,6 +356,7 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   AuthenticatedDashboardIssuesIssueIdIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
@@ -352,6 +373,8 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
       AuthenticatedDashboardProjectsProjectIdSettingsRoute,
     AuthenticatedDashboardIssuesIssueIdIndexRoute:
       AuthenticatedDashboardIssuesIssueIdIndexRoute,
+    AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute:
+      AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute,
   }
 
 const AuthenticatedDashboardRouteWithChildren =

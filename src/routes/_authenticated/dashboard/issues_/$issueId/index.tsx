@@ -3,7 +3,12 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import { createFileRoute, notFound, useRouter } from '@tanstack/react-router';
+import {
+  createFileRoute,
+  Link,
+  notFound,
+  useRouter,
+} from '@tanstack/react-router';
 import type { ColumnDef } from '@tanstack/react-table';
 import { type } from 'arktype';
 import {
@@ -21,6 +26,7 @@ import { getExceptionsQueryOptions } from '@/api/exceptions/query-options';
 import { changeIssueSeverity, changeIssueStatus } from '@/api/issues';
 import { getProjectIssueByIdQueryOptions } from '@/api/issues/query-options';
 import { DataTable } from '@/components/data-table';
+import { FlameLinear } from '@/components/icons';
 import { IssueSeverityBadge } from '@/components/issue-severity-badge';
 import { IssueStatusBadge } from '@/components/issue-status-badge';
 import { Button } from '@/components/ui/button';
@@ -400,13 +406,24 @@ function IssuePage() {
                       Recent activity will appear here
                     </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => refetchLatestExceptions()}
-                  >
-                    <RefreshCcw className="size-4 mr-1" /> Refresh
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => refetchLatestExceptions()}
+                    >
+                      <RefreshCcw className="size-4 mr-1" /> Refresh
+                    </Button>
+                    <Link
+                      to="/dashboard/issues/$issueId/exceptions"
+                      params={{ issueId }}
+                      search={{ projectId }}
+                    >
+                      <Button variant="default" size="sm">
+                        <FlameLinear className="size-4 mr-1" /> See all
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
 
                 <DataTable<Exception>
