@@ -229,12 +229,12 @@ function IssuePage() {
         ),
       },
       {
-        accessorKey: 'httpContext.statusCode',
+        accessorKey: 'httpContext',
         header: 'Status',
         cell: ({ row }) => row.original.httpContext?.statusCode ?? '-',
       },
       {
-        accessorKey: 'httpContext.method',
+        accessorKey: 'httpContext',
         header: 'Method',
         cell: ({ row }) => row.original.httpContext?.method ?? '-',
       },
@@ -247,7 +247,7 @@ function IssuePage() {
         header: 'Platform',
       },
       {
-        accessorKey: 'httpContext.url',
+        accessorKey: 'httpContext',
         header: 'URL',
         cell: ({ row }) => (
           <div className="truncate max-w-[280px]">

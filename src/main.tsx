@@ -7,6 +7,7 @@ import { routeTree } from './routeTree.gen';
 
 import './styles.css';
 import { Toaster } from 'sonner';
+import { ThemeProvider } from './components/theme-provider.tsx';
 import { auth } from './lib/auth.ts';
 import reportWebVitals from './reportWebVitals.ts';
 
@@ -40,7 +41,7 @@ function App() {
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <div>
+        <ThemeProvider defaultTheme="system">
           <RouterProvider
             router={router}
             context={{
@@ -49,7 +50,7 @@ function App() {
             }}
           />
           <Toaster />
-        </div>
+        </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>
   );

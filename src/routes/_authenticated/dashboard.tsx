@@ -18,6 +18,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { useAwsWafClient } from '@/hooks/use-aws-waf-client';
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
   component: Dashboard,
@@ -35,6 +36,8 @@ function Dashboard() {
   //       path: pathname,
   //     };
   //   });
+
+  useAwsWafClient();
 
   return (
     <SidebarProvider>

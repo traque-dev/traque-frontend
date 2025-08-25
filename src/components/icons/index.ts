@@ -7,5 +7,6 @@ export * from './flame-linear';
 export * from './hamburger-menu-linear';
 export * from './logout-3-linear';
 export * from './settings-linear';
+export * from './trash-bin-minimalistic-2-linear';
 export * from './user-rounded-linear';
 export * from './widget-add-linear';

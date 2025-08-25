@@ -25,6 +25,7 @@ import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_auth
 import { Route as AuthenticatedDashboardIssuesIssueIdIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/index'
 import { Route as AuthenticatedDashboardProjectsProjectIdSettingsRouteImport } from './routes/_authenticated/dashboard/projects_/$projectId/settings'
 import { Route as AuthenticatedDashboardIssuesIssueIdExceptionsIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/exceptions/index'
+import { Route as AuthenticatedDashboardIntegrationsAwsWafIndexRouteImport } from './routes/_authenticated/dashboard/integrations_/aws/waf/index'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -115,6 +116,12 @@ const AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute =
     path: '/issues/$issueId/exceptions/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardIntegrationsAwsWafIndexRoute =
+  AuthenticatedDashboardIntegrationsAwsWafIndexRouteImport.update({
+    id: '/integrations_/aws/waf/',
+    path: '/integrations/aws/waf/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/dashboard/integrations/aws/waf': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
   '/dashboard/issues/$issueId/exceptions': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -147,6 +155,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/dashboard/integrations/aws/waf': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
   '/dashboard/issues/$issueId/exceptions': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
 }
 export interface FileRoutesById {
@@ -166,6 +175,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/dashboard/projects_/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/_authenticated/dashboard/issues_/$issueId/': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/_authenticated/dashboard/integrations_/aws/waf/': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
   '/_authenticated/dashboard/issues_/$issueId/exceptions/': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
 }
 export interface FileRouteTypes {
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/issues/$issueId'
+    | '/dashboard/integrations/aws/waf'
     | '/dashboard/issues/$issueId/exceptions'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/issues/$issueId'
+    | '/dashboard/integrations/aws/waf'
     | '/dashboard/issues/$issueId/exceptions'
   id:
     | '__root__'
@@ -219,6 +231,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/'
     | '/_authenticated/dashboard/projects_/$projectId/settings'
     | '/_authenticated/dashboard/issues_/$issueId/'
+    | '/_authenticated/dashboard/integrations_/aws/waf/'
     | '/_authenticated/dashboard/issues_/$issueId/exceptions/'
   fileRoutesById: FileRoutesById
 }
@@ -344,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/integrations_/aws/waf/': {
+      id: '/_authenticated/dashboard/integrations_/aws/waf/'
+      path: '/integrations/aws/waf'
+      fullPath: '/dashboard/integrations/aws/waf'
+      preLoaderRoute: typeof AuthenticatedDashboardIntegrationsAwsWafIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
   }
 }
 
@@ -356,6 +376,7 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   AuthenticatedDashboardIssuesIssueIdIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  AuthenticatedDashboardIntegrationsAwsWafIndexRoute: typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
   AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
 }
 
@@ -373,6 +394,8 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
       AuthenticatedDashboardProjectsProjectIdSettingsRoute,
     AuthenticatedDashboardIssuesIssueIdIndexRoute:
       AuthenticatedDashboardIssuesIssueIdIndexRoute,
+    AuthenticatedDashboardIntegrationsAwsWafIndexRoute:
+      AuthenticatedDashboardIntegrationsAwsWafIndexRoute,
     AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute:
       AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute,
   }
