@@ -7,7 +7,7 @@ import { useMemo, useState } from 'react';
 import { getExceptionsQueryOptions } from '@/api/exceptions/query-options';
 import { DataTable } from '@/components/data-table';
 import { ExceptionDetailsDialog } from '@/components/exceptions-details-dialog';
-import { Badge } from '@/components/ui/badge';
+// import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
@@ -119,21 +119,21 @@ function ExceptionsPage() {
           </div>
         ),
       },
-      {
-        accessorKey: 'httpContext',
-        header: 'Status',
-        cell: ({ row }) => row.original.httpContext?.statusCode ?? '-',
-      },
-      {
-        accessorKey: 'httpContext',
-        header: 'Method',
-        cell: ({ row }) =>
-          row.original.httpContext?.method ? (
-            <Badge variant="secondary">{row.original.httpContext.method}</Badge>
-          ) : (
-            '-'
-          ),
-      },
+      // {
+      //   accessorKey: 'httpContext',
+      //   header: 'Status',
+      //   cell: ({ row }) => row.original.httpContext?.statusCode ?? '-',
+      // },
+      // {
+      //   accessorKey: 'httpContext',
+      //   header: 'Method',
+      //   cell: ({ row }) =>
+      //     row.original.httpContext?.method ? (
+      //       <Badge variant="secondary">{row.original.httpContext.method}</Badge>
+      //     ) : (
+      //       '-'
+      //     ),
+      // },
       {
         accessorKey: 'environment',
         header: 'Env',
@@ -142,18 +142,18 @@ function ExceptionsPage() {
         accessorKey: 'platform',
         header: 'Platform',
       },
-      {
-        accessorKey: 'httpContext',
-        header: 'URL',
-        cell: ({ row }) => (
-          <div
-            className="truncate max-w-[320px]"
-            title={row.original.httpContext?.url}
-          >
-            {row.original.httpContext?.url ?? '-'}
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: 'httpContext',
+      //   header: 'URL',
+      //   cell: ({ row }) => (
+      //     <div
+      //       className="truncate max-w-[320px]"
+      //       title={row.original.httpContext?.url}
+      //     >
+      //       {row.original.httpContext?.url ?? '-'}
+      //     </div>
+      //   ),
+      // },
       {
         id: 'actions',
         header: '',

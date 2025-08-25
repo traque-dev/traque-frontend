@@ -228,16 +228,16 @@ function IssuePage() {
           </div>
         ),
       },
-      {
-        accessorKey: 'httpContext',
-        header: 'Status',
-        cell: ({ row }) => row.original.httpContext?.statusCode ?? '-',
-      },
-      {
-        accessorKey: 'httpContext',
-        header: 'Method',
-        cell: ({ row }) => row.original.httpContext?.method ?? '-',
-      },
+      // {
+      //   accessorKey: 'httpContext',
+      //   header: 'Status',
+      //   cell: ({ row }) => row.original.httpContext?.statusCode ?? '-',
+      // },
+      // {
+      //   accessorKey: 'httpContext',
+      //   header: 'Method',
+      //   cell: ({ row }) => row.original.httpContext?.method ?? '-',
+      // },
       {
         accessorKey: 'environment',
         header: 'Env',
@@ -246,15 +246,15 @@ function IssuePage() {
         accessorKey: 'platform',
         header: 'Platform',
       },
-      {
-        accessorKey: 'httpContext',
-        header: 'URL',
-        cell: ({ row }) => (
-          <div className="truncate max-w-[280px]">
-            {row.original.httpContext?.url ?? '-'}
-          </div>
-        ),
-      },
+      // {
+      //   accessorKey: 'httpContext',
+      //   header: 'URL',
+      //   cell: ({ row }) => (
+      //     <div className="truncate max-w-[280px]">
+      //       {row.original.httpContext?.url ?? '-'}
+      //     </div>
+      //   ),
+      // },
     ],
     [],
   );
