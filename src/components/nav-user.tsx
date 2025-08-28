@@ -86,10 +86,10 @@ export function NavUser() {
             align="end"
             sideOffset={4}
           >
-            <Link to="/settings/account">
+            <Link to="/dashboard/profile">
               <DropdownMenuItem className="gap-3 px-1">
                 <UserRoundedLinear className="text-muted-foreground/70" />
-                <span>Account</span>
+                <span>My profile</span>
               </DropdownMenuItem>
             </Link>
 

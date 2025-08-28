@@ -5,6 +5,7 @@ import {
 } from '@tanstack/react-router';
 // import { Fragment } from 'react';
 import { AppSidebar } from '@/components/app-sidebar';
+import { Button } from '@/components/ui/button';
 // import {
 //   Breadcrumb,
 //   BreadcrumbItem,
@@ -12,7 +13,7 @@ import { AppSidebar } from '@/components/app-sidebar';
 //   BreadcrumbList,
 //   BreadcrumbSeparator,
 // } from '@/components/ui/breadcrumb';
-import { Separator } from '@/components/ui/separator';
+// import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
@@ -49,11 +50,11 @@ function Dashboard() {
             <header className="flex flex-wrap gap-3 py-2 shrink-0 items-center transition-all ease-linear border-b">
               <div className="flex flex-1 items-center gap-2">
                 <SidebarTrigger className="-ms-1" />
-                <div className="max-lg:hidden lg:contents">
-                  <Separator
+                <div className="max-lg:hidden flex flex-row flex-1 items-center justify-end">
+                  {/* <Separator
                     orientation="vertical"
                     className="me-2 data-[orientation=vertical]:h-4"
-                  />
+                  /> */}
                   {/* <Breadcrumb>
                     <BreadcrumbList>
                       {breadcrumbs.map((breadcrumb, index) => (
@@ -70,6 +71,12 @@ function Dashboard() {
                       ))}
                     </BreadcrumbList>
                   </Breadcrumb> */}
+                  <a
+                    href="https://www.traque.dev/docs/introduction"
+                    target="_blank"
+                  >
+                    <Button variant="ghost">Docs</Button>
+                  </a>
                 </div>
               </div>
             </header>

@@ -18,6 +18,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedDashboardProjectsRouteImport } from './routes/_authenticated/dashboard/projects'
+import { Route as AuthenticatedDashboardProfileRouteImport } from './routes/_authenticated/dashboard/profile'
 import { Route as AuthenticatedDashboardIssuesRouteImport } from './routes/_authenticated/dashboard/issues'
 import { Route as AuthenticatedDashboardIntegrationsRouteImport } from './routes/_authenticated/dashboard/integrations'
 import { Route as AuthenticatedDashboardExceptionsRouteImport } from './routes/_authenticated/dashboard/exceptions'
@@ -72,6 +73,12 @@ const AuthenticatedDashboardProjectsRoute =
   AuthenticatedDashboardProjectsRouteImport.update({
     id: '/projects',
     path: '/projects',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardProfileRoute =
+  AuthenticatedDashboardProfileRouteImport.update({
+    id: '/profile',
+    path: '/profile',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardIssuesRoute =
@@ -133,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/exceptions': typeof AuthenticatedDashboardExceptionsRoute
   '/dashboard/integrations': typeof AuthenticatedDashboardIntegrationsRoute
   '/dashboard/issues': typeof AuthenticatedDashboardIssuesRoute
+  '/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
@@ -150,6 +158,7 @@ export interface FileRoutesByTo {
   '/dashboard/exceptions': typeof AuthenticatedDashboardExceptionsRoute
   '/dashboard/integrations': typeof AuthenticatedDashboardIntegrationsRoute
   '/dashboard/issues': typeof AuthenticatedDashboardIssuesRoute
+  '/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
@@ -170,6 +179,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/exceptions': typeof AuthenticatedDashboardExceptionsRoute
   '/_authenticated/dashboard/integrations': typeof AuthenticatedDashboardIntegrationsRoute
   '/_authenticated/dashboard/issues': typeof AuthenticatedDashboardIssuesRoute
+  '/_authenticated/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/_authenticated/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
@@ -190,6 +200,7 @@ export interface FileRouteTypes {
     | '/dashboard/exceptions'
     | '/dashboard/integrations'
     | '/dashboard/issues'
+    | '/dashboard/profile'
     | '/dashboard/projects'
     | '/settings/account'
     | '/dashboard/'
@@ -207,6 +218,7 @@ export interface FileRouteTypes {
     | '/dashboard/exceptions'
     | '/dashboard/integrations'
     | '/dashboard/issues'
+    | '/dashboard/profile'
     | '/dashboard/projects'
     | '/settings/account'
     | '/dashboard'
@@ -226,6 +238,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/exceptions'
     | '/_authenticated/dashboard/integrations'
     | '/_authenticated/dashboard/issues'
+    | '/_authenticated/dashboard/profile'
     | '/_authenticated/dashboard/projects'
     | '/_authenticated/settings/account'
     | '/_authenticated/dashboard/'
@@ -308,6 +321,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardProjectsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/profile': {
+      id: '/_authenticated/dashboard/profile'
+      path: '/profile'
+      fullPath: '/dashboard/profile'
+      preLoaderRoute: typeof AuthenticatedDashboardProfileRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/issues': {
       id: '/_authenticated/dashboard/issues'
       path: '/issues'
@@ -372,6 +392,7 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardExceptionsRoute: typeof AuthenticatedDashboardExceptionsRoute
   AuthenticatedDashboardIntegrationsRoute: typeof AuthenticatedDashboardIntegrationsRoute
   AuthenticatedDashboardIssuesRoute: typeof AuthenticatedDashboardIssuesRoute
+  AuthenticatedDashboardProfileRoute: typeof AuthenticatedDashboardProfileRoute
   AuthenticatedDashboardProjectsRoute: typeof AuthenticatedDashboardProjectsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
@@ -388,6 +409,7 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardIntegrationsRoute:
       AuthenticatedDashboardIntegrationsRoute,
     AuthenticatedDashboardIssuesRoute: AuthenticatedDashboardIssuesRoute,
+    AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
     AuthenticatedDashboardProjectsRoute: AuthenticatedDashboardProjectsRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
     AuthenticatedDashboardProjectsProjectIdSettingsRoute:
