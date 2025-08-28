@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import { toast } from 'sonner';
 import { match, P } from 'ts-pattern';
 import { DataTable } from '@/components/data-table';
-import { Badge } from '@/components/ui/badge';
+import { Badge, type BadgeProps } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { auth } from '@/lib/auth';
@@ -72,15 +72,13 @@ export function UserInvitesCard() {
         accessorKey: 'status',
         cell: ({ row }) => (
           <Badge
-            variant={
-              row.original.status === 'pending'
-                ? 'secondary'
-                : row.original.status === 'accepted'
-                  ? 'default'
-                  : row.original.status === 'rejected'
-                    ? 'destructive'
-                    : 'outline'
-            }
+            variant={match<Invitation['status'], BadgeProps['variant']>(
+              row.original.status,
+            )
+              .with('pending', () => 'secondary')
+              .with('accepted', () => 'default')
+              .with('rejected', () => 'destructive')
+              .otherwise(() => 'outline')}
           >
             {row.original.status}
           </Badge>
