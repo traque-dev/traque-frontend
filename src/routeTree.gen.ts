@@ -23,6 +23,8 @@ import { Route as AuthenticatedDashboardIssuesRouteImport } from './routes/_auth
 import { Route as AuthenticatedDashboardIntegrationsRouteImport } from './routes/_authenticated/dashboard/integrations'
 import { Route as AuthenticatedDashboardExceptionsRouteImport } from './routes/_authenticated/dashboard/exceptions'
 import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_authenticated/dashboard/events'
+import { Route as AuthenticatedDashboardChatIndexRouteImport } from './routes/_authenticated/dashboard/chat/index'
+import { Route as AuthenticatedDashboardChatChatIdRouteImport } from './routes/_authenticated/dashboard/chat/$chatId'
 import { Route as AuthenticatedDashboardIssuesIssueIdIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/index'
 import { Route as AuthenticatedDashboardProjectsProjectIdSettingsRouteImport } from './routes/_authenticated/dashboard/projects_/$projectId/settings'
 import { Route as AuthenticatedDashboardIssuesIssueIdExceptionsIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/exceptions/index'
@@ -105,6 +107,18 @@ const AuthenticatedDashboardEventsRoute =
     path: '/events',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardChatIndexRoute =
+  AuthenticatedDashboardChatIndexRouteImport.update({
+    id: '/chat/',
+    path: '/chat/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardChatChatIdRoute =
+  AuthenticatedDashboardChatChatIdRouteImport.update({
+    id: '/chat/$chatId',
+    path: '/chat/$chatId',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardIssuesIssueIdIndexRoute =
   AuthenticatedDashboardIssuesIssueIdIndexRouteImport.update({
     id: '/issues_/$issueId/',
@@ -144,6 +158,8 @@ export interface FileRoutesByFullPath {
   '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
+  '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/dashboard/integrations/aws/waf': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
@@ -162,6 +178,8 @@ export interface FileRoutesByTo {
   '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
+  '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/dashboard/integrations/aws/waf': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
@@ -183,6 +201,8 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
+  '/_authenticated/dashboard/chat/': typeof AuthenticatedDashboardChatIndexRoute
   '/_authenticated/dashboard/projects_/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/_authenticated/dashboard/issues_/$issueId/': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/_authenticated/dashboard/integrations_/aws/waf/': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
@@ -204,6 +224,8 @@ export interface FileRouteTypes {
     | '/dashboard/projects'
     | '/settings/account'
     | '/dashboard/'
+    | '/dashboard/chat/$chatId'
+    | '/dashboard/chat'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/issues/$issueId'
     | '/dashboard/integrations/aws/waf'
@@ -222,6 +244,8 @@ export interface FileRouteTypes {
     | '/dashboard/projects'
     | '/settings/account'
     | '/dashboard'
+    | '/dashboard/chat/$chatId'
+    | '/dashboard/chat'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/issues/$issueId'
     | '/dashboard/integrations/aws/waf'
@@ -242,6 +266,8 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/projects'
     | '/_authenticated/settings/account'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/dashboard/chat/$chatId'
+    | '/_authenticated/dashboard/chat/'
     | '/_authenticated/dashboard/projects_/$projectId/settings'
     | '/_authenticated/dashboard/issues_/$issueId/'
     | '/_authenticated/dashboard/integrations_/aws/waf/'
@@ -356,6 +382,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardEventsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/chat/': {
+      id: '/_authenticated/dashboard/chat/'
+      path: '/chat'
+      fullPath: '/dashboard/chat'
+      preLoaderRoute: typeof AuthenticatedDashboardChatIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/chat/$chatId': {
+      id: '/_authenticated/dashboard/chat/$chatId'
+      path: '/chat/$chatId'
+      fullPath: '/dashboard/chat/$chatId'
+      preLoaderRoute: typeof AuthenticatedDashboardChatChatIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/issues_/$issueId/': {
       id: '/_authenticated/dashboard/issues_/$issueId/'
       path: '/issues/$issueId'
@@ -395,6 +435,8 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardProfileRoute: typeof AuthenticatedDashboardProfileRoute
   AuthenticatedDashboardProjectsRoute: typeof AuthenticatedDashboardProjectsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedDashboardChatChatIdRoute: typeof AuthenticatedDashboardChatChatIdRoute
+  AuthenticatedDashboardChatIndexRoute: typeof AuthenticatedDashboardChatIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   AuthenticatedDashboardIssuesIssueIdIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   AuthenticatedDashboardIntegrationsAwsWafIndexRoute: typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
@@ -412,6 +454,9 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardProfileRoute: AuthenticatedDashboardProfileRoute,
     AuthenticatedDashboardProjectsRoute: AuthenticatedDashboardProjectsRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+    AuthenticatedDashboardChatChatIdRoute:
+      AuthenticatedDashboardChatChatIdRoute,
+    AuthenticatedDashboardChatIndexRoute: AuthenticatedDashboardChatIndexRoute,
     AuthenticatedDashboardProjectsProjectIdSettingsRoute:
       AuthenticatedDashboardProjectsProjectIdSettingsRoute,
     AuthenticatedDashboardIssuesIssueIdIndexRoute:

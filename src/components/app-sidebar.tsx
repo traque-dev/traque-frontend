@@ -1,6 +1,5 @@
 import { Link, useLocation } from '@tanstack/react-router';
 import type { SVGProps } from 'react';
-
 import { NavUser } from '@/components/nav-user';
 import {
   Sidebar,
@@ -14,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { ChatsSidebarItem } from './chats-sidebar-item';
 import {
   BoxMinimalisticLinear,
   ChartSquareLinear,
@@ -21,13 +21,14 @@ import {
   DangerLinear,
   WidgetAddLinear,
 } from './icons';
+import { ChatRoundLineLinear } from './icons/chat-round-line-linear';
 import { OrganizationSwitcher } from './organization-switcher';
 
 type SidebarItem = {
+  key?: string;
   title: string;
   url: string;
   icon?: React.JSXElementConstructor<SVGProps<SVGSVGElement>>;
-  isActive?: boolean;
 };
 
 const data = {
@@ -36,32 +37,37 @@ const data = {
       title: 'General',
       items: [
         {
+          key: 'dashboard',
           title: 'Dashboard',
           url: '/dashboard',
           icon: ChartSquareLinear,
-          isActive: true,
         },
         {
+          key: 'projects',
           title: 'Projects',
           url: '/dashboard/projects',
           icon: BoxMinimalisticLinear,
         },
         {
+          key: 'issues',
           title: 'Issues',
           url: '/dashboard/issues',
           icon: DangerLinear,
         },
-        // {
-        //   title: 'Exceptions',
-        //   url: '/dashboard/exceptions',
-        //   icon: FlameLinear,
-        // },
         {
+          key: 'events',
           title: 'Events',
           url: '/dashboard/events',
           icon: CodeLinear,
         },
         {
+          key: 'chat',
+          title: 'Chat',
+          url: '/dashboard/chat',
+          icon: ChatRoundLineLinear,
+        },
+        {
+          key: 'integrations',
           title: 'Integrations',
           url: '/dashboard/integrations',
           icon: WidgetAddLinear,
@@ -87,28 +93,42 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item: SidebarItem) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      asChild={true}
-                      className="group/menu-button group-data-[collapsible=icon]:px-[7px]! font-medium gap-3 h-9 [&>svg]:size-auto"
-                      tooltip={item.title}
-                      isActive={location.pathname === item.url}
-                    >
-                      <Link to={item.url}>
-                        {item.icon && (
-                          <item.icon
-                            className="text-muted-foreground/65 group-data-[active=true]/menu-button:text-primary"
-                            height={22}
-                            width={22}
-                            aria-hidden="true"
-                          />
-                        )}
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                {item.items.map((navItem: SidebarItem) => {
+                  const isChat = navItem.key === 'chat';
+
+                  const isActive =
+                    location.pathname === navItem.url ||
+                    (isChat && location.pathname.startsWith('/dashboard/chat'));
+
+                  if (isChat) {
+                    return (
+                      <ChatsSidebarItem key={navItem.key} isActive={isActive} />
+                    );
+                  }
+
+                  return (
+                    <SidebarMenuItem key={navItem.title}>
+                      <SidebarMenuButton
+                        asChild={true}
+                        className="group/menu-button group-data-[collapsible=icon]:px-[7px]! font-medium gap-3 h-9 [&>svg]:size-auto"
+                        tooltip={navItem.title}
+                        isActive={isActive}
+                      >
+                        <Link to={navItem.url}>
+                          {navItem.icon && (
+                            <navItem.icon
+                              className="text-muted-foreground/65 group-data-[active=true]/menu-button:text-primary"
+                              height={22}
+                              width={22}
+                              aria-hidden="true"
+                            />
+                          )}
+                          <span>{navItem.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

@@ -27,18 +27,18 @@ import {
 export function AwsWafOverview() {
   const trafficData = useMemo(
     () => [
-      { h: '00', allowed: 4800, blocked: 50 },
-      { h: '02', allowed: 4200, blocked: 41 },
-      { h: '04', allowed: 3900, blocked: 38 },
-      { h: '06', allowed: 5200, blocked: 55 },
-      { h: '08', allowed: 7400, blocked: 72 },
-      { h: '10', allowed: 9300, blocked: 95 },
-      { h: '12', allowed: 10120, blocked: 104 },
-      { h: '14', allowed: 11240, blocked: 121 },
-      { h: '16', allowed: 10980, blocked: 115 },
-      { h: '18', allowed: 9870, blocked: 98 },
-      { h: '20', allowed: 8120, blocked: 74 },
-      { h: '22', allowed: 6900, blocked: 61 },
+      { h: '01:00', allowed: 4800, blocked: 50 },
+      { h: '02:00', allowed: 4200, blocked: 41 },
+      { h: '03:00', allowed: 3900, blocked: 38 },
+      { h: '04:00', allowed: 5200, blocked: 55 },
+      { h: '05:00', allowed: 7400, blocked: 72 },
+      { h: '06:00', allowed: 9300, blocked: 95 },
+      { h: '07:00', allowed: 10120, blocked: 104 },
+      { h: '08:00', allowed: 11240, blocked: 121 },
+      { h: '09:00', allowed: 10980, blocked: 115 },
+      { h: '10:00', allowed: 9870, blocked: 98 },
+      { h: '11:00', allowed: 8120, blocked: 74 },
+      { h: '12:00', allowed: 6900, blocked: 61 },
     ],
     [],
   );
@@ -89,24 +89,24 @@ export function AwsWafOverview() {
                 <linearGradient id="fillAllowed" x1="0" x2="0" y1="0" y2="1">
                   <stop
                     offset="5%"
-                    stopColor="hsl(var(--chart-2))"
+                    stopColor="var(--chart-2)"
                     stopOpacity={0.3}
                   />
                   <stop
                     offset="95%"
-                    stopColor="hsl(var(--chart-2))"
+                    stopColor="var(--chart-2)"
                     stopOpacity={0}
                   />
                 </linearGradient>
                 <linearGradient id="fillBlocked" x1="0" x2="0" y1="0" y2="1">
                   <stop
                     offset="5%"
-                    stopColor="hsl(var(--chart-5))"
+                    stopColor="var(--chart-5)"
                     stopOpacity={0.35}
                   />
                   <stop
                     offset="95%"
-                    stopColor="hsl(var(--chart-5))"
+                    stopColor="var(--chart-5)"
                     stopOpacity={0}
                   />
                 </linearGradient>
