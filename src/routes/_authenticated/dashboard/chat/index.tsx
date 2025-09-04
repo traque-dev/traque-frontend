@@ -56,7 +56,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/')({
 function ExceptionsChat() {
   const { activeOrganization } = Route.useLoaderData();
 
-  const navigate = useNavigate();
+  const navigate = useNavigate({ from: Route.fullPath });
 
   const { data: projects } = useSuspenseQuery(
     getProjectsQueryOptions(activeOrganization.id),
@@ -94,6 +94,7 @@ function ExceptionsChat() {
         projectId,
         dateFrom: from?.toISOString(),
         dateTo: to?.toISOString(),
+        new: true,
       },
     });
   };

@@ -37,6 +37,7 @@ const chatSearchParamsSchema = type({
   'projectId?': 'string.uuid',
   'dateFrom?': 'string.date',
   'dateTo?': 'string.date',
+  'new?': 'boolean',
 });
 
 export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
@@ -50,7 +51,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
     chatId: params.chatId,
     ...search,
   }),
-  loader: async ({ params }) => {
+  loader: async ({ params, deps }) => {
     chatParamsSchema.assert(params);
 
     const { data: activeOrganization, error } =
@@ -64,13 +65,15 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
 
     let conversation = null;
 
-    try {
-      const { data } = await axios.get(
-        `/api/v1/ai/agents/conversations/${params.chatId}`,
-      );
+    if (!deps.new) {
+      try {
+        const { data } = await axios.get(
+          `/api/v1/ai/agents/conversations/${params.chatId}`,
+        );
 
-      conversation = data;
-    } catch (error) {}
+        conversation = data;
+      } catch (error) {}
+    }
 
     return {
       activeOrganization,
