@@ -5,5 +5,6 @@ export type Conversation = {
   createdAt: string;
   updatedAt: string;
   name: string;
+  projectId: string;
   messages: UIMessage[];
 };

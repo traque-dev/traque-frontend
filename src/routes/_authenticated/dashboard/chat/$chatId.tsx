@@ -1,11 +1,11 @@
 import { useChat } from '@ai-sdk/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { createFileRoute, notFound } from '@tanstack/react-router';
+import { createFileRoute, notFound, useNavigate } from '@tanstack/react-router';
 import { useStore } from '@tanstack/react-store';
 import { DefaultChatTransport } from 'ai';
 import { type } from 'arktype';
 import { useEffect, useRef, useState } from 'react';
-import { axios } from '@/api/axios';
+import { getConversation } from '@/api/ai';
 import {
   Conversation,
   ConversationContent,
@@ -45,11 +45,10 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
   validateSearch: chatSearchParamsSchema,
   staleTime: 0,
   loaderDeps: ({ search }) => ({
-    ...search,
+    new: search.new,
   }),
-  remountDeps: ({ params, search }) => ({
+  remountDeps: ({ params }) => ({
     chatId: params.chatId,
-    ...search,
   }),
   loader: async ({ params, deps }) => {
     chatParamsSchema.assert(params);
@@ -67,9 +66,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
 
     if (!deps.new) {
       try {
-        const { data } = await axios.get(
-          `/api/v1/ai/agents/conversations/${params.chatId}`,
-        );
+        const data = await getConversation(params.chatId);
 
         conversation = data;
       } catch (error) {}
@@ -92,15 +89,16 @@ function ExceptionsChat() {
 
   const queryClient = useQueryClient();
 
+  const navigate = useNavigate({ from: Route.fullPath });
+
   const initialMessage = useStore(chatStore, (state) => state.initialMessage);
 
   const [input, setInput] = useState('');
 
   const { sendMessage, status, messages } = useChat({
-    // @ts-ignore
     messages: conversation?.messages ?? [],
     transport: new DefaultChatTransport({
-      api: `${config.api.url}/api/v1/ai/agents/${projectId ?? conversation.projectId}/chat?organizationId=${activeOrganization.id}`,
+      api: `${config.api.url}/api/v1/ai/agents/${projectId ?? conversation?.projectId}/chat?organizationId=${activeOrganization.id}`,
       credentials: () => 'include',
       body: () => ({
         threadMetadata: {
@@ -129,6 +127,10 @@ function ExceptionsChat() {
     sendMessage({ text: message }).then(() => {
       queryClient.invalidateQueries({
         queryKey: ['ai', 'conversations'],
+      });
+
+      navigate({
+        search: {},
       });
     });
   }, [initialMessage]);
