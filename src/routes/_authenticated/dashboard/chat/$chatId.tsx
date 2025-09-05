@@ -113,31 +113,24 @@ function ExceptionsChat() {
     }),
   });
 
-  const isFirstMessage = useRef(true);
+  const hasSentInitRef = useRef(false);
 
   useEffect(() => {
-    if (isFirstMessage.current) {
-      isFirstMessage.current = false;
-      return;
-    }
-
     if (!initialMessage) return;
+    if (hasSentInitRef.current) return;
+    hasSentInitRef.current = true;
 
-    const init = async () => {
-      await sendMessage({
-        text: initialMessage,
-      });
+    const message = initialMessage;
 
-      chatStore.setState({
-        initialMessage: '',
-      });
+    chatStore.setState({
+      initialMessage: null,
+    });
 
+    sendMessage({ text: message }).then(() => {
       queryClient.invalidateQueries({
         queryKey: ['ai', 'conversations'],
       });
-    };
-
-    init();
+    });
   }, [initialMessage]);
 
   const handleSubmit = async (e: React.FormEvent) => {
