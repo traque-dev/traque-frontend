@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import { ChevronDown, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { hasAtLeast } from 'remeda';
 import { useConversations, useDeleteConversation } from '@/api/ai/hooks';
 import {
   AlertDialog,
@@ -34,11 +35,13 @@ export function ChatsSidebarItem({ isActive }: Props) {
     location.pathname.startsWith('/dashboard/chat'),
   );
 
-  const { data: conversations } = useConversations();
+  const { data: conversations = [] } = useConversations();
 
   useEffect(() => {
     setIsChatOpen(location.pathname.startsWith('/dashboard/chat'));
   }, [location.pathname]);
+
+  const hasConversations = hasAtLeast(conversations, 1);
 
   return (
     <SidebarMenuItem key="chats">
@@ -58,16 +61,18 @@ export function ChatsSidebarItem({ isActive }: Props) {
           <span>Chat</span>
         </Link>
       </SidebarMenuButton>
-      <SidebarMenuAction
-        aria-label="Toggle Chat submenu"
-        onClick={() => setIsChatOpen((v) => !v)}
-        data-state={isChatOpen ? 'open' : 'closed'}
-        showOnHover
-        className="transition-transform data-[state=open]:rotate-180 !top-[9px]"
-      >
-        <ChevronDown />
-      </SidebarMenuAction>
-      {isChatOpen && (
+      {hasConversations ? (
+        <SidebarMenuAction
+          aria-label="Toggle Chat submenu"
+          onClick={() => setIsChatOpen((v) => !v)}
+          data-state={isChatOpen ? 'open' : 'closed'}
+          showOnHover
+          className="transition-transform data-[state=open]:rotate-180 !top-[9px]"
+        >
+          <ChevronDown />
+        </SidebarMenuAction>
+      ) : null}
+      {isChatOpen && hasConversations && (
         <SidebarMenuSub className="overflow-hidden">
           {conversations?.map((conversation) => (
             <SidebarMenuSubItem
