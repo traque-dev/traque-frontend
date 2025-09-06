@@ -29,26 +29,16 @@ type Props = {
 
 export function ChatsSidebarItem({ isActive }: Props) {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const [isChatOpen, setIsChatOpen] = useState(
     location.pathname.startsWith('/dashboard/chat'),
   );
 
   const { data: conversations } = useConversations();
-  const { mutate: deleteConversation } = useDeleteConversation();
 
   useEffect(() => {
     setIsChatOpen(location.pathname.startsWith('/dashboard/chat'));
   }, [location.pathname]);
-
-  const onDeleteConversation = (id: string) => {
-    deleteConversation(id);
-
-    if (location.pathname.startsWith(`/dashboard/chat/${id}`)) {
-      navigate({ to: '/dashboard/chat' });
-    }
-  };
 
   return (
     <SidebarMenuItem key="chats">
@@ -73,19 +63,19 @@ export function ChatsSidebarItem({ isActive }: Props) {
         onClick={() => setIsChatOpen((v) => !v)}
         data-state={isChatOpen ? 'open' : 'closed'}
         showOnHover
-        className="transition-transform data-[state=open]:rotate-180"
+        className="transition-transform data-[state=open]:rotate-180 !top-[9px]"
       >
-        <ChevronDown className="size-4" />
+        <ChevronDown />
       </SidebarMenuAction>
       {isChatOpen && (
-        <SidebarMenuSub>
+        <SidebarMenuSub className="overflow-hidden">
           {conversations?.map((conversation) => (
             <SidebarMenuSubItem
               key={conversation.id}
-              className="group/conversation"
+              className="group/conversation relative overflow-hidden"
             >
               <SidebarMenuSubButton
-                asChild={true}
+                asChild
                 isActive={
                   location.pathname === `/dashboard/chat/${conversation.id}`
                 }
@@ -94,37 +84,87 @@ export function ChatsSidebarItem({ isActive }: Props) {
                   to="/dashboard/chat/$chatId"
                   params={{ chatId: conversation.id }}
                 >
-                  <span>{conversation.name}</span>
+                  <span className="truncate">{conversation.name}</span>
+
+                  <div className="text-muted-foreground group-hover/conversation:bg-sidebar-accent pointer-events-auto absolute top-0 right-[4px] bottom-0 z-50 flex translate-x-full items-center justify-end transition-transform group-hover/conversation:translate-x-0">
+                    <div className="from-sidebar-accent pointer-events-none absolute top-0 right-full bottom-0 h-12 w-8 bg-linear-to-l to-transparent opacity-0 group-hover/conversation:opacity-100" />
+                    <DeleteConversationButton
+                      conversationId={conversation.id}
+                    />
+                  </div>
                 </Link>
               </SidebarMenuSubButton>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <SidebarMenuAction className="hidden group-hover/conversation:flex">
-                    <X className="size-4" />
-                  </SidebarMenuAction>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Delete conversation?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      this conversation and remove its messages.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => onDeleteConversation(conversation.id)}
-                    >
-                      Delete
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
             </SidebarMenuSubItem>
           ))}
         </SidebarMenuSub>
       )}
     </SidebarMenuItem>
+  );
+}
+
+type DeleteConversationButtonProps = {
+  conversationId: string;
+};
+
+function DeleteConversationButton({
+  conversationId,
+}: DeleteConversationButtonProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { mutate: deleteConversation } = useDeleteConversation();
+
+  const onDeleteConversation = (id: string) => {
+    deleteConversation(id);
+
+    if (location.pathname.startsWith(`/dashboard/chat/${id}`)) {
+      navigate({ to: '/dashboard/chat' });
+    }
+  };
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>
+        <button
+          className="cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsOpen(true);
+          }}
+        >
+          <X className="size-4" />
+        </button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete conversation?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete this
+            conversation and remove its messages.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsOpen(false);
+            }}
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onDeleteConversation(conversationId);
+            }}
+          >
+            Delete
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
