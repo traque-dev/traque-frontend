@@ -28,7 +28,7 @@ import { dayjs } from '@/lib/dayjs';
 import { chatStore } from '@/store/chat-store';
 
 export const Route = createFileRoute('/_authenticated/dashboard/chat/')({
-  component: ExceptionsChat,
+  component: NewChat,
   loader: async ({ context }) => {
     const { data: activeOrganization, error } =
       await auth.organization.getFullOrganization();
@@ -53,7 +53,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/')({
   },
 });
 
-function ExceptionsChat() {
+function NewChat() {
   const { activeOrganization } = Route.useLoaderData();
 
   const navigate = useNavigate({ from: Route.fullPath });
@@ -131,7 +131,7 @@ function ExceptionsChat() {
 
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline">
                     {from && to
                       ? `${dayjs(from).format('ll')} – ${dayjs(to).format('ll')}`
                       : 'Time range'}

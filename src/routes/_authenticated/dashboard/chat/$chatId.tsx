@@ -41,7 +41,7 @@ const chatSearchParamsSchema = type({
 });
 
 export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
-  component: ExceptionsChat,
+  component: Chat,
   validateSearch: chatSearchParamsSchema,
   staleTime: 0,
   loaderDeps: ({ search }) => ({
@@ -82,7 +82,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
   },
 });
 
-function ExceptionsChat() {
+function Chat() {
   const { chatId } = Route.useParams();
   const { activeOrganization, conversation } = Route.useLoaderData();
   const { projectId, dateFrom, dateTo } = Route.useSearch();
