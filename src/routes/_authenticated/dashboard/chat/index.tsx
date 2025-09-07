@@ -175,8 +175,11 @@ function NewChat() {
                         setFrom(range?.from);
                         setTo(range?.to);
                       }}
-                      numberOfMonths={2}
+                      numberOfMonths={1}
                       showOutsideDays
+                      disabled={{
+                        after: new Date(),
+                      }}
                     />
                   </div>
                 </PopoverContent>
