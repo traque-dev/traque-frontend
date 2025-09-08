@@ -111,7 +111,7 @@ export function OrganizationSwitcher() {
             <DropdownMenuLabel className="text-muted-foreground text-xs">
               Organizations
             </DropdownMenuLabel>
-            {organizations?.map((organization, index) => (
+            {organizations?.map((organization) => (
               <DropdownMenuItem
                 key={organization.id}
                 onClick={async () => {

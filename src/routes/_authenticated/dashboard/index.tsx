@@ -94,7 +94,7 @@ function DashboardNotFound() {
       </div>
       <div>
         <Button asChild className="min-w-56">
-          <Link to="/settings/organizations/new">Create organization</Link>
+          <Link to="/onboarding">Create organization</Link>
         </Button>
       </div>
     </div>
