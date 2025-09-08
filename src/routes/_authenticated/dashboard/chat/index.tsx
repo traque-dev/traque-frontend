@@ -8,6 +8,7 @@ import {
   PromptInputTextarea,
   PromptInputToolbar,
 } from '@/components/ai/prompt-input';
+import { OrganizationProjectGate } from '@/components/organization-project-gate';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -36,7 +37,11 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/')({
     if (error) throw error;
 
     if (!activeOrganization) {
-      throw notFound();
+      throw notFound({
+        data: {
+          type: 'organization',
+        },
+      });
     }
 
     const projects = await context.queryClient.ensureQueryData(
@@ -44,13 +49,18 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/')({
     );
 
     if (projects?.length === 0) {
-      throw notFound();
+      throw notFound({
+        data: {
+          type: 'projects',
+        },
+      });
     }
 
     return {
       activeOrganization,
     };
   },
+  notFoundComponent: OrganizationProjectGate,
 });
 
 function NewChat() {

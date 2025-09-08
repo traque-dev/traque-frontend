@@ -12,6 +12,7 @@ import { useMemo } from 'react';
 import { useProjectEvents } from '@/api/events/hooks';
 import { getProjectsQueryOptions } from '@/api/projects/query-options';
 import { DataTable } from '@/components/data-table';
+import { OrganizationProjectGate } from '@/components/organization-project-gate';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -46,7 +47,11 @@ export const Route = createFileRoute('/_authenticated/dashboard/events')({
     if (error) throw error;
 
     if (!activeOrganization) {
-      throw notFound();
+      throw notFound({
+        data: {
+          type: 'organization',
+        },
+      });
     }
 
     const projects = await context.queryClient.ensureQueryData(
@@ -54,7 +59,11 @@ export const Route = createFileRoute('/_authenticated/dashboard/events')({
     );
 
     if (projects?.length === 0) {
-      throw notFound();
+      throw notFound({
+        data: {
+          type: 'projects',
+        },
+      });
     }
 
     if (!deps.projectId) {
@@ -72,7 +81,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/events')({
     };
   },
   pendingComponent: () => <div>Loading...</div>,
-  notFoundComponent: () => <div>Not found</div>,
+  notFoundComponent: OrganizationProjectGate,
   errorComponent: () => <div>Error</div>,
 });
 

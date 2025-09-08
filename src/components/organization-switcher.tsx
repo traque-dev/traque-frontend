@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
+  // DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -24,7 +24,8 @@ export function OrganizationSwitcher() {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
 
-  const { data: organizations } = auth.useListOrganizations();
+  const { data: organizations, isPending: isPendingOrganizations } =
+    auth.useListOrganizations();
 
   const { data: activeOrganization } = auth.useActiveOrganization();
 
@@ -41,6 +42,33 @@ export function OrganizationSwitcher() {
       to: '/dashboard',
     });
   };
+
+  if (!isPendingOrganizations && organizations?.length === 0) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            size="lg"
+            className="group h-auto items-center gap-3 rounded-lg border border-dashed p-3 text-left hover:border-primary"
+            tooltip="Create organization"
+            aria-label="Create organization"
+            onClick={() =>
+              navigate({
+                to: '/onboarding',
+              })
+            }
+          >
+            <div className="bg-sidebar-accent text-sidebar-accent-foreground/80 flex size-8 items-center justify-center rounded-md">
+              <Plus className="size-4" />
+            </div>
+            <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+              <span className="truncate font-medium">Create organization</span>
+            </div>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    );
+  }
 
   return (
     <SidebarMenu>
@@ -96,11 +124,18 @@ export function OrganizationSwitcher() {
                   <AvatarFallback>{organization.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 {organization.name}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                {/* <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut> */}
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
+            <DropdownMenuItem
+              className="gap-2 p-2"
+              onClick={() =>
+                navigate({
+                  to: '/onboarding',
+                })
+              }
+            >
               <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                 <Plus className="size-4" />
               </div>

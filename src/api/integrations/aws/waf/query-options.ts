@@ -20,6 +20,7 @@ export const getAwsWafCredentialsQueryOptions = (
       ? () => getAwsWafCredentials(organizationId)
       : skipToken,
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
 export const setAwsWafCredentialsMutationOptions = (

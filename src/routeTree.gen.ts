@@ -15,7 +15,11 @@ import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-passw
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthSignupIndexRouteImport } from './routes/auth/signup/index'
+import { Route as AuthenticatedOnboardingIndexRouteImport } from './routes/_authenticated/onboarding/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
+import { Route as AuthSignupVerifyEmailRouteImport } from './routes/auth/signup/verify-email'
+import { Route as AuthSignupSuccessRouteImport } from './routes/auth/signup/success'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedDashboardProjectsRouteImport } from './routes/_authenticated/dashboard/projects'
 import { Route as AuthenticatedDashboardProfileRouteImport } from './routes/_authenticated/dashboard/profile'
@@ -59,12 +63,33 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthSignupIndexRoute = AuthSignupIndexRouteImport.update({
+  id: '/auth/signup/',
+  path: '/auth/signup/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedOnboardingIndexRoute =
+  AuthenticatedOnboardingIndexRouteImport.update({
+    id: '/onboarding/',
+    path: '/onboarding/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/',
     path: '/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthSignupVerifyEmailRoute = AuthSignupVerifyEmailRouteImport.update({
+  id: '/auth/signup/verify-email',
+  path: '/auth/signup/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupSuccessRoute = AuthSignupSuccessRouteImport.update({
+  id: '/auth/signup/success',
+  path: '/auth/signup/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedSettingsAccountRoute =
   AuthenticatedSettingsAccountRouteImport.update({
     id: '/settings/account',
@@ -157,7 +182,11 @@ export interface FileRoutesByFullPath {
   '/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
+  '/auth/signup/success': typeof AuthSignupSuccessRoute
+  '/auth/signup/verify-email': typeof AuthSignupVerifyEmailRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/onboarding': typeof AuthenticatedOnboardingIndexRoute
+  '/auth/signup': typeof AuthSignupIndexRoute
   '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
@@ -177,7 +206,11 @@ export interface FileRoutesByTo {
   '/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
+  '/auth/signup/success': typeof AuthSignupSuccessRoute
+  '/auth/signup/verify-email': typeof AuthSignupVerifyEmailRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/onboarding': typeof AuthenticatedOnboardingIndexRoute
+  '/auth/signup': typeof AuthSignupIndexRoute
   '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
@@ -200,7 +233,11 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/_authenticated/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
+  '/auth/signup/success': typeof AuthSignupSuccessRoute
+  '/auth/signup/verify-email': typeof AuthSignupVerifyEmailRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/onboarding/': typeof AuthenticatedOnboardingIndexRoute
+  '/auth/signup/': typeof AuthSignupIndexRoute
   '/_authenticated/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/_authenticated/dashboard/chat/': typeof AuthenticatedDashboardChatIndexRoute
   '/_authenticated/dashboard/projects_/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
@@ -223,7 +260,11 @@ export interface FileRouteTypes {
     | '/dashboard/profile'
     | '/dashboard/projects'
     | '/settings/account'
+    | '/auth/signup/success'
+    | '/auth/signup/verify-email'
     | '/dashboard/'
+    | '/onboarding'
+    | '/auth/signup'
     | '/dashboard/chat/$chatId'
     | '/dashboard/chat'
     | '/dashboard/projects/$projectId/settings'
@@ -243,7 +284,11 @@ export interface FileRouteTypes {
     | '/dashboard/profile'
     | '/dashboard/projects'
     | '/settings/account'
+    | '/auth/signup/success'
+    | '/auth/signup/verify-email'
     | '/dashboard'
+    | '/onboarding'
+    | '/auth/signup'
     | '/dashboard/chat/$chatId'
     | '/dashboard/chat'
     | '/dashboard/projects/$projectId/settings'
@@ -265,7 +310,11 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/profile'
     | '/_authenticated/dashboard/projects'
     | '/_authenticated/settings/account'
+    | '/auth/signup/success'
+    | '/auth/signup/verify-email'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/onboarding/'
+    | '/auth/signup/'
     | '/_authenticated/dashboard/chat/$chatId'
     | '/_authenticated/dashboard/chat/'
     | '/_authenticated/dashboard/projects_/$projectId/settings'
@@ -280,6 +329,9 @@ export interface RootRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
+  AuthSignupSuccessRoute: typeof AuthSignupSuccessRoute
+  AuthSignupVerifyEmailRoute: typeof AuthSignupVerifyEmailRoute
+  AuthSignupIndexRoute: typeof AuthSignupIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -326,12 +378,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/auth/signup/': {
+      id: '/auth/signup/'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/onboarding/': {
+      id: '/_authenticated/onboarding/'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthenticatedOnboardingIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/auth/signup/verify-email': {
+      id: '/auth/signup/verify-email'
+      path: '/auth/signup/verify-email'
+      fullPath: '/auth/signup/verify-email'
+      preLoaderRoute: typeof AuthSignupVerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup/success': {
+      id: '/auth/signup/success'
+      path: '/auth/signup/success'
+      fullPath: '/auth/signup/success'
+      preLoaderRoute: typeof AuthSignupSuccessRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/settings/account': {
       id: '/_authenticated/settings/account'
@@ -475,11 +555,13 @@ const AuthenticatedDashboardRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
   AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
+  AuthenticatedOnboardingIndexRoute: typeof AuthenticatedOnboardingIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
   AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
+  AuthenticatedOnboardingIndexRoute: AuthenticatedOnboardingIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -492,6 +574,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
+  AuthSignupSuccessRoute: AuthSignupSuccessRoute,
+  AuthSignupVerifyEmailRoute: AuthSignupVerifyEmailRoute,
+  AuthSignupIndexRoute: AuthSignupIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

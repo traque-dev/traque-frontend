@@ -22,6 +22,7 @@ import { getProjectsQueryOptions } from '@/api/projects/query-options';
 import { DataTable } from '@/components/data-table';
 import { IssueSeverityBadge } from '@/components/issue-severity-badge';
 import { IssueStatusBadge } from '@/components/issue-status-badge';
+import { OrganizationProjectGate } from '@/components/organization-project-gate';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -75,7 +76,11 @@ export const Route = createFileRoute('/_authenticated/dashboard/issues')({
     if (error) throw error;
 
     if (!activeOrganization) {
-      throw notFound();
+      throw notFound({
+        data: {
+          type: 'organization',
+        },
+      });
     }
 
     const projects = await context.queryClient.ensureQueryData(
@@ -83,7 +88,11 @@ export const Route = createFileRoute('/_authenticated/dashboard/issues')({
     );
 
     if (projects?.length === 0) {
-      throw notFound();
+      throw notFound({
+        data: {
+          type: 'projects',
+        },
+      });
     }
 
     if (!deps.projectId) {
@@ -101,7 +110,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/issues')({
     };
   },
   pendingComponent: () => <div>Loading...</div>,
-  notFoundComponent: () => <div>Not found</div>,
+  notFoundComponent: OrganizationProjectGate,
   errorComponent: () => <div>Error</div>,
 });
 

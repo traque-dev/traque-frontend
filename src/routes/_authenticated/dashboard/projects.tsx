@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
+
 import { getProjects } from '@/api/projects';
 import { WidgetAddLinear } from '@/components/icons';
+import { OrganizationProjectGate } from '@/components/organization-project-gate';
 import { ProjectCard } from '@/components/project-card';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,25 +15,37 @@ import {
 import { auth } from '@/lib/auth';
 
 export const Route = createFileRoute('/_authenticated/dashboard/projects')({
-  component: RouteComponent,
+  component: Projects,
   loader: async () => {
     const { data: activeOrganization } =
       await auth.organization.getFullOrganization();
 
     if (!activeOrganization) {
-      throw notFound();
+      throw notFound({
+        data: {
+          type: 'organization',
+        },
+      });
     }
 
     const projects = await getProjects(activeOrganization.id);
 
+    if (projects.length === 0) {
+      throw notFound({
+        data: {
+          type: 'projects',
+        },
+      });
+    }
+
     return {
-      title: 'Projects',
       projects,
     };
   },
+  notFoundComponent: OrganizationProjectGate,
 });
 
-function RouteComponent() {
+function Projects() {
   const { projects } = Route.useLoaderData();
 
   return (
