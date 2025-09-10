@@ -6,6 +6,7 @@ import { DefaultChatTransport } from 'ai';
 import { type } from 'arktype';
 import { useEffect, useRef, useState } from 'react';
 import { getConversation } from '@/api/ai';
+import { getProjectByIdQueryOptions } from '@/api/projects/query-options';
 import {
   Conversation,
   ConversationContent,
@@ -25,8 +26,10 @@ import {
   ReasoningTrigger,
 } from '@/components/ai/reasoning';
 import { Response } from '@/components/ai/response';
+import { ProjectExceptionsChart } from '@/components/project-exceptions-chart';
 import { config } from '@/config';
 import { auth } from '@/lib/auth';
+import { exceptionDailyStatisticSchema } from '@/schemas/exception';
 import { chatStore } from '@/store/chat-store';
 
 const chatParamsSchema = type({
@@ -46,11 +49,12 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
   staleTime: 0,
   loaderDeps: ({ search }) => ({
     new: search.new,
+    projectId: search.projectId,
   }),
   remountDeps: ({ params }) => ({
     chatId: params.chatId,
   }),
-  loader: async ({ params, deps }) => {
+  loader: async ({ params, deps, context }) => {
     chatParamsSchema.assert(params);
 
     const { data: activeOrganization, error } =
@@ -72,9 +76,24 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
       } catch (error) {}
     }
 
+    const projectId = conversation?.projectId ?? deps?.projectId;
+
+    if (!projectId) {
+      throw notFound({
+        data: {
+          type: 'project',
+        },
+      });
+    }
+
+    const project = await context.queryClient.ensureQueryData(
+      getProjectByIdQueryOptions(activeOrganization.id, projectId),
+    );
+
     return {
       activeOrganization,
       conversation,
+      project,
     };
   },
   errorComponent: ({ error }) => {
@@ -84,8 +103,8 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
 
 function Chat() {
   const { chatId } = Route.useParams();
-  const { activeOrganization, conversation } = Route.useLoaderData();
-  const { projectId, dateFrom, dateTo } = Route.useSearch();
+  const { activeOrganization, conversation, project } = Route.useLoaderData();
+  const { dateFrom, dateTo } = Route.useSearch();
 
   const queryClient = useQueryClient();
 
@@ -98,13 +117,13 @@ function Chat() {
   const { sendMessage, status, messages } = useChat({
     messages: conversation?.messages ?? [],
     transport: new DefaultChatTransport({
-      api: `${config.api.url}/api/v1/ai/agents/${projectId ?? conversation?.projectId}/chat?organizationId=${activeOrganization.id}`,
+      api: `${config.api.url}/api/v1/ai/agents/${project.id}/chat?organizationId=${activeOrganization.id}`,
       credentials: () => 'include',
       body: () => ({
         threadMetadata: {
           id: chatId,
         },
-        projectId,
+        projectId: project.id,
         dateFrom,
         dateTo,
       }),
@@ -172,6 +191,25 @@ function Chat() {
                                 <ReasoningTrigger />
                                 <ReasoningContent>{part.text}</ReasoningContent>
                               </Reasoning>
+                            );
+                          case 'tool-getExceptionStatistic':
+                            if (part.state !== 'output-available') return null;
+                            const data = exceptionDailyStatisticSchema(
+                              part.output,
+                            );
+
+                            if (data instanceof type.errors) {
+                              return (
+                                <div className="text-red-400">
+                                  Error parsing data
+                                </div>
+                              );
+                            }
+
+                            return (
+                              <div className="w-xl">
+                                <ProjectExceptionsChart data={data} />
+                              </div>
                             );
                           default:
                             return null;

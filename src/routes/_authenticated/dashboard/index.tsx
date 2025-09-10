@@ -4,7 +4,7 @@ import { BoxMinimalisticLinear } from '@/components/icons/box-minimalistic-linea
 import { ChartSquareLinear } from '@/components/icons/chart-square-linear';
 import { UserRoundedLinear } from '@/components/icons/user-rounded-linear';
 import { WidgetAddLinear } from '@/components/icons/widget-add-linear';
-import { ProjectExceptionsChart } from '@/components/project-exceptions-chart';
+import { ProjectExceptionsChartCard } from '@/components/project-exceptions-chart-card';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/lib/auth';
 
@@ -37,7 +37,7 @@ function DashboardPage() {
   return (
     <div className="grid auto-rows-min @2xl:grid-cols-2 *:-ms-px *:-mt-px -m-px">
       {projects.map((project) => (
-        <ProjectExceptionsChart
+        <ProjectExceptionsChartCard
           key={project.id}
           organizationId={activeOrganization.id}
           project={project}
