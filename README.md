@@ -39,6 +39,20 @@ bun run dev
 npm run dev
 ```
 
+### AI chat (Vercel AI SDK) and tool results
+
+We use the Vercel AI SDK (`@ai-sdk/react` + `ai`) to stream chat responses and tool calls. The chat UI lives in `src/routes/_authenticated/dashboard/chat/$chatId.tsx` and uses `useChat` with `DefaultChatTransport` to connect to the backend:
+
+- **Transport**: streams from `POST ${VITE_API_URL}/api/v1/ai/agents/:projectId/chat`, sending `threadMetadata.id` (the chat id) plus optional filters (`dateFrom`, `dateTo`).
+- **Parts rendering**: each message arrives as parts. We render:
+  - **text** via a `Streamdown`-powered `Response` component
+  - **reasoning** in a collapsible panel
+  - **tool-…** parts with custom UI per tool
+
+- **Tool states**: tools stream through states (`input-streaming` → `input-available` → `output-available` or `output-error`). We expose a generic tool UI in `src/components/ai/tool.tsx` (status badges, params JSON, result/error panel) and add bespoke renderers for productized tools like `getExceptionStatistic` (chart above).
+
+To add a new tool renderer, add a new `case 'tool-yourToolName'` in the switch and return the appropriate component. For generic debugging, use the `Tool`, `ToolInput`, and `ToolOutput` components.
+
 ### Scripts
 
 - `dev`: start Vite dev server (port 5000)
