@@ -29,12 +29,15 @@ function SignUpSuccessPage() {
         </CardHeader>
         <CardContent className="space-y-3">
           <Button asChild className="w-full">
-            <Link to="/auth/login">Login</Link>
+            <Link
+              to="/auth/login"
+              search={{
+                redirect: '/onboarding',
+              }}
+            >
+              Login
+            </Link>
           </Button>
-
-          {/* <Button asChild variant="outline" className="w-full">
-            <Link to="/dashboard/profile">Check invitations</Link>
-          </Button> */}
         </CardContent>
       </Card>
     </div>

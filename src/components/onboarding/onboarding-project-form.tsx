@@ -1,23 +1,30 @@
 import { motion } from 'motion/react';
 import { useState } from 'react';
+import { useCreateProject } from '@/api/projects/hooks';
+import { NestjsLogo } from '@/components/icons/nestjs-logo';
+import { NodejsLogo } from '@/components/icons/nodejs-logo';
+import { ReactLogo } from '@/components/icons/react-logo';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { auth } from '@/lib/auth';
 import { Platform } from '@/types/platform';
-import { NestjsLogo } from './icons/nestjs-logo';
-import { NodejsLogo } from './icons/nodejs-logo';
-import { ReactLogo } from './icons/react-logo';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
 
 type Props = {
   onStepChange: (step: number) => void;
 };
 
 export function NewProjectForm({ onStepChange }: Props) {
-  const [projectName, setProjectName] = useState('');
-  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
-    null,
-  );
-  const [projectCreating, setProjectCreating] = useState(false);
+  const { data: organization, isPending: isPendingOrganization } =
+    auth.useActiveOrganization();
+
+  const [name, setName] = useState('');
+  const [platform, setPlatform] = useState<Platform | null>(null);
+
+  const { mutate: createProject, isPending: isCreatingProject } =
+    useCreateProject(organization?.id);
+
+  const isPending = isPendingOrganization || isCreatingProject;
 
   return (
     <motion.form
@@ -44,8 +51,8 @@ export function NewProjectForm({ onStepChange }: Props) {
         <Input
           id="project-name"
           placeholder="Web App"
-          value={projectName}
-          onChange={(e) => setProjectName(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
 
@@ -77,12 +84,12 @@ export function NewProjectForm({ onStepChange }: Props) {
               Logo: NestjsLogo,
             },
           ].map(({ key, name, Logo }) => {
-            const selected = selectedPlatform === key;
+            const selected = platform === key;
             return (
               <button
                 key={key}
                 type="button"
-                onClick={() => setSelectedPlatform(key)}
+                onClick={() => setPlatform(key)}
                 style={{
                   cursor: 'pointer',
                   borderRadius: 12,
@@ -114,17 +121,25 @@ export function NewProjectForm({ onStepChange }: Props) {
       >
         <Button
           type="button"
-          disabled={!projectName || !selectedPlatform || projectCreating}
+          disabled={!name || !platform || isPending}
           onClick={() => {
-            setProjectCreating(true);
-            setTimeout(() => {
-              setProjectCreating(false);
-              onStepChange(3);
-            }, 1000);
+            if (!platform) return;
+
+            createProject(
+              {
+                name,
+                platform,
+              },
+              {
+                onSuccess: () => {
+                  onStepChange(3);
+                },
+              },
+            );
           }}
           style={{ paddingLeft: 16, paddingRight: 16 }}
         >
-          {projectCreating ? 'Creating…' : 'Create project'}
+          {isCreatingProject ? 'Creating…' : 'Create project'}
         </Button>
       </div>
     </motion.form>

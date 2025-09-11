@@ -5,8 +5,8 @@ import { opacify } from 'polished';
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 import { BlurredSpheresBackground } from '@/components/blurred-spheres-background';
 import { ConfettiMinimalisticLinear } from '@/components/icons/confetti-minimalistic-linear';
-import { NewOrganizationForm } from '@/components/onboarding-organization-form';
-import { NewProjectForm } from '@/components/onboarding-project-form';
+import { NewOrganizationForm } from '@/components/onboarding/onboarding-organization-form';
+import { NewProjectForm } from '@/components/onboarding/onboarding-project-form';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/_authenticated/onboarding/')({

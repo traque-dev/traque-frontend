@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type { Organization } from '@/types/organization';
 import type { Project } from '@/types/project';
+import { createProject } from '.';
 import {
   getProjectByIdQueryOptions,
   getProjectsQueryOptions,
@@ -15,4 +16,10 @@ export const useProjectById = (
   projectId: Project['id'],
 ) => {
   return useQuery(getProjectByIdQueryOptions(organizationId, projectId));
+};
+
+export const useCreateProject = (organizationId: Organization['id']) => {
+  return useMutation({
+    mutationFn: (project: Project) => createProject(organizationId, project),
+  });
 };

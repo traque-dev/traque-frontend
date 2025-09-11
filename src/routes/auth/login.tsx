@@ -1,11 +1,6 @@
 import { revalidateLogic, useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
-import {
-  createFileRoute,
-  Link,
-  redirect,
-  useNavigate,
-} from '@tanstack/react-router';
+import { createFileRoute, Link, redirect } from '@tanstack/react-router';
 import { type } from 'arktype';
 import { useState } from 'react';
 import { GoogleIcon } from '@/components/icons/google-icon';
@@ -22,16 +17,25 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { auth } from '@/lib/auth';
 
+const loginSearchParamsSchema = type({
+  'redirect?': '"/onboarding"',
+});
+
 export const Route = createFileRoute('/auth/login')({
+  validateSearch: loginSearchParamsSchema,
   component: LoginPage,
-  loader: async ({ context }) => {
+  loaderDeps: ({ search }) => ({
+    redirect: search.redirect,
+  }),
+  loader: async ({ context, deps }) => {
     const session = context.session;
 
     if (session) {
-      throw redirect({ to: '/dashboard' });
+      throw redirect({ to: deps.redirect || '/dashboard' });
     }
   },
   pendingComponent: () => null,
+  errorComponent: () => null,
 });
 
 const loginSchema = type({
@@ -46,8 +50,6 @@ const loginSchema = type({
 type LoginFormValues = typeof loginSchema.infer;
 
 function LoginPage() {
-  const navigate = useNavigate();
-
   const [formError, setFormError] = useState<string | null>(null);
 
   const emailPasswordMutation = useMutation({
@@ -55,13 +57,9 @@ function LoginPage() {
       const { data, error } = await auth.signIn.email({
         email: values.email,
         password: values.password,
-        callbackURL: `${window.location.origin}/dashboard`,
       });
       if (error) throw new Error(error.message ?? 'Unable to sign in');
       return data;
-    },
-    onSuccess: () => {
-      navigate({ to: '/dashboard' });
     },
     onError: (err: unknown) => {
       setFormError(err instanceof Error ? err.message : 'Unable to sign in');
