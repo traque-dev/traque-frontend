@@ -432,6 +432,13 @@ function IssuePage() {
                   emptyText="No exceptions yet"
                   pageDataMeta={latestExceptions?.meta}
                   className="mt-2 [&>div]:border-none"
+                  onRowClick={(row) => {
+                    router.navigate({
+                      to: '/dashboard/issues/$issueId/exceptions/$exceptionId',
+                      params: { issueId, exceptionId: row.id! },
+                      search: { projectId },
+                    });
+                  }}
                 />
               </div>
             </div>
