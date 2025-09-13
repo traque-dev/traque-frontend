@@ -3,11 +3,9 @@ import { createFileRoute, notFound, useNavigate } from '@tanstack/react-router';
 import type { ColumnDef } from '@tanstack/react-table';
 import { type } from 'arktype';
 import { Eye } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { getExceptionsQueryOptions } from '@/api/exceptions/query-options';
 import { DataTable } from '@/components/data-table';
-import { ExceptionDetailsDialog } from '@/components/exceptions-details-dialog';
-// import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
@@ -82,19 +80,6 @@ function ExceptionsPage() {
 
   const totalPages = exceptionsPage?.meta.totalPages ?? 1;
 
-  const [selectedExceptionId, setSelectedExceptionId] = useState<string>();
-  const [detailsOpen, setDetailsOpen] = useState(false);
-
-  const openDetails = (exceptionId: string) => {
-    setSelectedExceptionId(exceptionId);
-    setDetailsOpen(true);
-  };
-
-  const closeDetails = () => {
-    setDetailsOpen(false);
-    setSelectedExceptionId(undefined);
-  };
-
   const columns = useMemo<ColumnDef<Exception>[]>(
     () => [
       {
@@ -164,7 +149,18 @@ function ExceptionsPage() {
             className="size-6"
             onClick={(e) => {
               e.stopPropagation();
-              if (row.original.id) openDetails(row.original.id);
+              if (row.original.id) {
+                navigate({
+                  to: '/dashboard/issues/$issueId/exceptions/$exceptionId',
+                  params: {
+                    issueId,
+                    exceptionId: row.original.id,
+                  },
+                  search: {
+                    projectId,
+                  },
+                });
+              }
             }}
             aria-label="View details"
           >
@@ -190,7 +186,19 @@ function ExceptionsPage() {
         data={exceptionsPage?.items ?? []}
         isLoading={isLoading}
         emptyText="No exceptions found."
-        onRowClick={(row) => row.id && openDetails(row.id)}
+        onRowClick={(row) =>
+          row.id &&
+          navigate({
+            to: '/dashboard/issues/$issueId/exceptions/$exceptionId',
+            params: {
+              issueId,
+              exceptionId: row.id,
+            },
+            search: {
+              projectId,
+            },
+          })
+        }
         pagination={{
           page,
           size,
@@ -213,16 +221,6 @@ function ExceptionsPage() {
           pageSizeOptions: [10, 20, 50],
         }}
         pageDataMeta={exceptionsPage?.meta}
-      />
-
-      <ExceptionDetailsDialog
-        open={detailsOpen}
-        onOpenChange={(open) => {
-          if (!open) closeDetails();
-        }}
-        organizationId={activeOrganization.id}
-        projectId={projectId}
-        exceptionId={selectedExceptionId}
       />
     </div>
   );

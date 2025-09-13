@@ -18,6 +18,24 @@ export type HttpContext = Base & {
   statusCode?: number;
   status?: string;
   clientIp?: string;
+  response?: Record<string, unknown>;
+};
+
+export type StacktraceFrame = {
+  frameIndex?: number;
+  filename?: string;
+  functionName?: string;
+  lineNumber?: number;
+  columnNumber?: number;
+  absolutePath?: string;
+  module?: string;
+  inApp?: boolean;
+  platform?: string;
+};
+
+export type Stacktrace = {
+  stack?: string;
+  frames?: StacktraceFrame[];
 };
 
 export type Exception = Base & {
@@ -28,6 +46,7 @@ export type Exception = Base & {
   details?: string;
   suggestion?: string;
   httpContext?: HttpContext;
+  stacktrace?: Stacktrace;
 };
 
 export type ExceptionDailyStatistic = {
