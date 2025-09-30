@@ -1,6 +1,12 @@
 import { Link, useLocation } from '@tanstack/react-router';
 import type { SVGProps } from 'react';
+import { ChatsSidebarItem } from '@/components/chats-sidebar-item';
+import { ChartSquareLinear, UserRoundedLinear } from '@/components/icons';
+import { BuildingsLinear } from '@/components/icons/buildings-linear';
+import { CardLinear } from '@/components/icons/card-linear';
 import { NavUser } from '@/components/nav-user';
+import { OrganizationSwitcher } from '@/components/organization/organization-switcher';
+import { Button } from '@/components/ui/button';
 import {
   Sidebar,
   SidebarContent,
@@ -13,16 +19,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { ChatsSidebarItem } from './chats-sidebar-item';
-import {
-  BoxMinimalisticLinear,
-  ChartSquareLinear,
-  CodeLinear,
-  DangerLinear,
-  WidgetAddLinear,
-} from './icons';
-import { ChatRoundLineLinear } from './icons/chat-round-line-linear';
-import { OrganizationSwitcher } from './organization-switcher';
+import { config } from '@/config';
 
 type SidebarItem = {
   key?: string;
@@ -34,50 +31,39 @@ type SidebarItem = {
 const data = {
   navMain: [
     {
-      title: 'General',
+      title: 'Account',
       items: [
         {
-          key: 'dashboard',
-          title: 'Dashboard',
-          url: '/dashboard',
-          icon: ChartSquareLinear,
-        },
-        {
-          key: 'projects',
-          title: 'Projects',
-          url: '/dashboard/projects',
-          icon: BoxMinimalisticLinear,
-        },
-        {
-          key: 'issues',
-          title: 'Issues',
-          url: '/dashboard/issues',
-          icon: DangerLinear,
-        },
-        {
-          key: 'events',
-          title: 'Events',
-          url: '/dashboard/events',
-          icon: CodeLinear,
-        },
-        {
-          key: 'chat',
-          title: 'Chat',
-          url: '/dashboard/chat',
-          icon: ChatRoundLineLinear,
-        },
-        {
-          key: 'integrations',
-          title: 'Integrations',
-          url: '/dashboard/integrations',
-          icon: WidgetAddLinear,
+          key: 'profile',
+          title: 'Profile',
+          url: '/settings/profile',
+          icon: UserRoundedLinear,
         },
       ],
+    },
+    {
+      title: 'Organization',
+      items: [
+        {
+          key: 'organization',
+          title: 'Organization',
+          url: '/settings/organization',
+          icon: BuildingsLinear,
+        },
+        config.deployment.isTraqueCloud && {
+          key: 'billing',
+          title: 'Billing',
+          url: '/settings/organization/billing',
+          icon: CardLinear,
+        },
+      ].filter(Boolean),
     },
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function SettingsSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   const location = useLocation();
 
   return (
@@ -135,6 +121,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ))}
       </SidebarContent>
       <SidebarFooter>
+        <Link to="/dashboard">
+          <Button variant="secondary" size="sm" className="w-full">
+            <ChartSquareLinear />
+            Back to dashboard
+          </Button>
+        </Link>
         <NavUser />
       </SidebarFooter>
     </Sidebar>

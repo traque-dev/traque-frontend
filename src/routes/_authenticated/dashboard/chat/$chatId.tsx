@@ -28,7 +28,6 @@ import {
 import { Response } from '@/components/ai/response';
 import { ProjectExceptionsChart } from '@/components/project-exceptions-chart';
 import { config } from '@/config';
-import { auth } from '@/lib/auth';
 import { exceptionDailyStatisticSchema } from '@/schemas/exception';
 import { chatStore } from '@/store/chat-store';
 
@@ -57,10 +56,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/$chatId')({
   loader: async ({ params, deps, context }) => {
     chatParamsSchema.assert(params);
 
-    const { data: activeOrganization, error } =
-      await auth.organization.getFullOrganization();
-
-    if (error) throw error;
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound();

@@ -24,17 +24,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { issuesDatePresetRanges } from '@/constants/issues-date-preset-ranges';
-import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
+import { verifyPlanAccess } from '@/lib/plan';
 import { chatStore } from '@/store/chat-store';
 
 export const Route = createFileRoute('/_authenticated/dashboard/chat/')({
   component: NewChat,
   loader: async ({ context }) => {
-    const { data: activeOrganization, error } =
-      await auth.organization.getFullOrganization();
-
-    if (error) throw error;
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound({
@@ -43,6 +40,10 @@ export const Route = createFileRoute('/_authenticated/dashboard/chat/')({
         },
       });
     }
+
+    await verifyPlanAccess('plus')({
+      activeOrganization,
+    });
 
     const projects = await context.queryClient.ensureQueryData(
       getProjectsQueryOptions(activeOrganization.id),

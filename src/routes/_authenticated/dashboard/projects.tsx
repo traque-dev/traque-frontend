@@ -12,13 +12,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { auth } from '@/lib/auth';
 
 export const Route = createFileRoute('/_authenticated/dashboard/projects')({
   component: Projects,
-  loader: async () => {
-    const { data: activeOrganization } =
-      await auth.organization.getFullOrganization();
+  loader: async ({ context }) => {
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound({
@@ -58,7 +56,7 @@ function Projects() {
           </p>
         </div>
         <Button asChild>
-          <Link to="/dashboard/projects" search={{ create: true }}>
+          <Link to="/dashboard/projects/new">
             <WidgetAddLinear className="size-4" /> Create project
           </Link>
         </Button>
@@ -83,7 +81,7 @@ function Projects() {
           </CardHeader>
           <CardContent>
             <Button asChild>
-              <Link to="/dashboard/projects" search={{ create: true }}>
+              <Link to="/dashboard/projects/new">
                 <WidgetAddLinear className="size-4" /> Create project
               </Link>
             </Button>

@@ -22,7 +22,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
 import type { Event } from '@/types/event';
 import type { Pageable } from '@/types/pageable';
@@ -41,10 +40,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/events')({
     projectId: search.projectId,
   }),
   loader: async ({ context, deps }) => {
-    const { data: activeOrganization, error } =
-      await auth.organization.getFullOrganization();
-
-    if (error) throw error;
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound({

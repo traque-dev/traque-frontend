@@ -1,19 +1,7 @@
-import {
-  createFileRoute,
-  Outlet,
-  // useRouterState,
-} from '@tanstack/react-router';
-// import { Fragment } from 'react';
-import { AppSidebar } from '@/components/app-sidebar';
+import { createFileRoute, Link, Outlet } from '@tanstack/react-router';
+import { SettingsLinear } from '@/components/icons';
+import { AppSidebar } from '@/components/sidebar/app-sidebar';
 import { Button } from '@/components/ui/button';
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbSeparator,
-// } from '@/components/ui/breadcrumb';
-// import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
@@ -27,17 +15,6 @@ export const Route = createFileRoute('/_authenticated/dashboard')({
 });
 
 function Dashboard() {
-  // const { matches } = useRouterState();
-
-  // const breadcrumbs = matches
-  //   .filter((match) => match.loaderData?.title)
-  //   .map(({ pathname, loaderData }) => {
-  //     return {
-  //       title: loaderData?.title,
-  //       path: pathname,
-  //     };
-  //   });
-
   useAwsWafClient();
 
   return (
@@ -71,12 +48,20 @@ function Dashboard() {
                       ))}
                     </BreadcrumbList>
                   </Breadcrumb> */}
-                  <a
-                    href="https://www.traque.dev/docs/introduction"
-                    target="_blank"
-                  >
-                    <Button variant="ghost">Docs</Button>
-                  </a>
+
+                  <div className="flex items-center gap-1">
+                    <a
+                      href="https://www.traque.dev/docs/introduction"
+                      target="_blank"
+                    >
+                      <Button variant="ghost">Docs</Button>
+                    </a>
+                    <Link to="/settings/profile">
+                      <Button variant="ghost" size="icon">
+                        <SettingsLinear />
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </header>

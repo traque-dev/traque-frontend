@@ -40,7 +40,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
-import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
 import type { Exception } from '@/types/exception';
 import { IssueSeverity } from '@/types/issue-severity';
@@ -59,11 +58,7 @@ export const Route = createFileRoute(
     projectId: search.projectId,
   }),
   loader: async ({ context, params, deps }) => {
-    // TODO: move active organization to context
-    const { data: activeOrganization, error } =
-      await auth.organization.getFullOrganization();
-
-    if (error) throw error;
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound();

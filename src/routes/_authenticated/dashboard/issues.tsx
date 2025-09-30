@@ -47,7 +47,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { issuesDatePresetRanges } from '@/constants/issues-date-preset-ranges';
-import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
 import { EventEnvironment } from '@/types/event-environment';
 import type { Issue } from '@/types/issue';
@@ -70,10 +69,7 @@ export const Route = createFileRoute('/_authenticated/dashboard/issues')({
     projectId: search.projectId,
   }),
   loader: async ({ context, deps }) => {
-    const { data: activeOrganization, error } =
-      await auth.organization.getFullOrganization();
-
-    if (error) throw error;
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound({

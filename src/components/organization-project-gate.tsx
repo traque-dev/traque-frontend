@@ -4,11 +4,12 @@ import { BoxMinimalisticLinear, WidgetAddLinear } from './icons';
 import { Button } from './ui/button';
 
 const organizationProjectGateDataSchema = type({
-  type: type('"organization" | "projects"').default('organization'),
+  type: type('"organization" | "projects"'),
 });
 
-export function OrganizationProjectGate(props: NotFoundRouteProps) {
-  const { type } = organizationProjectGateDataSchema.assert(props.data);
+export function OrganizationProjectGate({ data }: NotFoundRouteProps) {
+  //@ts-expect-error data is unknown
+  const { type } = organizationProjectGateDataSchema.assert(data.data);
 
   if (type === 'organization') {
     return (
@@ -80,7 +81,7 @@ export function OrganizationProjectGate(props: NotFoundRouteProps) {
       </div>
       <div>
         <Button asChild className="min-w-56">
-          <Link to="/dashboard/projects" search={{ create: true }}>
+          <Link to="/dashboard/projects/new">
             <WidgetAddLinear className="size-4" /> Create project
           </Link>
         </Button>

@@ -14,20 +14,27 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthSignupIndexRouteImport } from './routes/auth/signup/index'
+import { Route as AuthenticatedPlusIndexRouteImport } from './routes/_authenticated/plus/index'
 import { Route as AuthenticatedOnboardingIndexRouteImport } from './routes/_authenticated/onboarding/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthSignupVerifyEmailRouteImport } from './routes/auth/signup/verify-email'
 import { Route as AuthSignupSuccessRouteImport } from './routes/auth/signup/success'
+import { Route as AuthenticatedSettingsProfileRouteImport } from './routes/_authenticated/settings/profile'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
+import { Route as AuthenticatedPlusSuccessRouteImport } from './routes/_authenticated/plus/success'
 import { Route as AuthenticatedDashboardProjectsRouteImport } from './routes/_authenticated/dashboard/projects'
 import { Route as AuthenticatedDashboardProfileRouteImport } from './routes/_authenticated/dashboard/profile'
 import { Route as AuthenticatedDashboardIssuesRouteImport } from './routes/_authenticated/dashboard/issues'
 import { Route as AuthenticatedDashboardIntegrationsRouteImport } from './routes/_authenticated/dashboard/integrations'
 import { Route as AuthenticatedDashboardExceptionsRouteImport } from './routes/_authenticated/dashboard/exceptions'
 import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_authenticated/dashboard/events'
+import { Route as AuthenticatedSettingsOrganizationIndexRouteImport } from './routes/_authenticated/settings/organization/index'
 import { Route as AuthenticatedDashboardChatIndexRouteImport } from './routes/_authenticated/dashboard/chat/index'
+import { Route as AuthenticatedSettingsOrganizationBillingRouteImport } from './routes/_authenticated/settings/organization/billing'
+import { Route as AuthenticatedDashboardProjectsNewRouteImport } from './routes/_authenticated/dashboard/projects_/new'
 import { Route as AuthenticatedDashboardChatChatIdRouteImport } from './routes/_authenticated/dashboard/chat/$chatId'
 import { Route as AuthenticatedDashboardIssuesIssueIdIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/index'
 import { Route as AuthenticatedDashboardProjectsProjectIdSettingsRouteImport } from './routes/_authenticated/dashboard/projects_/$projectId/settings'
@@ -59,6 +66,11 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   path: '/auth/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -68,6 +80,11 @@ const AuthSignupIndexRoute = AuthSignupIndexRouteImport.update({
   id: '/auth/signup/',
   path: '/auth/signup/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedPlusIndexRoute = AuthenticatedPlusIndexRouteImport.update({
+  id: '/plus/',
+  path: '/plus/',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedOnboardingIndexRoute =
   AuthenticatedOnboardingIndexRouteImport.update({
@@ -91,10 +108,22 @@ const AuthSignupSuccessRoute = AuthSignupSuccessRouteImport.update({
   path: '/auth/signup/success',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedSettingsProfileRoute =
+  AuthenticatedSettingsProfileRouteImport.update({
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => AuthenticatedSettingsRoute,
+  } as any)
 const AuthenticatedSettingsAccountRoute =
   AuthenticatedSettingsAccountRouteImport.update({
-    id: '/settings/account',
-    path: '/settings/account',
+    id: '/account',
+    path: '/account',
+    getParentRoute: () => AuthenticatedSettingsRoute,
+  } as any)
+const AuthenticatedPlusSuccessRoute =
+  AuthenticatedPlusSuccessRouteImport.update({
+    id: '/plus/success',
+    path: '/plus/success',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedDashboardProjectsRoute =
@@ -133,10 +162,28 @@ const AuthenticatedDashboardEventsRoute =
     path: '/events',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedSettingsOrganizationIndexRoute =
+  AuthenticatedSettingsOrganizationIndexRouteImport.update({
+    id: '/organization/',
+    path: '/organization/',
+    getParentRoute: () => AuthenticatedSettingsRoute,
+  } as any)
 const AuthenticatedDashboardChatIndexRoute =
   AuthenticatedDashboardChatIndexRouteImport.update({
     id: '/chat/',
     path: '/chat/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedSettingsOrganizationBillingRoute =
+  AuthenticatedSettingsOrganizationBillingRouteImport.update({
+    id: '/organization/billing',
+    path: '/organization/billing',
+    getParentRoute: () => AuthenticatedSettingsRoute,
+  } as any)
+const AuthenticatedDashboardProjectsNewRoute =
+  AuthenticatedDashboardProjectsNewRouteImport.update({
+    id: '/projects_/new',
+    path: '/projects/new',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardChatChatIdRoute =
@@ -179,6 +226,7 @@ const AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/settings': typeof AuthenticatedSettingsRouteWithChildren
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
@@ -188,14 +236,20 @@ export interface FileRoutesByFullPath {
   '/dashboard/issues': typeof AuthenticatedDashboardIssuesRoute
   '/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
+  '/plus/success': typeof AuthenticatedPlusSuccessRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
+  '/settings/profile': typeof AuthenticatedSettingsProfileRoute
   '/auth/signup/success': typeof AuthSignupSuccessRoute
   '/auth/signup/verify-email': typeof AuthSignupVerifyEmailRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/onboarding': typeof AuthenticatedOnboardingIndexRoute
+  '/plus': typeof AuthenticatedPlusIndexRoute
   '/auth/signup': typeof AuthSignupIndexRoute
   '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
+  '/dashboard/projects/new': typeof AuthenticatedDashboardProjectsNewRoute
+  '/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
+  '/settings/organization': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/dashboard/issues/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
@@ -204,6 +258,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/settings': typeof AuthenticatedSettingsRouteWithChildren
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
@@ -213,14 +268,20 @@ export interface FileRoutesByTo {
   '/dashboard/issues': typeof AuthenticatedDashboardIssuesRoute
   '/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
+  '/plus/success': typeof AuthenticatedPlusSuccessRoute
   '/settings/account': typeof AuthenticatedSettingsAccountRoute
+  '/settings/profile': typeof AuthenticatedSettingsProfileRoute
   '/auth/signup/success': typeof AuthSignupSuccessRoute
   '/auth/signup/verify-email': typeof AuthSignupVerifyEmailRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/onboarding': typeof AuthenticatedOnboardingIndexRoute
+  '/plus': typeof AuthenticatedPlusIndexRoute
   '/auth/signup': typeof AuthSignupIndexRoute
   '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
+  '/dashboard/projects/new': typeof AuthenticatedDashboardProjectsNewRoute
+  '/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
+  '/settings/organization': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/dashboard/issues/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
@@ -232,6 +293,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/settings': typeof AuthenticatedSettingsRouteWithChildren
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
@@ -241,14 +303,20 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/issues': typeof AuthenticatedDashboardIssuesRoute
   '/_authenticated/dashboard/profile': typeof AuthenticatedDashboardProfileRoute
   '/_authenticated/dashboard/projects': typeof AuthenticatedDashboardProjectsRoute
+  '/_authenticated/plus/success': typeof AuthenticatedPlusSuccessRoute
   '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
+  '/_authenticated/settings/profile': typeof AuthenticatedSettingsProfileRoute
   '/auth/signup/success': typeof AuthSignupSuccessRoute
   '/auth/signup/verify-email': typeof AuthSignupVerifyEmailRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/onboarding/': typeof AuthenticatedOnboardingIndexRoute
+  '/_authenticated/plus/': typeof AuthenticatedPlusIndexRoute
   '/auth/signup/': typeof AuthSignupIndexRoute
   '/_authenticated/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
+  '/_authenticated/dashboard/projects_/new': typeof AuthenticatedDashboardProjectsNewRoute
+  '/_authenticated/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
   '/_authenticated/dashboard/chat/': typeof AuthenticatedDashboardChatIndexRoute
+  '/_authenticated/settings/organization/': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/_authenticated/dashboard/projects_/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/_authenticated/dashboard/issues_/$issueId/': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/_authenticated/dashboard/issues_/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
@@ -260,6 +328,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/settings'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/reset-password'
@@ -269,14 +338,20 @@ export interface FileRouteTypes {
     | '/dashboard/issues'
     | '/dashboard/profile'
     | '/dashboard/projects'
+    | '/plus/success'
     | '/settings/account'
+    | '/settings/profile'
     | '/auth/signup/success'
     | '/auth/signup/verify-email'
     | '/dashboard/'
     | '/onboarding'
+    | '/plus'
     | '/auth/signup'
     | '/dashboard/chat/$chatId'
+    | '/dashboard/projects/new'
+    | '/settings/organization/billing'
     | '/dashboard/chat'
+    | '/settings/organization'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/issues/$issueId'
     | '/dashboard/issues/$issueId/exceptions/$exceptionId'
@@ -285,6 +360,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/settings'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/reset-password'
@@ -294,14 +370,20 @@ export interface FileRouteTypes {
     | '/dashboard/issues'
     | '/dashboard/profile'
     | '/dashboard/projects'
+    | '/plus/success'
     | '/settings/account'
+    | '/settings/profile'
     | '/auth/signup/success'
     | '/auth/signup/verify-email'
     | '/dashboard'
     | '/onboarding'
+    | '/plus'
     | '/auth/signup'
     | '/dashboard/chat/$chatId'
+    | '/dashboard/projects/new'
+    | '/settings/organization/billing'
     | '/dashboard/chat'
+    | '/settings/organization'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/issues/$issueId'
     | '/dashboard/issues/$issueId/exceptions/$exceptionId'
@@ -312,6 +394,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/_authenticated/dashboard'
+    | '/_authenticated/settings'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/reset-password'
@@ -321,14 +404,20 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/issues'
     | '/_authenticated/dashboard/profile'
     | '/_authenticated/dashboard/projects'
+    | '/_authenticated/plus/success'
     | '/_authenticated/settings/account'
+    | '/_authenticated/settings/profile'
     | '/auth/signup/success'
     | '/auth/signup/verify-email'
     | '/_authenticated/dashboard/'
     | '/_authenticated/onboarding/'
+    | '/_authenticated/plus/'
     | '/auth/signup/'
     | '/_authenticated/dashboard/chat/$chatId'
+    | '/_authenticated/dashboard/projects_/new'
+    | '/_authenticated/settings/organization/billing'
     | '/_authenticated/dashboard/chat/'
+    | '/_authenticated/settings/organization/'
     | '/_authenticated/dashboard/projects_/$projectId/settings'
     | '/_authenticated/dashboard/issues_/$issueId/'
     | '/_authenticated/dashboard/issues_/$issueId/exceptions/$exceptionId'
@@ -384,6 +473,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -397,6 +493,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/signup'
       preLoaderRoute: typeof AuthSignupIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/plus/': {
+      id: '/_authenticated/plus/'
+      path: '/plus'
+      fullPath: '/plus'
+      preLoaderRoute: typeof AuthenticatedPlusIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/onboarding/': {
       id: '/_authenticated/onboarding/'
@@ -426,11 +529,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/settings/profile': {
+      id: '/_authenticated/settings/profile'
+      path: '/profile'
+      fullPath: '/settings/profile'
+      preLoaderRoute: typeof AuthenticatedSettingsProfileRouteImport
+      parentRoute: typeof AuthenticatedSettingsRoute
+    }
     '/_authenticated/settings/account': {
       id: '/_authenticated/settings/account'
-      path: '/settings/account'
+      path: '/account'
       fullPath: '/settings/account'
       preLoaderRoute: typeof AuthenticatedSettingsAccountRouteImport
+      parentRoute: typeof AuthenticatedSettingsRoute
+    }
+    '/_authenticated/plus/success': {
+      id: '/_authenticated/plus/success'
+      path: '/plus/success'
+      fullPath: '/plus/success'
+      preLoaderRoute: typeof AuthenticatedPlusSuccessRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/dashboard/projects': {
@@ -475,11 +592,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardEventsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/settings/organization/': {
+      id: '/_authenticated/settings/organization/'
+      path: '/organization'
+      fullPath: '/settings/organization'
+      preLoaderRoute: typeof AuthenticatedSettingsOrganizationIndexRouteImport
+      parentRoute: typeof AuthenticatedSettingsRoute
+    }
     '/_authenticated/dashboard/chat/': {
       id: '/_authenticated/dashboard/chat/'
       path: '/chat'
       fullPath: '/dashboard/chat'
       preLoaderRoute: typeof AuthenticatedDashboardChatIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/settings/organization/billing': {
+      id: '/_authenticated/settings/organization/billing'
+      path: '/organization/billing'
+      fullPath: '/settings/organization/billing'
+      preLoaderRoute: typeof AuthenticatedSettingsOrganizationBillingRouteImport
+      parentRoute: typeof AuthenticatedSettingsRoute
+    }
+    '/_authenticated/dashboard/projects_/new': {
+      id: '/_authenticated/dashboard/projects_/new'
+      path: '/projects/new'
+      fullPath: '/dashboard/projects/new'
+      preLoaderRoute: typeof AuthenticatedDashboardProjectsNewRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/chat/$chatId': {
@@ -536,6 +674,7 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardProjectsRoute: typeof AuthenticatedDashboardProjectsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardChatChatIdRoute: typeof AuthenticatedDashboardChatChatIdRoute
+  AuthenticatedDashboardProjectsNewRoute: typeof AuthenticatedDashboardProjectsNewRoute
   AuthenticatedDashboardChatIndexRoute: typeof AuthenticatedDashboardChatIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   AuthenticatedDashboardIssuesIssueIdIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
@@ -557,6 +696,8 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
     AuthenticatedDashboardChatChatIdRoute:
       AuthenticatedDashboardChatChatIdRoute,
+    AuthenticatedDashboardProjectsNewRoute:
+      AuthenticatedDashboardProjectsNewRoute,
     AuthenticatedDashboardChatIndexRoute: AuthenticatedDashboardChatIndexRoute,
     AuthenticatedDashboardProjectsProjectIdSettingsRoute:
       AuthenticatedDashboardProjectsProjectIdSettingsRoute,
@@ -575,16 +716,41 @@ const AuthenticatedDashboardRouteWithChildren =
     AuthenticatedDashboardRouteChildren,
   )
 
+interface AuthenticatedSettingsRouteChildren {
+  AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
+  AuthenticatedSettingsProfileRoute: typeof AuthenticatedSettingsProfileRoute
+  AuthenticatedSettingsOrganizationBillingRoute: typeof AuthenticatedSettingsOrganizationBillingRoute
+  AuthenticatedSettingsOrganizationIndexRoute: typeof AuthenticatedSettingsOrganizationIndexRoute
+}
+
+const AuthenticatedSettingsRouteChildren: AuthenticatedSettingsRouteChildren = {
+  AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
+  AuthenticatedSettingsProfileRoute: AuthenticatedSettingsProfileRoute,
+  AuthenticatedSettingsOrganizationBillingRoute:
+    AuthenticatedSettingsOrganizationBillingRoute,
+  AuthenticatedSettingsOrganizationIndexRoute:
+    AuthenticatedSettingsOrganizationIndexRoute,
+}
+
+const AuthenticatedSettingsRouteWithChildren =
+  AuthenticatedSettingsRoute._addFileChildren(
+    AuthenticatedSettingsRouteChildren,
+  )
+
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
-  AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRouteWithChildren
+  AuthenticatedPlusSuccessRoute: typeof AuthenticatedPlusSuccessRoute
   AuthenticatedOnboardingIndexRoute: typeof AuthenticatedOnboardingIndexRoute
+  AuthenticatedPlusIndexRoute: typeof AuthenticatedPlusIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
-  AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRouteWithChildren,
+  AuthenticatedPlusSuccessRoute: AuthenticatedPlusSuccessRoute,
   AuthenticatedOnboardingIndexRoute: AuthenticatedOnboardingIndexRoute,
+  AuthenticatedPlusIndexRoute: AuthenticatedPlusIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

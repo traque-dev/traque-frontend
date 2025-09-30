@@ -2,14 +2,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-
-import { routeTree } from './routeTree.gen';
-
-import './styles.css';
 import { Toaster } from 'sonner';
-import { ThemeProvider } from './components/theme-provider.tsx';
-import { auth } from './lib/auth.ts';
-import reportWebVitals from './reportWebVitals.ts';
+import { ThemeProvider } from '@/components/theme-provider';
+import { auth } from '@/lib/auth';
+import reportWebVitals from '@/reportWebVitals';
+import { routeTree } from './routeTree.gen';
+import './styles.css';
+import { getActiveOrganizationQueryOptions } from '@/api/organizations/options';
 
 export const queryClient = new QueryClient();
 
@@ -18,7 +17,9 @@ export const router = createRouter({
   context: {
     session: null,
     user: null,
-    activeOrganization: null,
+    getActiveOrganization: async () => {
+      return queryClient.ensureQueryData(getActiveOrganizationQueryOptions());
+    },
     queryClient,
   },
   defaultPreload: false,
@@ -33,26 +34,43 @@ declare module '@tanstack/react-router' {
   }
 }
 
-function App() {
-  const { data: session, isPending } = auth.useSession();
-
-  if (isPending) return null;
-
+function Providers({ children }: { children: React.ReactNode }) {
   return (
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="system">
-          <RouterProvider
-            router={router}
-            context={{
-              session: session?.session ?? null,
-              user: session?.user ?? null,
-            }}
-          />
           <Toaster />
+          {children}
         </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>
+  );
+}
+
+function AppRouterProvider() {
+  const { data: session, isPending: isSessionPending } = auth.useSession();
+
+  if (isSessionPending) {
+    // TODO: add a loading state
+    return null;
+  }
+
+  return (
+    <RouterProvider
+      router={router}
+      context={{
+        session: session?.session ?? null,
+        user: session?.user ?? null,
+      }}
+    />
+  );
+}
+
+function App() {
+  return (
+    <Providers>
+      <AppRouterProvider />
+    </Providers>
   );
 }
 

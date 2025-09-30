@@ -1,6 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 import { Link, useRouter } from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
+import { SettingsLinear } from '@/components/icons';
+import { CardLinear } from '@/components/icons/card-linear';
+import { HamburgerMenuLinear } from '@/components/icons/hamburger-menu-linear';
+import { Logout3Linear } from '@/components/icons/logout-3-linear';
+import { MoonLinear } from '@/components/icons/moon-linear';
+import { Sun2Linear } from '@/components/icons/sun-2-linear';
+import { UserRoundedLinear } from '@/components/icons/user-rounded-linear';
 import { useTheme } from '@/components/theme-provider';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -21,11 +28,6 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { auth } from '@/lib/auth';
-import { HamburgerMenuLinear } from './icons/hamburger-menu-linear';
-import { Logout3Linear } from './icons/logout-3-linear';
-import { MoonLinear } from './icons/moon-linear';
-import { Sun2Linear } from './icons/sun-2-linear';
-import { UserRoundedLinear } from './icons/user-rounded-linear';
 
 export function NavUser() {
   const router = useRouter();
@@ -86,10 +88,24 @@ export function NavUser() {
             align="end"
             sideOffset={4}
           >
-            <Link to="/dashboard/profile">
+            <Link to="/settings/profile">
               <DropdownMenuItem className="gap-3 px-1">
                 <UserRoundedLinear className="text-muted-foreground/70" />
                 <span>My profile</span>
+              </DropdownMenuItem>
+            </Link>
+
+            <Link to="/settings/organization/billing">
+              <DropdownMenuItem className="gap-3 px-1">
+                <CardLinear className="text-muted-foreground/70" />
+                <span>Billing</span>
+              </DropdownMenuItem>
+            </Link>
+
+            <Link to="/settings/profile">
+              <DropdownMenuItem className="gap-3 px-1">
+                <SettingsLinear className="text-muted-foreground/70" />
+                <span>Settings</span>
               </DropdownMenuItem>
             </Link>
 

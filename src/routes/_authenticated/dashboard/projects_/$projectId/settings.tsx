@@ -12,22 +12,19 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-// import { Separator } from '@/components/ui/separator';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
 
 export const Route = createFileRoute(
   '/_authenticated/dashboard/projects_/$projectId/settings',
 )({
   component: RouteComponent,
-  loader: async ({ params }) => {
-    const { data: activeOrganization } =
-      await auth.organization.getFullOrganization();
+  loader: async ({ params, context }) => {
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound();

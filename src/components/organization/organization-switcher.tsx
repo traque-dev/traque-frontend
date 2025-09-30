@@ -1,6 +1,8 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import type { Organization } from 'better-auth/plugins/organization';
 import { ChevronsUpDown, Plus } from 'lucide-react';
+import { SubscriptionPlanBadge } from '@/components/billing/subscription-plan-badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -8,7 +10,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  // DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -23,6 +24,7 @@ import { router } from '@/main';
 export function OrganizationSwitcher() {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { data: organizations, isPending: isPendingOrganizations } =
     auth.useListOrganizations();
@@ -37,7 +39,9 @@ export function OrganizationSwitcher() {
     await auth.organization.setActive({
       organizationId: organization.id,
     });
-    router.invalidate();
+    queryClient.clear();
+    router.clearCache();
+    await router.invalidate();
     navigate({
       to: '/dashboard',
     });
@@ -92,12 +96,13 @@ export function OrganizationSwitcher() {
                 />
               </div> */}
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">
+                <span className="truncate font-medium flex items-center gap-2">
                   {activeOrganization?.name}
+                  <SubscriptionPlanBadge />
                 </span>
-                <span className="truncate text-xs">
+                {/* <span className="truncate text-xs">
                   @{activeOrganization?.slug}
-                </span>
+                </span> */}
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>

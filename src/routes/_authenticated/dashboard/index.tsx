@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
+import { getActiveOrganizationQueryOptions } from '@/api/organizations/options';
 import { getProjects } from '@/api/projects';
 import { BoxMinimalisticLinear } from '@/components/icons/box-minimalistic-linear';
 import { ChartSquareLinear } from '@/components/icons/chart-square-linear';
@@ -6,13 +7,13 @@ import { UserRoundedLinear } from '@/components/icons/user-rounded-linear';
 import { WidgetAddLinear } from '@/components/icons/widget-add-linear';
 import { ProjectExceptionsChartCard } from '@/components/project-exceptions-chart-card';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/auth';
 
 export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: DashboardPage,
-  loader: async () => {
-    const { data: activeOrganization } =
-      await auth.organization.getFullOrganization();
+  loader: async ({ context }) => {
+    const activeOrganization = await context.queryClient.ensureQueryData(
+      getActiveOrganizationQueryOptions(),
+    );
 
     if (!activeOrganization) {
       throw notFound();

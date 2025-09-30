@@ -7,10 +7,10 @@ import type { Organization } from 'better-auth/plugins/organization';
 import type { Session, User } from '@/lib/auth';
 import type { Nullable } from '@/types/utils';
 
-interface RouterContext {
+export interface RouterContext {
   session: Nullable<Session['session']>;
   user: Nullable<User>;
-  activeOrganization: Nullable<Organization>;
+  getActiveOrganization: () => Promise<Nullable<Organization>>;
 
   queryClient: QueryClient;
 }

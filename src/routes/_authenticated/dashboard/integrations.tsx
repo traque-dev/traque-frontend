@@ -1,13 +1,11 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
 import { AwsWafIntegrationCard } from '@/components/integrations/aws-waf/aws-waf-integration-card';
 import { OrganizationProjectGate } from '@/components/organization-project-gate';
-import { auth } from '@/lib/auth';
 
 export const Route = createFileRoute('/_authenticated/dashboard/integrations')({
   component: IntegrationsPage,
-  loader: async () => {
-    const { data: activeOrganization } =
-      await auth.organization.getFullOrganization();
+  loader: async ({ context }) => {
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound({

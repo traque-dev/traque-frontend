@@ -14,7 +14,6 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
-import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
 
 const exceptionIdParamsSchema = type({
@@ -29,10 +28,7 @@ export const Route = createFileRoute(
     projectId: search.projectId,
   }),
   loader: async ({ context, params, deps }) => {
-    const { data: activeOrganization, error } =
-      await auth.organization.getFullOrganization();
-
-    if (error) throw error;
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound();
@@ -71,7 +67,7 @@ function ExceptionDetailsPage() {
   const { issueId } = Route.useParams();
   const navigate = useNavigate({ from: Route.fullPath });
 
-  const [inAppOnly, setInAppOnly] = useState(true);
+  const [inAppOnly, setInAppOnly] = useState(false);
 
   const frames = useMemo(
     () => exception?.stacktrace?.frames ?? [],

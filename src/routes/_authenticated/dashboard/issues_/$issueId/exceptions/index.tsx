@@ -7,7 +7,6 @@ import { useMemo } from 'react';
 import { getExceptionsQueryOptions } from '@/api/exceptions/query-options';
 import { DataTable } from '@/components/data-table';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/auth';
 import { dayjs } from '@/lib/dayjs';
 import type { Exception } from '@/types/exception';
 import type { Pageable } from '@/types/pageable';
@@ -29,10 +28,7 @@ export const Route = createFileRoute(
     size: search.size,
   }),
   loader: async ({ deps, context, params }) => {
-    const { data: activeOrganization, error } =
-      await auth.organization.getFullOrganization();
-
-    if (error) throw error;
+    const activeOrganization = await context.getActiveOrganization();
 
     if (!activeOrganization) {
       throw notFound();

@@ -13,6 +13,7 @@ export default defineConfig({
     viteReact(),
     tailwindcss(),
   ],
+  envPrefix: 'APP_',
   resolve: {
     alias: {
       "@": "/src",
