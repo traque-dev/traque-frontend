@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { OrganizationMembers } from '@/components/organization/organization-members';
 import { UpdateOrganizationNameCard } from '@/components/organization/update-organization-name-card';
 
 export const Route = createFileRoute('/_authenticated/settings/organization/')({
@@ -18,6 +19,8 @@ function OrganizationSettings() {
       </div>
 
       <UpdateOrganizationNameCard />
+
+      <OrganizationMembers />
     </div>
   );
 }
