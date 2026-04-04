@@ -1,6 +1,8 @@
 {
   "short_name": "Traque",
-  "name": "Traque",
+  "name": "Traque — Bug Tracking & Monitoring",
+  "description": "Track bugs, monitor uptime, and ship software with confidence.",
+  "categories": ["productivity", "developer", "utilities"],
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,7 +20,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
