@@ -34,12 +34,14 @@ import { Route as AuthenticatedDashboardExceptionsRouteImport } from './routes/_
 import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_authenticated/dashboard/events'
 import { Route as AuthenticatedSettingsOrganizationIndexRouteImport } from './routes/_authenticated/settings/organization/index'
 import { Route as AuthenticatedDashboardChatIndexRouteImport } from './routes/_authenticated/dashboard/chat/index'
+import { Route as AuthenticatedDashboardBugsIndexRouteImport } from './routes/_authenticated/dashboard/bugs/index'
 import { Route as AuthenticatedSettingsOrganizationBillingRouteImport } from './routes/_authenticated/settings/organization/billing'
 import { Route as AuthenticatedDashboardProjectsNewRouteImport } from './routes/_authenticated/dashboard/projects_/new'
 import { Route as AuthenticatedDashboardChatChatIdRouteImport } from './routes/_authenticated/dashboard/chat/$chatId'
 import { Route as AuthenticatedDashboardUptimeMonitorsIndexRouteImport } from './routes/_authenticated/dashboard/uptime/monitors/index'
 import { Route as AuthenticatedDashboardUptimeIncidentsIndexRouteImport } from './routes/_authenticated/dashboard/uptime/incidents/index'
 import { Route as AuthenticatedDashboardIssuesIssueIdIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/index'
+import { Route as AuthenticatedDashboardBugsBugIdIndexRouteImport } from './routes/_authenticated/dashboard/bugs/$bugId/index'
 import { Route as AuthenticatedDashboardUptimeMonitorsNewRouteImport } from './routes/_authenticated/dashboard/uptime/monitors/new'
 import { Route as AuthenticatedDashboardProjectsProjectIdSettingsRouteImport } from './routes/_authenticated/dashboard/projects_/$projectId/settings'
 import { Route as AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRouteImport } from './routes/_authenticated/dashboard/uptime/monitors/$monitorId/index'
@@ -185,6 +187,12 @@ const AuthenticatedDashboardChatIndexRoute =
     path: '/chat/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardBugsIndexRoute =
+  AuthenticatedDashboardBugsIndexRouteImport.update({
+    id: '/bugs/',
+    path: '/bugs/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedSettingsOrganizationBillingRoute =
   AuthenticatedSettingsOrganizationBillingRouteImport.update({
     id: '/organization/billing',
@@ -219,6 +227,12 @@ const AuthenticatedDashboardIssuesIssueIdIndexRoute =
   AuthenticatedDashboardIssuesIssueIdIndexRouteImport.update({
     id: '/issues_/$issueId/',
     path: '/issues/$issueId/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardBugsBugIdIndexRoute =
+  AuthenticatedDashboardBugsBugIdIndexRouteImport.update({
+    id: '/bugs/$bugId/',
+    path: '/bugs/$bugId/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardUptimeMonitorsNewRoute =
@@ -290,10 +304,12 @@ export interface FileRoutesByFullPath {
   '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/dashboard/projects/new': typeof AuthenticatedDashboardProjectsNewRoute
   '/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
+  '/dashboard/bugs': typeof AuthenticatedDashboardBugsIndexRoute
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/settings/organization': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/uptime/monitors/new': typeof AuthenticatedDashboardUptimeMonitorsNewRoute
+  '/dashboard/bugs/$bugId': typeof AuthenticatedDashboardBugsBugIdIndexRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/dashboard/uptime/incidents': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
   '/dashboard/uptime/monitors': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
@@ -328,10 +344,12 @@ export interface FileRoutesByTo {
   '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/dashboard/projects/new': typeof AuthenticatedDashboardProjectsNewRoute
   '/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
+  '/dashboard/bugs': typeof AuthenticatedDashboardBugsIndexRoute
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/settings/organization': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/dashboard/uptime/monitors/new': typeof AuthenticatedDashboardUptimeMonitorsNewRoute
+  '/dashboard/bugs/$bugId': typeof AuthenticatedDashboardBugsBugIdIndexRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/dashboard/uptime/incidents': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
   '/dashboard/uptime/monitors': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
@@ -369,10 +387,12 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/_authenticated/dashboard/projects_/new': typeof AuthenticatedDashboardProjectsNewRoute
   '/_authenticated/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
+  '/_authenticated/dashboard/bugs/': typeof AuthenticatedDashboardBugsIndexRoute
   '/_authenticated/dashboard/chat/': typeof AuthenticatedDashboardChatIndexRoute
   '/_authenticated/settings/organization/': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/_authenticated/dashboard/projects_/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   '/_authenticated/dashboard/uptime/monitors/new': typeof AuthenticatedDashboardUptimeMonitorsNewRoute
+  '/_authenticated/dashboard/bugs/$bugId/': typeof AuthenticatedDashboardBugsBugIdIndexRoute
   '/_authenticated/dashboard/issues_/$issueId/': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   '/_authenticated/dashboard/uptime/incidents/': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
   '/_authenticated/dashboard/uptime/monitors/': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
@@ -410,10 +430,12 @@ export interface FileRouteTypes {
     | '/dashboard/chat/$chatId'
     | '/dashboard/projects/new'
     | '/settings/organization/billing'
+    | '/dashboard/bugs'
     | '/dashboard/chat'
     | '/settings/organization'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/uptime/monitors/new'
+    | '/dashboard/bugs/$bugId'
     | '/dashboard/issues/$issueId'
     | '/dashboard/uptime/incidents'
     | '/dashboard/uptime/monitors'
@@ -448,10 +470,12 @@ export interface FileRouteTypes {
     | '/dashboard/chat/$chatId'
     | '/dashboard/projects/new'
     | '/settings/organization/billing'
+    | '/dashboard/bugs'
     | '/dashboard/chat'
     | '/settings/organization'
     | '/dashboard/projects/$projectId/settings'
     | '/dashboard/uptime/monitors/new'
+    | '/dashboard/bugs/$bugId'
     | '/dashboard/issues/$issueId'
     | '/dashboard/uptime/incidents'
     | '/dashboard/uptime/monitors'
@@ -488,10 +512,12 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/chat/$chatId'
     | '/_authenticated/dashboard/projects_/new'
     | '/_authenticated/settings/organization/billing'
+    | '/_authenticated/dashboard/bugs/'
     | '/_authenticated/dashboard/chat/'
     | '/_authenticated/settings/organization/'
     | '/_authenticated/dashboard/projects_/$projectId/settings'
     | '/_authenticated/dashboard/uptime/monitors/new'
+    | '/_authenticated/dashboard/bugs/$bugId/'
     | '/_authenticated/dashboard/issues_/$issueId/'
     | '/_authenticated/dashboard/uptime/incidents/'
     | '/_authenticated/dashboard/uptime/monitors/'
@@ -691,6 +717,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardChatIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/bugs/': {
+      id: '/_authenticated/dashboard/bugs/'
+      path: '/bugs'
+      fullPath: '/dashboard/bugs'
+      preLoaderRoute: typeof AuthenticatedDashboardBugsIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/settings/organization/billing': {
       id: '/_authenticated/settings/organization/billing'
       path: '/organization/billing'
@@ -731,6 +764,13 @@ declare module '@tanstack/react-router' {
       path: '/issues/$issueId'
       fullPath: '/dashboard/issues/$issueId'
       preLoaderRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/bugs/$bugId/': {
+      id: '/_authenticated/dashboard/bugs/$bugId/'
+      path: '/bugs/$bugId'
+      fullPath: '/dashboard/bugs/$bugId'
+      preLoaderRoute: typeof AuthenticatedDashboardBugsBugIdIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/uptime/monitors/new': {
@@ -795,9 +835,11 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardChatChatIdRoute: typeof AuthenticatedDashboardChatChatIdRoute
   AuthenticatedDashboardProjectsNewRoute: typeof AuthenticatedDashboardProjectsNewRoute
+  AuthenticatedDashboardBugsIndexRoute: typeof AuthenticatedDashboardBugsIndexRoute
   AuthenticatedDashboardChatIndexRoute: typeof AuthenticatedDashboardChatIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   AuthenticatedDashboardUptimeMonitorsNewRoute: typeof AuthenticatedDashboardUptimeMonitorsNewRoute
+  AuthenticatedDashboardBugsBugIdIndexRoute: typeof AuthenticatedDashboardBugsBugIdIndexRoute
   AuthenticatedDashboardIssuesIssueIdIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
   AuthenticatedDashboardUptimeIncidentsIndexRoute: typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
   AuthenticatedDashboardUptimeMonitorsIndexRoute: typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
@@ -823,11 +865,14 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
       AuthenticatedDashboardChatChatIdRoute,
     AuthenticatedDashboardProjectsNewRoute:
       AuthenticatedDashboardProjectsNewRoute,
+    AuthenticatedDashboardBugsIndexRoute: AuthenticatedDashboardBugsIndexRoute,
     AuthenticatedDashboardChatIndexRoute: AuthenticatedDashboardChatIndexRoute,
     AuthenticatedDashboardProjectsProjectIdSettingsRoute:
       AuthenticatedDashboardProjectsProjectIdSettingsRoute,
     AuthenticatedDashboardUptimeMonitorsNewRoute:
       AuthenticatedDashboardUptimeMonitorsNewRoute,
+    AuthenticatedDashboardBugsBugIdIndexRoute:
+      AuthenticatedDashboardBugsBugIdIndexRoute,
     AuthenticatedDashboardIssuesIssueIdIndexRoute:
       AuthenticatedDashboardIssuesIssueIdIndexRoute,
     AuthenticatedDashboardUptimeIncidentsIndexRoute:

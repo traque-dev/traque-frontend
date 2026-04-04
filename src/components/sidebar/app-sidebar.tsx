@@ -11,6 +11,7 @@ import {
   DangerLinear,
   WidgetAddLinear,
 } from '@/components/icons';
+import { BugLinearIcon } from '@/components/icons/bug-linear';
 import { ChatRoundLineLinear } from '@/components/icons/chat-round-line-linear';
 import { GlobalLinearIcon } from '@/components/icons/global-linear';
 import { ShieldWarningLinearIcon } from '@/components/icons/shield-warning-linear';
@@ -77,6 +78,12 @@ const data = {
           title: 'Chat',
           url: '/dashboard/chat',
           icon: ChatRoundLineLinear,
+        },
+        {
+          key: 'bugs',
+          title: 'Bugs',
+          url: '/dashboard/bugs',
+          icon: BugLinearIcon,
         },
         {
           key: 'integrations',
