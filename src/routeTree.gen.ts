@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BugsReportRouteImport } from './routes/bugs/report'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
@@ -36,8 +37,13 @@ import { Route as AuthenticatedDashboardChatIndexRouteImport } from './routes/_a
 import { Route as AuthenticatedSettingsOrganizationBillingRouteImport } from './routes/_authenticated/settings/organization/billing'
 import { Route as AuthenticatedDashboardProjectsNewRouteImport } from './routes/_authenticated/dashboard/projects_/new'
 import { Route as AuthenticatedDashboardChatChatIdRouteImport } from './routes/_authenticated/dashboard/chat/$chatId'
+import { Route as AuthenticatedDashboardUptimeMonitorsIndexRouteImport } from './routes/_authenticated/dashboard/uptime/monitors/index'
+import { Route as AuthenticatedDashboardUptimeIncidentsIndexRouteImport } from './routes/_authenticated/dashboard/uptime/incidents/index'
 import { Route as AuthenticatedDashboardIssuesIssueIdIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/index'
+import { Route as AuthenticatedDashboardUptimeMonitorsNewRouteImport } from './routes/_authenticated/dashboard/uptime/monitors/new'
 import { Route as AuthenticatedDashboardProjectsProjectIdSettingsRouteImport } from './routes/_authenticated/dashboard/projects_/$projectId/settings'
+import { Route as AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRouteImport } from './routes/_authenticated/dashboard/uptime/monitors/$monitorId/index'
+import { Route as AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRouteImport } from './routes/_authenticated/dashboard/uptime/incidents/$incidentId/index'
 import { Route as AuthenticatedDashboardIssuesIssueIdExceptionsIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/exceptions/index'
 import { Route as AuthenticatedDashboardIntegrationsAwsWafIndexRouteImport } from './routes/_authenticated/dashboard/integrations_/aws/waf/index'
 import { Route as AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/exceptions/$exceptionId'
@@ -49,6 +55,11 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BugsReportRoute = BugsReportRouteImport.update({
+  id: '/bugs/report',
+  path: '/bugs/report',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
@@ -192,16 +203,46 @@ const AuthenticatedDashboardChatChatIdRoute =
     path: '/chat/$chatId',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardUptimeMonitorsIndexRoute =
+  AuthenticatedDashboardUptimeMonitorsIndexRouteImport.update({
+    id: '/uptime/monitors/',
+    path: '/uptime/monitors/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardUptimeIncidentsIndexRoute =
+  AuthenticatedDashboardUptimeIncidentsIndexRouteImport.update({
+    id: '/uptime/incidents/',
+    path: '/uptime/incidents/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardIssuesIssueIdIndexRoute =
   AuthenticatedDashboardIssuesIssueIdIndexRouteImport.update({
     id: '/issues_/$issueId/',
     path: '/issues/$issueId/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardUptimeMonitorsNewRoute =
+  AuthenticatedDashboardUptimeMonitorsNewRouteImport.update({
+    id: '/uptime/monitors/new',
+    path: '/uptime/monitors/new',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardProjectsProjectIdSettingsRoute =
   AuthenticatedDashboardProjectsProjectIdSettingsRouteImport.update({
     id: '/projects_/$projectId/settings',
     path: '/projects/$projectId/settings',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRoute =
+  AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRouteImport.update({
+    id: '/uptime/monitors/$monitorId/',
+    path: '/uptime/monitors/$monitorId/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRoute =
+  AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRouteImport.update({
+    id: '/uptime/incidents/$incidentId/',
+    path: '/uptime/incidents/$incidentId/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute =
@@ -230,6 +271,7 @@ export interface FileRoutesByFullPath {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
+  '/bugs/report': typeof BugsReportRoute
   '/dashboard/events': typeof AuthenticatedDashboardEventsRoute
   '/dashboard/exceptions': typeof AuthenticatedDashboardExceptionsRoute
   '/dashboard/integrations': typeof AuthenticatedDashboardIntegrationsRoute
@@ -251,10 +293,15 @@ export interface FileRoutesByFullPath {
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/settings/organization': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
+  '/dashboard/uptime/monitors/new': typeof AuthenticatedDashboardUptimeMonitorsNewRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/dashboard/uptime/incidents': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
+  '/dashboard/uptime/monitors': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
   '/dashboard/issues/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
   '/dashboard/integrations/aws/waf': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
   '/dashboard/issues/$issueId/exceptions': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
+  '/dashboard/uptime/incidents/$incidentId': typeof AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRoute
+  '/dashboard/uptime/monitors/$monitorId': typeof AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -262,6 +309,7 @@ export interface FileRoutesByTo {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
+  '/bugs/report': typeof BugsReportRoute
   '/dashboard/events': typeof AuthenticatedDashboardEventsRoute
   '/dashboard/exceptions': typeof AuthenticatedDashboardExceptionsRoute
   '/dashboard/integrations': typeof AuthenticatedDashboardIntegrationsRoute
@@ -283,10 +331,15 @@ export interface FileRoutesByTo {
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/settings/organization': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/dashboard/projects/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
+  '/dashboard/uptime/monitors/new': typeof AuthenticatedDashboardUptimeMonitorsNewRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/dashboard/uptime/incidents': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
+  '/dashboard/uptime/monitors': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
   '/dashboard/issues/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
   '/dashboard/integrations/aws/waf': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
   '/dashboard/issues/$issueId/exceptions': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
+  '/dashboard/uptime/incidents/$incidentId': typeof AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRoute
+  '/dashboard/uptime/monitors/$monitorId': typeof AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -297,6 +350,7 @@ export interface FileRoutesById {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
+  '/bugs/report': typeof BugsReportRoute
   '/_authenticated/dashboard/events': typeof AuthenticatedDashboardEventsRoute
   '/_authenticated/dashboard/exceptions': typeof AuthenticatedDashboardExceptionsRoute
   '/_authenticated/dashboard/integrations': typeof AuthenticatedDashboardIntegrationsRoute
@@ -318,10 +372,15 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/chat/': typeof AuthenticatedDashboardChatIndexRoute
   '/_authenticated/settings/organization/': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/_authenticated/dashboard/projects_/$projectId/settings': typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
+  '/_authenticated/dashboard/uptime/monitors/new': typeof AuthenticatedDashboardUptimeMonitorsNewRoute
   '/_authenticated/dashboard/issues_/$issueId/': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/_authenticated/dashboard/uptime/incidents/': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
+  '/_authenticated/dashboard/uptime/monitors/': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
   '/_authenticated/dashboard/issues_/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
   '/_authenticated/dashboard/integrations_/aws/waf/': typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
   '/_authenticated/dashboard/issues_/$issueId/exceptions/': typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
+  '/_authenticated/dashboard/uptime/incidents/$incidentId/': typeof AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRoute
+  '/_authenticated/dashboard/uptime/monitors/$monitorId/': typeof AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -332,6 +391,7 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/reset-password'
+    | '/bugs/report'
     | '/dashboard/events'
     | '/dashboard/exceptions'
     | '/dashboard/integrations'
@@ -353,10 +413,15 @@ export interface FileRouteTypes {
     | '/dashboard/chat'
     | '/settings/organization'
     | '/dashboard/projects/$projectId/settings'
+    | '/dashboard/uptime/monitors/new'
     | '/dashboard/issues/$issueId'
+    | '/dashboard/uptime/incidents'
+    | '/dashboard/uptime/monitors'
     | '/dashboard/issues/$issueId/exceptions/$exceptionId'
     | '/dashboard/integrations/aws/waf'
     | '/dashboard/issues/$issueId/exceptions'
+    | '/dashboard/uptime/incidents/$incidentId'
+    | '/dashboard/uptime/monitors/$monitorId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -364,6 +429,7 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/reset-password'
+    | '/bugs/report'
     | '/dashboard/events'
     | '/dashboard/exceptions'
     | '/dashboard/integrations'
@@ -385,10 +451,15 @@ export interface FileRouteTypes {
     | '/dashboard/chat'
     | '/settings/organization'
     | '/dashboard/projects/$projectId/settings'
+    | '/dashboard/uptime/monitors/new'
     | '/dashboard/issues/$issueId'
+    | '/dashboard/uptime/incidents'
+    | '/dashboard/uptime/monitors'
     | '/dashboard/issues/$issueId/exceptions/$exceptionId'
     | '/dashboard/integrations/aws/waf'
     | '/dashboard/issues/$issueId/exceptions'
+    | '/dashboard/uptime/incidents/$incidentId'
+    | '/dashboard/uptime/monitors/$monitorId'
   id:
     | '__root__'
     | '/'
@@ -398,6 +469,7 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/reset-password'
+    | '/bugs/report'
     | '/_authenticated/dashboard/events'
     | '/_authenticated/dashboard/exceptions'
     | '/_authenticated/dashboard/integrations'
@@ -419,10 +491,15 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/chat/'
     | '/_authenticated/settings/organization/'
     | '/_authenticated/dashboard/projects_/$projectId/settings'
+    | '/_authenticated/dashboard/uptime/monitors/new'
     | '/_authenticated/dashboard/issues_/$issueId/'
+    | '/_authenticated/dashboard/uptime/incidents/'
+    | '/_authenticated/dashboard/uptime/monitors/'
     | '/_authenticated/dashboard/issues_/$issueId/exceptions/$exceptionId'
     | '/_authenticated/dashboard/integrations_/aws/waf/'
     | '/_authenticated/dashboard/issues_/$issueId/exceptions/'
+    | '/_authenticated/dashboard/uptime/incidents/$incidentId/'
+    | '/_authenticated/dashboard/uptime/monitors/$monitorId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -431,6 +508,7 @@ export interface RootRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
+  BugsReportRoute: typeof BugsReportRoute
   AuthSignupSuccessRoute: typeof AuthSignupSuccessRoute
   AuthSignupVerifyEmailRoute: typeof AuthSignupVerifyEmailRoute
   AuthSignupIndexRoute: typeof AuthSignupIndexRoute
@@ -450,6 +528,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bugs/report': {
+      id: '/bugs/report'
+      path: '/bugs/report'
+      fullPath: '/bugs/report'
+      preLoaderRoute: typeof BugsReportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/reset-password': {
@@ -627,6 +712,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardChatChatIdRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/uptime/monitors/': {
+      id: '/_authenticated/dashboard/uptime/monitors/'
+      path: '/uptime/monitors'
+      fullPath: '/dashboard/uptime/monitors'
+      preLoaderRoute: typeof AuthenticatedDashboardUptimeMonitorsIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/uptime/incidents/': {
+      id: '/_authenticated/dashboard/uptime/incidents/'
+      path: '/uptime/incidents'
+      fullPath: '/dashboard/uptime/incidents'
+      preLoaderRoute: typeof AuthenticatedDashboardUptimeIncidentsIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/issues_/$issueId/': {
       id: '/_authenticated/dashboard/issues_/$issueId/'
       path: '/issues/$issueId'
@@ -634,11 +733,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/uptime/monitors/new': {
+      id: '/_authenticated/dashboard/uptime/monitors/new'
+      path: '/uptime/monitors/new'
+      fullPath: '/dashboard/uptime/monitors/new'
+      preLoaderRoute: typeof AuthenticatedDashboardUptimeMonitorsNewRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/projects_/$projectId/settings': {
       id: '/_authenticated/dashboard/projects_/$projectId/settings'
       path: '/projects/$projectId/settings'
       fullPath: '/dashboard/projects/$projectId/settings'
       preLoaderRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/uptime/monitors/$monitorId/': {
+      id: '/_authenticated/dashboard/uptime/monitors/$monitorId/'
+      path: '/uptime/monitors/$monitorId'
+      fullPath: '/dashboard/uptime/monitors/$monitorId'
+      preLoaderRoute: typeof AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/uptime/incidents/$incidentId/': {
+      id: '/_authenticated/dashboard/uptime/incidents/$incidentId/'
+      path: '/uptime/incidents/$incidentId'
+      fullPath: '/dashboard/uptime/incidents/$incidentId'
+      preLoaderRoute: typeof AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/issues_/$issueId/exceptions/': {
@@ -677,10 +797,15 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardProjectsNewRoute: typeof AuthenticatedDashboardProjectsNewRoute
   AuthenticatedDashboardChatIndexRoute: typeof AuthenticatedDashboardChatIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
+  AuthenticatedDashboardUptimeMonitorsNewRoute: typeof AuthenticatedDashboardUptimeMonitorsNewRoute
   AuthenticatedDashboardIssuesIssueIdIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  AuthenticatedDashboardUptimeIncidentsIndexRoute: typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
+  AuthenticatedDashboardUptimeMonitorsIndexRoute: typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
   AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute: typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
   AuthenticatedDashboardIntegrationsAwsWafIndexRoute: typeof AuthenticatedDashboardIntegrationsAwsWafIndexRoute
   AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute
+  AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRoute: typeof AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRoute
+  AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRoute: typeof AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
@@ -701,14 +826,24 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardChatIndexRoute: AuthenticatedDashboardChatIndexRoute,
     AuthenticatedDashboardProjectsProjectIdSettingsRoute:
       AuthenticatedDashboardProjectsProjectIdSettingsRoute,
+    AuthenticatedDashboardUptimeMonitorsNewRoute:
+      AuthenticatedDashboardUptimeMonitorsNewRoute,
     AuthenticatedDashboardIssuesIssueIdIndexRoute:
       AuthenticatedDashboardIssuesIssueIdIndexRoute,
+    AuthenticatedDashboardUptimeIncidentsIndexRoute:
+      AuthenticatedDashboardUptimeIncidentsIndexRoute,
+    AuthenticatedDashboardUptimeMonitorsIndexRoute:
+      AuthenticatedDashboardUptimeMonitorsIndexRoute,
     AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute:
       AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute,
     AuthenticatedDashboardIntegrationsAwsWafIndexRoute:
       AuthenticatedDashboardIntegrationsAwsWafIndexRoute,
     AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute:
       AuthenticatedDashboardIssuesIssueIdExceptionsIndexRoute,
+    AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRoute:
+      AuthenticatedDashboardUptimeIncidentsIncidentIdIndexRoute,
+    AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRoute:
+      AuthenticatedDashboardUptimeMonitorsMonitorIdIndexRoute,
   }
 
 const AuthenticatedDashboardRouteWithChildren =
@@ -763,6 +898,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
+  BugsReportRoute: BugsReportRoute,
   AuthSignupSuccessRoute: AuthSignupSuccessRoute,
   AuthSignupVerifyEmailRoute: AuthSignupVerifyEmailRoute,
   AuthSignupIndexRoute: AuthSignupIndexRoute,

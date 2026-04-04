@@ -1,0 +1,4618 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/users/push-notifications/expo": {
+      "post": {
+        "operationId": "UserController_setExpoPushNotificationToken_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushNotificationTokenDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs": {
+      "get": {
+        "operationId": "BugController_getBugs_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BugDTO"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "itemCount": {
+                          "type": "number"
+                        },
+                        "itemsPerPage": {
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "currentPage",
+                        "itemCount",
+                        "itemsPerPage",
+                        "totalItems",
+                        "totalPages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "List bugs",
+        "tags": [
+          "Bugs"
+        ]
+      },
+      "post": {
+        "operationId": "BugController_createBug_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBugDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a bug",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/statistics": {
+      "get": {
+        "operationId": "BugController_getStatistics_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get bug statistics",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}": {
+      "get": {
+        "operationId": "BugController_getBugById_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get bug by ID",
+        "tags": [
+          "Bugs"
+        ]
+      },
+      "patch": {
+        "operationId": "BugController_updateBug_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBugDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update a bug",
+        "tags": [
+          "Bugs"
+        ]
+      },
+      "delete": {
+        "operationId": "BugController_deleteBug_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a bug",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/status": {
+      "put": {
+        "operationId": "BugController_changeBugStatus_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeBugStatusDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Change bug status",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/priority": {
+      "put": {
+        "operationId": "BugController_changeBugPriority_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeBugPriorityDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Change bug priority",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/assignee": {
+      "put": {
+        "operationId": "BugController_assignBug_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignBugDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Assign or unassign a bug",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/labels": {
+      "post": {
+        "operationId": "BugController_addLabel_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddBugLabelDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Add a label to a bug",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/labels/{labelId}": {
+      "delete": {
+        "operationId": "BugController_removeLabel_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "labelId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Remove a label from a bug",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/bugs": {
+      "post": {
+        "description": "Capture a bug report using API Key",
+        "operationId": "BugCaptureController_captureBug_v1",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Public API key for the project",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaptureBugDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Report a bug using API Key",
+        "tags": [
+          "Bugs"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/comments": {
+      "get": {
+        "operationId": "BugCommentController_getComments_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BugCommentDTO"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "itemCount": {
+                          "type": "number"
+                        },
+                        "itemsPerPage": {
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "currentPage",
+                        "itemCount",
+                        "itemsPerPage",
+                        "totalItems",
+                        "totalPages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "List comments for a bug",
+        "tags": [
+          "Bug Comments"
+        ]
+      },
+      "post": {
+        "operationId": "BugCommentController_createComment_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBugCommentDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugCommentDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Add a comment",
+        "tags": [
+          "Bug Comments"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/comments/{commentId}": {
+      "patch": {
+        "operationId": "BugCommentController_updateComment_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBugCommentDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugCommentDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Edit a comment",
+        "tags": [
+          "Bug Comments"
+        ]
+      },
+      "delete": {
+        "operationId": "BugCommentController_deleteComment_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a comment",
+        "tags": [
+          "Bug Comments"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/labels": {
+      "get": {
+        "operationId": "BugLabelController_getLabels_v1",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BugLabelDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List project bug labels",
+        "tags": [
+          "Bug Labels"
+        ]
+      },
+      "post": {
+        "operationId": "BugLabelController_createLabel_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBugLabelDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugLabelDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a bug label",
+        "tags": [
+          "Bug Labels"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/labels/{labelId}": {
+      "patch": {
+        "operationId": "BugLabelController_updateLabel_v1",
+        "parameters": [
+          {
+            "name": "labelId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBugLabelDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugLabelDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update a bug label",
+        "tags": [
+          "Bug Labels"
+        ]
+      },
+      "delete": {
+        "operationId": "BugLabelController_deleteLabel_v1",
+        "parameters": [
+          {
+            "name": "labelId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a bug label",
+        "tags": [
+          "Bug Labels"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/steps": {
+      "get": {
+        "operationId": "BugReproductionStepController_getSteps_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BugReproductionStepDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List reproduction steps",
+        "tags": [
+          "Bug Reproduction Steps"
+        ]
+      },
+      "post": {
+        "operationId": "BugReproductionStepController_createStep_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBugReproductionStepDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugReproductionStepDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Add a reproduction step",
+        "tags": [
+          "Bug Reproduction Steps"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/steps/{stepId}": {
+      "patch": {
+        "operationId": "BugReproductionStepController_updateStep_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stepId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBugReproductionStepDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BugReproductionStepDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update a reproduction step",
+        "tags": [
+          "Bug Reproduction Steps"
+        ]
+      },
+      "delete": {
+        "operationId": "BugReproductionStepController_deleteStep_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stepId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a reproduction step",
+        "tags": [
+          "Bug Reproduction Steps"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/steps/reorder": {
+      "put": {
+        "operationId": "BugReproductionStepController_reorderSteps_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderBugReproductionStepsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BugReproductionStepDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Bulk reorder reproduction steps",
+        "tags": [
+          "Bug Reproduction Steps"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/activities": {
+      "get": {
+        "operationId": "BugActivityController_getActivities_v1",
+        "parameters": [
+          {
+            "name": "bugId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BugActivityDTO"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "itemCount": {
+                          "type": "number"
+                        },
+                        "itemsPerPage": {
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "currentPage",
+                        "itemCount",
+                        "itemsPerPage",
+                        "totalItems",
+                        "totalPages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "List bug activity log",
+        "tags": [
+          "Bug Activities"
+        ]
+      }
+    },
+    "/api/v1/organizations": {
+      "get": {
+        "operationId": "OrganizationController_getOrganizations_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Organizations"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}": {
+      "get": {
+        "operationId": "OrganizationController_getOrganizationById_v1",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Organizations"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects": {
+      "get": {
+        "operationId": "ProjectController_getProjects_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Projects"
+        ]
+      },
+      "post": {
+        "operationId": "ProjectController_createProject_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Projects"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}": {
+      "get": {
+        "operationId": "ProjectController_getProjectById_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Projects"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/api-keys": {
+      "post": {
+        "operationId": "ApiKeyController_createApiKey_v1",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApiKeyDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "API Keys"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/exceptions": {
+      "get": {
+        "description": "Retrieve paginated list of exceptions for a specific project. Supports filtering by issue ID and pagination.",
+        "operationId": "ExceptionController_getExceptions_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get project exceptions",
+        "tags": [
+          "Exceptions"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/exceptions/{exceptionId}": {
+      "get": {
+        "description": "Retrieve a specific exception by its ID within the project scope.",
+        "operationId": "ExceptionController_getExceptionById_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get exception by ID",
+        "tags": [
+          "Exceptions"
+        ]
+      }
+    },
+    "/api/v1/exceptions": {
+      "post": {
+        "operationId": "ExceptionCaptureController_captureException_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExceptionDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Exceptions"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/exceptions/statistics/daily": {
+      "get": {
+        "description": "Returns time series data for number of exceptions per day. Supports optional from/to date filters (ISO strings).",
+        "operationId": "ExceptionStatisticController_getDailyStatistic_v1",
+        "parameters": [
+          {
+            "name": "from",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get exceptions count per day",
+        "tags": [
+          "Exception Statistics"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/issues": {
+      "get": {
+        "description": "Retrieves a paginated list of issues for a specific project. Supports filtering, sorting, and pagination.",
+        "operationId": "IssueController_getIssues_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get paginated list of project issues",
+        "tags": [
+          "Issues"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/issues/{issueId}": {
+      "get": {
+        "description": "Retrieves detailed information about a specific issue by its ID.",
+        "operationId": "IssueController_getIssueById_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get issue by ID",
+        "tags": [
+          "Issues"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/issues/{issueId}/status": {
+      "put": {
+        "description": "Updates the status of a specific issue. Valid status values include open, in_progress, resolved, and closed.",
+        "operationId": "IssueController_changeIssueStatus_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeIssueStatusDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Change issue status",
+        "tags": [
+          "Issues"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/issues/{issueId}/severity": {
+      "put": {
+        "description": "Updates the severity level of a specific issue. Valid severity values include low, medium, high, and critical.",
+        "operationId": "IssueController_changeIssueSeverity_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeIssueSeverityDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Change issue severity",
+        "tags": [
+          "Issues"
+        ]
+      }
+    },
+    "/api/v1/integrations/aws/waf/credentials": {
+      "get": {
+        "operationId": "AwsWafIntegrationController_getCredentials_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AWS WAF Integration"
+        ]
+      },
+      "post": {
+        "operationId": "AwsWafIntegrationController_setCredentials_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AwsWafCredentialsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AWS WAF Integration"
+        ]
+      },
+      "delete": {
+        "operationId": "AwsWafIntegrationController_deleteCredentials_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AWS WAF Integration"
+        ]
+      }
+    },
+    "/api/v1/ip-details/{ip}": {
+      "get": {
+        "operationId": "IpDetailsController_getIpDetails_v1",
+        "parameters": [
+          {
+            "name": "ip",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "IP Details"
+        ]
+      }
+    },
+    "/api/v1/waitlist": {
+      "post": {
+        "operationId": "WaitlistController_addToWaitlist_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WaitlistParticipantDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Waitlist"
+        ]
+      }
+    },
+    "/api/v1/waitlist/count": {
+      "get": {
+        "operationId": "WaitlistController_getWaitlistCount_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Waitlist"
+        ]
+      }
+    },
+    "/api/v1/events": {
+      "post": {
+        "description": "Capture an event for a project",
+        "operationId": "EventCaptureController_captureEvent_v1",
+        "parameters": [
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Public API key for the project",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Capture an event",
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/events": {
+      "get": {
+        "description": "Get all events for a project",
+        "operationId": "EventController_getEvents_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get events",
+        "tags": [
+          "Events"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/events/notification-triggers": {
+      "get": {
+        "description": "Get all event notification triggers for a project",
+        "operationId": "EventNotificationTriggerController_getEventNotificationTriggers_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventNotificationTriggerDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get event notification triggers",
+        "tags": [
+          "Event Notification Triggers"
+        ]
+      },
+      "post": {
+        "description": "Create a new event notification trigger for a project",
+        "operationId": "EventNotificationTriggerController_createEventNotificationTrigger_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventNotificationTriggerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotificationTriggerDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create event notification trigger",
+        "tags": [
+          "Event Notification Triggers"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/projects/{projectId}/events/notification-triggers/{notificationTriggerId}": {
+      "get": {
+        "description": "Get a specific event notification trigger by ID",
+        "operationId": "EventNotificationTriggerController_getEventNotificationTriggerById_v1",
+        "parameters": [
+          {
+            "name": "notificationTriggerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotificationTriggerDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get event notification trigger by ID",
+        "tags": [
+          "Event Notification Triggers"
+        ]
+      },
+      "put": {
+        "description": "Update an existing event notification trigger",
+        "operationId": "EventNotificationTriggerController_updateEventNotificationTrigger_v1",
+        "parameters": [
+          {
+            "name": "notificationTriggerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventNotificationTriggerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventNotificationTriggerDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update event notification trigger",
+        "tags": [
+          "Event Notification Triggers"
+        ]
+      },
+      "delete": {
+        "description": "Delete an event notification trigger",
+        "operationId": "EventNotificationTriggerController_deleteEventNotificationTrigger_v1",
+        "parameters": [
+          {
+            "name": "notificationTriggerId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete event notification trigger",
+        "tags": [
+          "Event Notification Triggers"
+        ]
+      }
+    },
+    "/api/v1/ai/agents/{projectId}/chat": {
+      "post": {
+        "operationId": "AiAgentController_chat_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AI Agents"
+        ]
+      }
+    },
+    "/api/v1/ai/agents/conversations": {
+      "get": {
+        "operationId": "AiAgentController_getConversations_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AI Agents"
+        ]
+      }
+    },
+    "/api/v1/ai/agents/conversations/{conversationId}": {
+      "get": {
+        "operationId": "AiAgentController_getConversation_v1",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AI Agents"
+        ]
+      },
+      "delete": {
+        "operationId": "AiAgentController_deleteConversation_v1",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AI Agents"
+        ]
+      }
+    },
+    "/api/v1/billing/subscriptions/{organizationId}": {
+      "get": {
+        "operationId": "SubscriptionController_getSubscriptions_v1",
+        "parameters": [
+          {
+            "name": "organizationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "active",
+            "required": false,
+            "in": "query",
+            "description": "Whether to return active subscriptions",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubscriptionDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Subscriptions"
+        ]
+      }
+    },
+    "/api/{projectId}/envelope": {
+      "post": {
+        "operationId": "EnvelopeController_ingestEnvelope",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Envelope"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/monitors": {
+      "get": {
+        "operationId": "MonitorController_getMonitors_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MonitorDTO"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "itemCount": {
+                          "type": "number"
+                        },
+                        "itemsPerPage": {
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "currentPage",
+                        "itemCount",
+                        "itemsPerPage",
+                        "totalItems",
+                        "totalPages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "List monitors",
+        "tags": [
+          "Uptime Monitors"
+        ]
+      },
+      "post": {
+        "operationId": "MonitorController_createMonitor_v1",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMonitorDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a monitor",
+        "tags": [
+          "Uptime Monitors"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/monitors/{monitorId}": {
+      "get": {
+        "operationId": "MonitorController_getMonitorById_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get monitor by ID",
+        "tags": [
+          "Uptime Monitors"
+        ]
+      },
+      "patch": {
+        "operationId": "MonitorController_updateMonitor_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMonitorDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update a monitor",
+        "tags": [
+          "Uptime Monitors"
+        ]
+      },
+      "delete": {
+        "operationId": "MonitorController_deleteMonitor_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositiveResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete a monitor",
+        "tags": [
+          "Uptime Monitors"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/monitors/{monitorId}/pause": {
+      "post": {
+        "operationId": "MonitorController_pauseMonitor_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Pause a monitor",
+        "tags": [
+          "Uptime Monitors"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/monitors/{monitorId}/resume": {
+      "post": {
+        "operationId": "MonitorController_resumeMonitor_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Resume a monitor",
+        "tags": [
+          "Uptime Monitors"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/monitors/{monitorId}/checks": {
+      "get": {
+        "operationId": "MonitorCheckController_getChecks_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MonitorCheckDTO"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "itemCount": {
+                          "type": "number"
+                        },
+                        "itemsPerPage": {
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "currentPage",
+                        "itemCount",
+                        "itemsPerPage",
+                        "totalItems",
+                        "totalPages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get check history for a monitor",
+        "tags": [
+          "Uptime Monitor Checks"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/monitors/{monitorId}/summary": {
+      "get": {
+        "operationId": "MonitorCheckController_getSummary_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorSummaryDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get monitor summary (uptime duration, last check)",
+        "tags": [
+          "Uptime Monitor Checks"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/monitors/{monitorId}/response-times": {
+      "get": {
+        "operationId": "MonitorCheckController_getResponseTimes_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "region",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "EUROPE",
+                "NORTH_AMERICA",
+                "ASIA",
+                "AUSTRALIA"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "period",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "day",
+                "week",
+                "month"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseTimePointDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get response time series",
+        "tags": [
+          "Uptime Monitor Checks"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/monitors/{monitorId}/availability": {
+      "get": {
+        "operationId": "MonitorCheckController_getAvailability_v1",
+        "parameters": [
+          {
+            "name": "monitorId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AvailabilityPeriodDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get availability stats",
+        "tags": [
+          "Uptime Monitor Checks"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/incidents": {
+      "get": {
+        "operationId": "IncidentController_getIncidents_v1",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncidentDTO"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "itemCount": {
+                          "type": "number"
+                        },
+                        "itemsPerPage": {
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "currentPage",
+                        "itemCount",
+                        "itemsPerPage",
+                        "totalItems",
+                        "totalPages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "List incidents",
+        "tags": [
+          "Uptime Incidents"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/incidents/{incidentId}": {
+      "get": {
+        "operationId": "IncidentController_getIncidentById_v1",
+        "parameters": [
+          {
+            "name": "incidentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncidentDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get incident by ID",
+        "tags": [
+          "Uptime Incidents"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/incidents/{incidentId}/timeline": {
+      "get": {
+        "operationId": "IncidentController_getTimeline_v1",
+        "parameters": [
+          {
+            "name": "incidentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/IncidentTimelineEntryDTO"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "itemCount": {
+                          "type": "number"
+                        },
+                        "itemsPerPage": {
+                          "type": "number"
+                        },
+                        "totalItems": {
+                          "type": "number"
+                        },
+                        "totalPages": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "currentPage",
+                        "itemCount",
+                        "itemsPerPage",
+                        "totalItems",
+                        "totalPages"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get incident timeline",
+        "tags": [
+          "Uptime Incidents"
+        ]
+      },
+      "post": {
+        "operationId": "IncidentController_addComment_v1",
+        "parameters": [
+          {
+            "name": "incidentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncidentTimelineEntryDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Post a comment or post-mortem",
+        "tags": [
+          "Uptime Incidents"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/incidents/{incidentId}/acknowledge": {
+      "post": {
+        "operationId": "IncidentController_acknowledgeIncident_v1",
+        "parameters": [
+          {
+            "name": "incidentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncidentDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Acknowledge an incident",
+        "tags": [
+          "Uptime Incidents"
+        ]
+      }
+    },
+    "/api/v1/organizations/{organizationId}/uptime/incidents/{incidentId}/resolve": {
+      "post": {
+        "operationId": "IncidentController_resolveIncident_v1",
+        "parameters": [
+          {
+            "name": "incidentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IncidentDTO"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Resolve an incident",
+        "tags": [
+          "Uptime Incidents"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Traque API",
+    "description": "The Traque API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "PushNotificationTokenDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "expoPushToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "expoPushToken"
+        ]
+      },
+      "BugLabelDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "color"
+        ]
+      },
+      "BugReproductionStepDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "order",
+          "description"
+        ]
+      },
+      "BugDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "IN_PROGRESS",
+              "RESOLVED",
+              "CLOSED",
+              "WONT_FIX"
+            ]
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "environment": {
+            "type": "string",
+            "nullable": true
+          },
+          "expectedBehavior": {
+            "type": "string",
+            "nullable": true
+          },
+          "actualBehavior": {
+            "type": "string",
+            "nullable": true
+          },
+          "browserContext": {
+            "type": "object",
+            "nullable": true
+          },
+          "serverContext": {
+            "type": "object",
+            "nullable": true
+          },
+          "breadcrumbs": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "SDK",
+              "DASHBOARD",
+              "BROWSER_EXTENSION"
+            ]
+          },
+          "reporterId": {
+            "type": "string",
+            "nullable": true
+          },
+          "reporterName": {
+            "type": "string",
+            "nullable": true
+          },
+          "assigneeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "assigneeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "exceptionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "labels": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BugLabelDTO"
+            }
+          },
+          "steps": {
+            "nullable": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BugReproductionStepDTO"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "title",
+          "description",
+          "status",
+          "priority",
+          "environment",
+          "expectedBehavior",
+          "actualBehavior",
+          "browserContext",
+          "serverContext",
+          "breadcrumbs",
+          "metadata",
+          "source",
+          "reporterId",
+          "reporterName",
+          "assigneeId",
+          "assigneeName",
+          "exceptionId",
+          "labels",
+          "steps"
+        ]
+      },
+      "CreateBugReproductionStepDTO": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "description",
+          "order"
+        ]
+      },
+      "CreateBugDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "environment": {
+            "type": "string"
+          },
+          "expectedBehavior": {
+            "type": "string"
+          },
+          "actualBehavior": {
+            "type": "string"
+          },
+          "exceptionId": {
+            "type": "string"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateBugReproductionStepDTO"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "priority"
+        ]
+      },
+      "UpdateBugDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "environment": {
+            "type": "string"
+          },
+          "expectedBehavior": {
+            "type": "string"
+          },
+          "actualBehavior": {
+            "type": "string"
+          }
+        }
+      },
+      "ChangeBugStatusDTO": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "IN_PROGRESS",
+              "RESOLVED",
+              "CLOSED",
+              "WONT_FIX"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "PositiveResponseDto": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string",
+            "example": "OK",
+            "description": "The result of the operation, always \"OK\""
+          }
+        },
+        "required": [
+          "result"
+        ]
+      },
+      "ChangeBugPriorityDTO": {
+        "type": "object",
+        "properties": {
+          "priority": {
+            "type": "string",
+            "enum": [
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          }
+        },
+        "required": [
+          "priority"
+        ]
+      },
+      "AssignBugDTO": {
+        "type": "object",
+        "properties": {
+          "assigneeId": {
+            "type": "string",
+            "description": "Set to null to unassign"
+          }
+        }
+      },
+      "AddBugLabelDTO": {
+        "type": "object",
+        "properties": {
+          "labelId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "labelId"
+        ]
+      },
+      "ViewportDTO": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "width",
+          "height"
+        ]
+      },
+      "BugBrowserContextDTO": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "userAgent": {
+            "type": "string"
+          },
+          "viewport": {
+            "$ref": "#/components/schemas/ViewportDTO"
+          }
+        }
+      },
+      "BugServerContextDTO": {
+        "type": "object",
+        "properties": {
+          "hostname": {
+            "type": "string"
+          },
+          "runtime": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "BreadcrumbDTO": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LOG",
+              "NAVIGATION",
+              "HTTP",
+              "ERROR"
+            ]
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "debug",
+              "info",
+              "warning",
+              "error"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "timestamp",
+          "type"
+        ]
+      },
+      "CaptureBugDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ]
+          },
+          "environment": {
+            "type": "string"
+          },
+          "expectedBehavior": {
+            "type": "string"
+          },
+          "actualBehavior": {
+            "type": "string"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateBugReproductionStepDTO"
+            }
+          },
+          "browserContext": {
+            "$ref": "#/components/schemas/BugBrowserContextDTO"
+          },
+          "serverContext": {
+            "$ref": "#/components/schemas/BugServerContextDTO"
+          },
+          "breadcrumbs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BreadcrumbDTO"
+            }
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "exceptionId": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "BugCommentDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "authorId": {
+            "type": "string"
+          },
+          "authorName": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "body",
+          "authorId",
+          "authorName",
+          "parentId"
+        ]
+      },
+      "CreateBugCommentDTO": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "body"
+        ]
+      },
+      "UpdateBugCommentDTO": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "body"
+        ]
+      },
+      "CreateBugLabelDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string",
+            "description": "Hex color code (e.g. #ff0000)"
+          }
+        },
+        "required": [
+          "name",
+          "color"
+        ]
+      },
+      "UpdateBugLabelDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string",
+            "description": "Hex color code (e.g. #ff0000)"
+          }
+        }
+      },
+      "UpdateBugReproductionStepDTO": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          }
+        }
+      },
+      "StepOrder": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "order": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "order"
+        ]
+      },
+      "ReorderBugReproductionStepsDTO": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StepOrder"
+            }
+          }
+        },
+        "required": [
+          "steps"
+        ]
+      },
+      "BugActivityDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "STATUS_CHANGED",
+              "PRIORITY_CHANGED",
+              "ASSIGNEE_CHANGED",
+              "LABEL_ADDED",
+              "LABEL_REMOVED",
+              "COMMENT_ADDED"
+            ]
+          },
+          "oldValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "newValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "actorId": {
+            "type": "string",
+            "nullable": true
+          },
+          "actorName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "type",
+          "oldValue",
+          "newValue",
+          "actorId",
+          "actorName"
+        ]
+      },
+      "ProjectDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "apiKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "description",
+          "platform",
+          "slug",
+          "apiKey"
+        ]
+      },
+      "CreateApiKeyDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "HttpContextDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "method": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string"
+          },
+          "clientIp": {
+            "type": "string"
+          },
+          "response": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "url",
+          "method",
+          "statusCode",
+          "status",
+          "clientIp",
+          "response"
+        ]
+      },
+      "ExceptionFrameDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "frameIndex": {
+            "type": "number"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "functionName": {
+            "type": "string"
+          },
+          "lineNumber": {
+            "type": "number"
+          },
+          "columnNumber": {
+            "type": "number"
+          },
+          "absolutePath": {
+            "type": "string"
+          },
+          "module": {
+            "type": "string"
+          },
+          "inApp": {
+            "type": "boolean"
+          },
+          "platform": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "frameIndex",
+          "filename",
+          "functionName",
+          "lineNumber",
+          "columnNumber",
+          "absolutePath",
+          "module",
+          "inApp",
+          "platform"
+        ]
+      },
+      "StacktraceDTO": {
+        "type": "object",
+        "properties": {
+          "stack": {
+            "type": "string"
+          },
+          "frames": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExceptionFrameDTO"
+            }
+          }
+        },
+        "required": [
+          "stack",
+          "frames"
+        ]
+      },
+      "ExceptionDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "environment": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "suggestion": {
+            "type": "string"
+          },
+          "httpContext": {
+            "$ref": "#/components/schemas/HttpContextDTO"
+          },
+          "stacktrace": {
+            "$ref": "#/components/schemas/StacktraceDTO"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "environment",
+          "platform",
+          "name",
+          "message",
+          "details",
+          "suggestion",
+          "httpContext",
+          "stacktrace"
+        ]
+      },
+      "ChangeIssueStatusDTO": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "ChangeIssueSeverityDTO": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "severity"
+        ]
+      },
+      "AwsWafCredentialsDTO": {
+        "type": "object",
+        "properties": {
+          "region": {
+            "type": "string"
+          },
+          "accessKeyId": {
+            "type": "string"
+          },
+          "secretAccessKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "region",
+          "accessKeyId",
+          "secretAccessKey"
+        ]
+      },
+      "WaitlistParticipantDTO": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "EventDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the event"
+          },
+          "properties": {
+            "type": "object",
+            "description": "The properties of the event",
+            "additionalProperties": true
+          },
+          "personId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "properties",
+          "personId"
+        ]
+      },
+      "EventNotificationTriggerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectDTO"
+          },
+          "onEvent": {
+            "type": "string"
+          },
+          "mobilePush": {
+            "type": "boolean"
+          },
+          "discord": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "project",
+          "onEvent",
+          "mobilePush",
+          "discord",
+          "email"
+        ]
+      },
+      "ConversationDTO": {
+        "type": "object",
+        "properties": {}
+      },
+      "SubscriptionDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "plan": {
+            "type": "string"
+          },
+          "referenceId": {
+            "type": "string",
+            "description": "Internal reference to user or organization"
+          },
+          "stripeCustomerId": {
+            "type": "string"
+          },
+          "stripeSubscriptionId": {
+            "type": "string"
+          },
+          "polarCustomerId": {
+            "type": "string"
+          },
+          "polarSubscriptionId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "periodStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "periodEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cancelAtPeriodEnd": {
+            "type": "boolean"
+          },
+          "seats": {
+            "type": "number"
+          },
+          "trialStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trialEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "STRIPE",
+              "POLAR"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "plan",
+          "referenceId",
+          "status",
+          "source"
+        ]
+      },
+      "MonitorDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pronounceableName": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "HTTP_UNAVAILABLE",
+              "HTTP_KEYWORD_MISSING",
+              "HTTP_KEYWORD_PRESENT",
+              "HTTP_STATUS_CODE",
+              "PING",
+              "TCP",
+              "UDP",
+              "SMTP",
+              "POP3",
+              "IMAP",
+              "DNS",
+              "PLAYWRIGHT"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "UP",
+              "DOWN",
+              "PAUSED",
+              "PENDING"
+            ]
+          },
+          "checkIntervalSeconds": {
+            "type": "number"
+          },
+          "confirmationPeriodSeconds": {
+            "type": "number"
+          },
+          "recoveryPeriodSeconds": {
+            "type": "number"
+          },
+          "requestTimeoutSeconds": {
+            "type": "number"
+          },
+          "lastCheckedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "httpMethod": {
+            "type": "string",
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "PATCH",
+              "DELETE",
+              "HEAD",
+              "OPTIONS"
+            ]
+          },
+          "requestBody": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestHeaders": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "object"
+            }
+          },
+          "followRedirects": {
+            "type": "boolean"
+          },
+          "keepCookiesOnRedirect": {
+            "type": "boolean"
+          },
+          "basicAuthUsername": {
+            "type": "string",
+            "nullable": true
+          },
+          "basicAuthPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "proxyHost": {
+            "type": "string",
+            "nullable": true
+          },
+          "proxyPort": {
+            "type": "number",
+            "nullable": true
+          },
+          "keyword": {
+            "type": "string",
+            "nullable": true
+          },
+          "expectedStatusCode": {
+            "type": "number",
+            "nullable": true
+          },
+          "port": {
+            "type": "number",
+            "nullable": true
+          },
+          "ipVersion": {
+            "type": "string",
+            "enum": [
+              "IPV4",
+              "IPV6",
+              "BOTH"
+            ]
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "EUROPE",
+                "NORTH_AMERICA",
+                "ASIA",
+                "AUSTRALIA"
+              ]
+            }
+          },
+          "sslVerification": {
+            "type": "boolean"
+          },
+          "sslExpirationAlertDays": {
+            "type": "number",
+            "nullable": true
+          },
+          "domainExpirationAlertDays": {
+            "type": "number",
+            "nullable": true
+          },
+          "maintenanceWindowStartTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "maintenanceWindowEndTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "maintenanceWindowTimezone": {
+            "type": "string",
+            "nullable": true
+          },
+          "maintenanceWindowDays": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "MON",
+                "TUE",
+                "WED",
+                "THU",
+                "FRI",
+                "SAT",
+                "SUN"
+              ]
+            }
+          },
+          "notificationChannels": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "CALL",
+                "SMS",
+                "EMAIL",
+                "PUSH",
+                "CRITICAL_ALERT"
+              ]
+            }
+          },
+          "escalationPolicy": {
+            "type": "string",
+            "enum": [
+              "DO_NOTHING",
+              "IMMEDIATELY",
+              "WITHIN_3_MIN",
+              "WITHIN_5_MIN",
+              "WITHIN_10_MIN"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "name",
+          "pronounceableName",
+          "url",
+          "type",
+          "status",
+          "checkIntervalSeconds",
+          "confirmationPeriodSeconds",
+          "recoveryPeriodSeconds",
+          "requestTimeoutSeconds",
+          "lastCheckedAt",
+          "httpMethod",
+          "requestBody",
+          "requestHeaders",
+          "followRedirects",
+          "keepCookiesOnRedirect",
+          "basicAuthUsername",
+          "basicAuthPassword",
+          "proxyHost",
+          "proxyPort",
+          "keyword",
+          "expectedStatusCode",
+          "port",
+          "ipVersion",
+          "regions",
+          "sslVerification",
+          "sslExpirationAlertDays",
+          "domainExpirationAlertDays",
+          "maintenanceWindowStartTime",
+          "maintenanceWindowEndTime",
+          "maintenanceWindowTimezone",
+          "maintenanceWindowDays",
+          "notificationChannels",
+          "escalationPolicy"
+        ]
+      },
+      "RequestHeaderDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ]
+      },
+      "CreateMonitorDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "pronounceableName": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "HTTP_UNAVAILABLE",
+              "HTTP_KEYWORD_MISSING",
+              "HTTP_KEYWORD_PRESENT",
+              "HTTP_STATUS_CODE",
+              "PING",
+              "TCP",
+              "UDP",
+              "SMTP",
+              "POP3",
+              "IMAP",
+              "DNS",
+              "PLAYWRIGHT"
+            ]
+          },
+          "checkIntervalSeconds": {
+            "type": "number",
+            "default": 180
+          },
+          "confirmationPeriodSeconds": {
+            "type": "number",
+            "default": 0
+          },
+          "recoveryPeriodSeconds": {
+            "type": "number",
+            "default": 180
+          },
+          "requestTimeoutSeconds": {
+            "type": "number",
+            "default": 30
+          },
+          "httpMethod": {
+            "type": "string",
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "PATCH",
+              "DELETE",
+              "HEAD",
+              "OPTIONS"
+            ],
+            "default": "GET"
+          },
+          "requestBody": {
+            "type": "string"
+          },
+          "requestHeaders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RequestHeaderDTO"
+            }
+          },
+          "followRedirects": {
+            "type": "boolean",
+            "default": true
+          },
+          "keepCookiesOnRedirect": {
+            "type": "boolean",
+            "default": true
+          },
+          "basicAuthUsername": {
+            "type": "string"
+          },
+          "basicAuthPassword": {
+            "type": "string"
+          },
+          "proxyHost": {
+            "type": "string"
+          },
+          "proxyPort": {
+            "type": "number"
+          },
+          "keyword": {
+            "type": "string"
+          },
+          "expectedStatusCode": {
+            "type": "number"
+          },
+          "port": {
+            "type": "number"
+          },
+          "ipVersion": {
+            "type": "string",
+            "enum": [
+              "IPV4",
+              "IPV6",
+              "BOTH"
+            ],
+            "default": "BOTH"
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "EUROPE",
+                "NORTH_AMERICA",
+                "ASIA",
+                "AUSTRALIA"
+              ]
+            }
+          },
+          "sslVerification": {
+            "type": "boolean",
+            "default": true
+          },
+          "sslExpirationAlertDays": {
+            "type": "number"
+          },
+          "domainExpirationAlertDays": {
+            "type": "number"
+          },
+          "maintenanceWindowStartTime": {
+            "type": "string",
+            "description": "HH:mm format"
+          },
+          "maintenanceWindowEndTime": {
+            "type": "string",
+            "description": "HH:mm format"
+          },
+          "maintenanceWindowTimezone": {
+            "type": "string",
+            "description": "IANA timezone"
+          },
+          "maintenanceWindowDays": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "MON",
+                "TUE",
+                "WED",
+                "THU",
+                "FRI",
+                "SAT",
+                "SUN"
+              ]
+            }
+          },
+          "notificationChannels": {
+            "type": "array",
+            "default": [
+              "EMAIL"
+            ],
+            "items": {
+              "type": "string",
+              "enum": [
+                "CALL",
+                "SMS",
+                "EMAIL",
+                "PUSH",
+                "CRITICAL_ALERT"
+              ]
+            }
+          },
+          "escalationPolicy": {
+            "type": "string",
+            "enum": [
+              "DO_NOTHING",
+              "IMMEDIATELY",
+              "WITHIN_3_MIN",
+              "WITHIN_5_MIN",
+              "WITHIN_10_MIN"
+            ],
+            "default": "IMMEDIATELY"
+          }
+        },
+        "required": [
+          "name",
+          "url",
+          "type"
+        ]
+      },
+      "UpdateMonitorDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "pronounceableName": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "HTTP_UNAVAILABLE",
+              "HTTP_KEYWORD_MISSING",
+              "HTTP_KEYWORD_PRESENT",
+              "HTTP_STATUS_CODE",
+              "PING",
+              "TCP",
+              "UDP",
+              "SMTP",
+              "POP3",
+              "IMAP",
+              "DNS",
+              "PLAYWRIGHT"
+            ]
+          },
+          "checkIntervalSeconds": {
+            "type": "number",
+            "default": 180
+          },
+          "confirmationPeriodSeconds": {
+            "type": "number",
+            "default": 0
+          },
+          "recoveryPeriodSeconds": {
+            "type": "number",
+            "default": 180
+          },
+          "requestTimeoutSeconds": {
+            "type": "number",
+            "default": 30
+          },
+          "httpMethod": {
+            "type": "string",
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "PATCH",
+              "DELETE",
+              "HEAD",
+              "OPTIONS"
+            ],
+            "default": "GET"
+          },
+          "requestBody": {
+            "type": "string"
+          },
+          "requestHeaders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RequestHeaderDTO"
+            }
+          },
+          "followRedirects": {
+            "type": "boolean",
+            "default": true
+          },
+          "keepCookiesOnRedirect": {
+            "type": "boolean",
+            "default": true
+          },
+          "basicAuthUsername": {
+            "type": "string"
+          },
+          "basicAuthPassword": {
+            "type": "string"
+          },
+          "proxyHost": {
+            "type": "string"
+          },
+          "proxyPort": {
+            "type": "number"
+          },
+          "keyword": {
+            "type": "string"
+          },
+          "expectedStatusCode": {
+            "type": "number"
+          },
+          "port": {
+            "type": "number"
+          },
+          "ipVersion": {
+            "type": "string",
+            "enum": [
+              "IPV4",
+              "IPV6",
+              "BOTH"
+            ],
+            "default": "BOTH"
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "EUROPE",
+                "NORTH_AMERICA",
+                "ASIA",
+                "AUSTRALIA"
+              ]
+            }
+          },
+          "sslVerification": {
+            "type": "boolean",
+            "default": true
+          },
+          "sslExpirationAlertDays": {
+            "type": "number"
+          },
+          "domainExpirationAlertDays": {
+            "type": "number"
+          },
+          "maintenanceWindowStartTime": {
+            "type": "string",
+            "description": "HH:mm format"
+          },
+          "maintenanceWindowEndTime": {
+            "type": "string",
+            "description": "HH:mm format"
+          },
+          "maintenanceWindowTimezone": {
+            "type": "string",
+            "description": "IANA timezone"
+          },
+          "maintenanceWindowDays": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "MON",
+                "TUE",
+                "WED",
+                "THU",
+                "FRI",
+                "SAT",
+                "SUN"
+              ]
+            }
+          },
+          "notificationChannels": {
+            "type": "array",
+            "default": [
+              "EMAIL"
+            ],
+            "items": {
+              "type": "string",
+              "enum": [
+                "CALL",
+                "SMS",
+                "EMAIL",
+                "PUSH",
+                "CRITICAL_ALERT"
+              ]
+            }
+          },
+          "escalationPolicy": {
+            "type": "string",
+            "enum": [
+              "DO_NOTHING",
+              "IMMEDIATELY",
+              "WITHIN_3_MIN",
+              "WITHIN_5_MIN",
+              "WITHIN_10_MIN"
+            ],
+            "default": "IMMEDIATELY"
+          }
+        }
+      },
+      "MonitorCheckDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "UP",
+              "DOWN"
+            ]
+          },
+          "region": {
+            "type": "string",
+            "enum": [
+              "EUROPE",
+              "NORTH_AMERICA",
+              "ASIA",
+              "AUSTRALIA"
+            ],
+            "nullable": true
+          },
+          "checkedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "httpStatusCode": {
+            "type": "number",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "dnsLookupMs": {
+            "type": "number",
+            "nullable": true
+          },
+          "tcpConnectionMs": {
+            "type": "number",
+            "nullable": true
+          },
+          "tlsHandshakeMs": {
+            "type": "number",
+            "nullable": true
+          },
+          "firstByteMs": {
+            "type": "number",
+            "nullable": true
+          },
+          "totalResponseMs": {
+            "type": "number",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "status",
+          "region",
+          "checkedAt",
+          "httpStatusCode",
+          "errorMessage",
+          "dnsLookupMs",
+          "tcpConnectionMs",
+          "tlsHandshakeMs",
+          "firstByteMs",
+          "totalResponseMs"
+        ]
+      },
+      "MonitorSummaryDTO": {
+        "type": "object",
+        "properties": {
+          "currentlyUpForMs": {
+            "type": "number",
+            "nullable": true,
+            "example": 10000,
+            "description": "The uptime duration in milliseconds"
+          },
+          "lastCheckedAt": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2026-04-01T12:00:00.000Z",
+            "description": "The last check time"
+          }
+        },
+        "required": [
+          "currentlyUpForMs",
+          "lastCheckedAt"
+        ]
+      },
+      "ResponseTimePointDTO": {
+        "type": "object",
+        "properties": {
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-04-01T12:00:00.000Z",
+            "description": "The time of the check"
+          },
+          "dnsLookupMs": {
+            "type": "number",
+            "nullable": true,
+            "example": 100,
+            "description": "The DNS lookup time in milliseconds"
+          },
+          "tcpConnectionMs": {
+            "type": "number",
+            "nullable": true,
+            "example": 200,
+            "description": "The TCP connection time in milliseconds"
+          },
+          "tlsHandshakeMs": {
+            "type": "number",
+            "nullable": true,
+            "example": 300,
+            "description": "The TLS handshake time in milliseconds"
+          },
+          "totalResponseMs": {
+            "type": "number",
+            "nullable": true,
+            "example": 400,
+            "description": "The total response time in milliseconds"
+          }
+        },
+        "required": [
+          "checkedAt",
+          "dnsLookupMs",
+          "tcpConnectionMs",
+          "tlsHandshakeMs",
+          "totalResponseMs"
+        ]
+      },
+      "AvailabilityPeriodDTO": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "from": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "to": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "availabilityPercent": {
+            "type": "number"
+          },
+          "downtimeMs": {
+            "type": "number"
+          },
+          "incidentCount": {
+            "type": "number"
+          },
+          "longestDowntimeMs": {
+            "type": "number"
+          },
+          "averageDowntimeMs": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "label",
+          "from",
+          "to",
+          "availabilityPercent",
+          "downtimeMs",
+          "incidentCount",
+          "longestDowntimeMs",
+          "averageDowntimeMs"
+        ]
+      },
+      "IncidentDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "monitorId": {
+            "type": "string"
+          },
+          "organizationId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "STARTED",
+              "ACKNOWLEDGED",
+              "RESOLVED"
+            ]
+          },
+          "cause": {
+            "type": "string"
+          },
+          "checkedUrl": {
+            "type": "string"
+          },
+          "startedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "acknowledgedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "acknowledgedById": {
+            "type": "string",
+            "nullable": true
+          },
+          "resolvedAt": {
+            "format": "date-time",
+            "type": "string",
+            "nullable": true
+          },
+          "resolvedAutomatically": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "monitorId",
+          "organizationId",
+          "status",
+          "cause",
+          "checkedUrl",
+          "startedAt",
+          "acknowledgedAt",
+          "acknowledgedById",
+          "resolvedAt",
+          "resolvedAutomatically"
+        ]
+      },
+      "IncidentTimelineEntryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "CHECK_FAILED",
+              "INCIDENT_STARTED",
+              "NOTIFICATION_SENT",
+              "MONITOR_RECOVERED",
+              "WAITING_FOR_RECOVERY",
+              "INCIDENT_RESOLVED",
+              "INCIDENT_ACKNOWLEDGED",
+              "COMMENT"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string",
+            "enum": [
+              "EUROPE",
+              "NORTH_AMERICA",
+              "ASIA",
+              "AUSTRALIA"
+            ],
+            "nullable": true
+          },
+          "metadata": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "type",
+          "message",
+          "region",
+          "metadata"
+        ]
+      }
+    }
+  }
+}
