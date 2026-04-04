@@ -1,10 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import {
-  createFileRoute,
-  Link,
-  notFound,
-  useRouter,
-} from '@tanstack/react-router';
+import { createFileRoute, notFound, useRouter } from '@tanstack/react-router';
 import { type } from 'arktype';
 import {
   ArrowLeft,
