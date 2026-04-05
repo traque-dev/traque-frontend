@@ -10,13 +10,17 @@ import { type } from 'arktype';
 import {
   ArrowRight,
   Bug,
+  Check,
   CheckCircle2,
   Circle,
   Clock,
+  Copy,
+  Info,
   Minus,
   User,
   XCircle,
 } from 'lucide-react';
+import { useState } from 'react';
 import { getBugsQueryOptions } from '@/api/bugs/query-options';
 import { getProjectsQueryOptions } from '@/api/projects/query-options';
 import { OrganizationProjectGate } from '@/components/organization-project-gate';
@@ -160,6 +164,59 @@ const STATUS_TABS: Array<{ value: BugStatus | 'ALL'; label: string }> = [
   { value: 'WONT_FIX', label: "Won't Fix" },
 ];
 
+function ReportingLinkBanner({ apiKey }: { apiKey: string | undefined }) {
+  const [copied, setCopied] = useState(false);
+
+  const reportUrl = apiKey
+    ? `${window.location.origin}/bugs/report?key=${apiKey}`
+    : null;
+
+  const handleCopy = async () => {
+    if (!reportUrl) return;
+    try {
+      await navigator.clipboard.writeText(reportUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  return (
+    <div className="flex gap-3 rounded-xl border bg-muted/30 px-4 py-3.5">
+      <Info className="size-4 shrink-0 text-muted-foreground mt-0.5" />
+      <div className="flex-1 min-w-0 space-y-2">
+        <div>
+          <p className="text-sm font-semibold leading-tight">
+            Share this URL with your team
+          </p>
+          <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+            Let your colleagues submit bug reports directly. Share the following
+            URL on your team&apos;s Slack, wiki, or README.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={handleCopy}
+          disabled={!reportUrl}
+          className="group flex w-full items-center justify-between gap-3 rounded-lg border bg-background px-3 py-2 transition-colors hover:bg-muted/60 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span className="truncate font-mono text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+            {reportUrl ?? 'No API key — generate one in project settings'}
+          </span>
+          <span className="shrink-0 text-muted-foreground group-hover:text-foreground transition-colors">
+            {copied ? (
+              <Check className="size-3.5 text-emerald-500" />
+            ) : (
+              <Copy className="size-3.5" />
+            )}
+          </span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Bug card
 // ---------------------------------------------------------------------------
@@ -249,6 +306,8 @@ function BugsPage() {
 
   const allBugs = bugsPage?.items ?? [];
 
+  const selectedProject = projects?.find((p) => p.id === projectId);
+
   const activeStatus = (status as BugStatus | 'ALL') ?? 'ALL';
   const activePriority = (priority as BugPriority | undefined) ?? undefined;
 
@@ -281,6 +340,9 @@ function BugsPage() {
           </Badge>
         )}
       </div>
+
+      {/* Reporting link banner */}
+      <ReportingLinkBanner apiKey={selectedProject?.apiKey} />
 
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2">
