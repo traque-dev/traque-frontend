@@ -6,6 +6,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Loader2,
+  Paperclip,
   Plus,
   RotateCcw,
   Trash2,
@@ -14,7 +15,9 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useId, useState } from 'react';
 import { z } from 'zod/v4';
 import { captureBug } from '@/api/bugs';
+import { uploadFile } from '@/api/files';
 import { ErrorMessage } from '@/components/error-message';
+import { FileUpload } from '@/components/file-upload';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -39,8 +42,18 @@ const STEPS = [
   { label: 'Details', description: 'What is the bug?' },
   { label: 'Context', description: 'What were you doing?' },
   { label: 'Steps', description: 'How to reproduce?' },
+  { label: 'Files', description: 'Attach screenshots or logs' },
   { label: 'Review', description: 'Confirm & submit' },
 ] as const;
+
+const MAX_FILE_SIZE_MB = 10;
+const MAX_FILES = 5;
+
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
 
 const PRIORITIES: {
   value: BugPriority;
@@ -198,6 +211,7 @@ function ReportBugPage() {
   const [stepErrors, setStepErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<'form' | 'success' | 'error'>('form');
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
 
   const form = useForm({
     defaultValues: {
@@ -210,6 +224,17 @@ function ReportBugPage() {
     } satisfies FormValues,
     onSubmit: async ({ value }) => {
       try {
+        let fileIds: string[] | undefined;
+
+        if (attachedFiles.length > 0) {
+          const uploaded = await Promise.all(
+            attachedFiles.map((file) =>
+              uploadFile({ file, purpose: 'BUG' }, key),
+            ),
+          );
+          fileIds = uploaded.map((f) => f.id);
+        }
+
         await captureBug(key, {
           title: value.title,
           priority: (value.priority as BugPriority) || undefined,
@@ -224,6 +249,7 @@ function ReportBugPage() {
                   order: i + 1,
                 }))
               : undefined,
+          fileIds,
         });
         setStatus('success');
       } catch (err) {
@@ -320,6 +346,7 @@ function ReportBugPage() {
                 form.reset();
                 setReproSteps([]);
                 setNewStepText('');
+                setAttachedFiles([]);
                 setStep(0);
                 setStatus('form');
               }}
@@ -362,7 +389,7 @@ function ReportBugPage() {
               className="gap-2"
               onClick={() => {
                 setStatus('form');
-                navigate(3);
+                navigate(4);
               }}
             >
               <ArrowLeft className="size-4" />
@@ -724,8 +751,19 @@ function ReportBugPage() {
                   </div>
                 )}
 
-                {/* ── Step 4: Review ── */}
+                {/* ── Step 4: Files ── */}
                 {step === 3 && (
+                  <FileUpload
+                    files={attachedFiles}
+                    onChange={setAttachedFiles}
+                    maxFiles={MAX_FILES}
+                    maxFileSizeMb={MAX_FILE_SIZE_MB}
+                    hint="Attachments are optional — skip if you don't have any"
+                  />
+                )}
+
+                {/* ── Step 5: Review ── */}
+                {step === 4 && (
                   <form.Subscribe selector={(s) => s.values}>
                     {(values) => (
                       <div className="space-y-5">
@@ -791,6 +829,34 @@ function ReportBugPage() {
                                     </span>
                                     <span className="leading-relaxed">
                                       {s.description}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        )}
+
+                        {/* Files section */}
+                        {attachedFiles.length > 0 && (
+                          <>
+                            <Separator />
+                            <div>
+                              <p className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                                Attachments
+                              </p>
+                              <div className="rounded-xl border bg-muted/20 p-3 space-y-2">
+                                {attachedFiles.map((file) => (
+                                  <div
+                                    key={`${file.name}-${file.size}`}
+                                    className="flex items-center gap-2.5 text-sm"
+                                  >
+                                    <Paperclip className="size-3.5 flex-shrink-0 text-muted-foreground" />
+                                    <span className="truncate flex-1">
+                                      {file.name}
+                                    </span>
+                                    <span className="text-xs text-muted-foreground flex-shrink-0">
+                                      {formatFileSize(file.size)}
                                     </span>
                                   </div>
                                 ))}

@@ -8,6 +8,8 @@ import {
   Circle,
   Clock,
   Copy,
+  ExternalLink,
+  FileIcon,
   Loader2,
   MessageSquare,
   Minus,
@@ -34,6 +36,7 @@ import { getProjectsQueryOptions } from '@/api/projects/query-options';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,6 +52,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { dayjs } from '@/lib/dayjs';
 import { cn } from '@/lib/utils';
 import type { BugActivityType, BugPriority, BugStatus } from '@/types/bug';
+import type { FileDTO } from '@/types/file';
 
 // ---------------------------------------------------------------------------
 // Route
@@ -224,6 +228,125 @@ function Section({
       </h3>
       {children}
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Attachments
+// ---------------------------------------------------------------------------
+
+function getFileKind(mimeType: string): 'image' | 'video' | 'other' {
+  if (mimeType.startsWith('image/')) return 'image';
+  if (mimeType.startsWith('video/')) return 'video';
+  return 'other';
+}
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function BugAttachmentsSection({ files }: { files: FileDTO[] }) {
+  const [lightbox, setLightbox] = useState<FileDTO | null>(null);
+
+  const images = files.filter((f) => getFileKind(f.mimeType) === 'image');
+  const videos = files.filter((f) => getFileKind(f.mimeType) === 'video');
+  const others = files.filter((f) => getFileKind(f.mimeType) === 'other');
+
+  return (
+    <Section title="Attachments">
+      <div className="space-y-3">
+        {/* Image grid */}
+        {images.length > 0 && (
+          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+            {images.map((file) => (
+              <button
+                key={file.id}
+                type="button"
+                onClick={() => setLightbox(file)}
+                className="group relative aspect-square overflow-hidden rounded-lg border bg-muted/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <img
+                  src={file.url}
+                  alt={file.originalName}
+                  className="absolute inset-0 size-full object-cover transition-transform duration-200 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Videos */}
+        {videos.length > 0 && (
+          <div className="space-y-2">
+            {videos.map((file) => (
+              <div key={file.id} className="overflow-hidden rounded-xl border">
+                <video
+                  src={file.url}
+                  controls
+                  preload="metadata"
+                  className="w-full max-h-64 bg-black"
+                />
+                <div className="flex items-center gap-2 border-t bg-muted/30 px-3 py-2">
+                  <span className="flex-1 truncate text-xs font-medium">
+                    {file.originalName}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {formatBytes(file.size)}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Other files */}
+        {others.length > 0 && (
+          <div className="overflow-hidden rounded-xl border divide-y">
+            {others.map((file) => (
+              <a
+                key={file.id}
+                href={file.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-card px-4 py-3 transition-colors hover:bg-muted/30"
+              >
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border bg-muted">
+                  <FileIcon className="size-4 text-muted-foreground" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">
+                    {file.originalName}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {formatBytes(file.size)}
+                  </p>
+                </div>
+                <ExternalLink className="size-3.5 shrink-0 text-muted-foreground" />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Lightbox */}
+      <Dialog
+        open={!!lightbox}
+        onOpenChange={(open) => !open && setLightbox(null)}
+      >
+        <DialogContent className="max-w-5xl border-0 bg-black/95 p-2">
+          {lightbox && (
+            <img
+              src={lightbox.url}
+              alt={lightbox.originalName}
+              className="max-h-[85vh] w-full rounded object-contain"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+    </Section>
   );
 }
 
@@ -570,6 +693,11 @@ function BugDetailPage() {
               </div>
             )}
           </Section>
+
+          {/* Attachments */}
+          {bug.files && bug.files.length > 0 && (
+            <BugAttachmentsSection files={bug.files} />
+          )}
 
           {/* Comments */}
           <Section title="Comments">

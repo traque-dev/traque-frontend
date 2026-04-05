@@ -1,4 +1,5 @@
 import type { Base } from '@/types/base';
+import type { FileDTO } from '@/types/file';
 
 export type BugStatus =
   | 'OPEN'
@@ -50,6 +51,7 @@ export type Bug = Base & {
   exceptionId: string | null;
   labels: BugLabel[] | null;
   steps: BugReproductionStep[] | null;
+  files: FileDTO[] | null;
 };
 
 export type CreateBugReproductionStepDTO = {
@@ -136,6 +138,7 @@ export type CaptureBugDTO = {
   metadata?: Record<string, unknown>;
   exceptionId?: string;
   source?: string;
+  fileIds?: string[];
 };
 
 export type BugComment = Base & {
