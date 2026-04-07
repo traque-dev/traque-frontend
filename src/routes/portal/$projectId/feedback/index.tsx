@@ -235,7 +235,7 @@ function SubmitFeedbackPage() {
         if (attachedFiles.length > 0) {
           const uploaded = await Promise.all(
             attachedFiles.map((file) =>
-              uploadFile({ file, purpose: 'ATTACHMENT' }),
+              uploadFile({ file, purpose: 'FEEDBACK' }),
             ),
           );
           fileIds = uploaded.map((f) => f.id);

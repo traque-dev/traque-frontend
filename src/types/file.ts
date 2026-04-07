@@ -4,6 +4,7 @@ export type FilePurpose =
   | 'AI_CHAT'
   | 'AVATAR'
   | 'LOGO'
+  | 'FEEDBACK'
   | 'ATTACHMENT';
 
 export type FileDTO = {
