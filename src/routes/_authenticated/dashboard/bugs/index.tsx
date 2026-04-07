@@ -306,8 +306,6 @@ function BugsPage() {
 
   const allBugs = bugsPage?.items ?? [];
 
-  const selectedProject = projects?.find((p) => p.id === projectId);
-
   const activeStatus = (status as BugStatus | 'ALL') ?? 'ALL';
   const activePriority = (priority as BugPriority | undefined) ?? undefined;
 
