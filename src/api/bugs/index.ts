@@ -50,6 +50,17 @@ export async function createBug(
   return data;
 }
 
+export async function captureBugByProjectId(
+  projectId: Project['id'],
+  dto: CaptureBugDTO,
+): Promise<Bug> {
+  const url = `/api/v1/projects/${projectId}/bugs`;
+
+  const { data } = await axios.post<Bug>(url, dto);
+
+  return data;
+}
+
 /** Response shape is not defined in the OpenAPI spec. */
 export async function getBugStatistics(
   organizationId: Organization['id'],

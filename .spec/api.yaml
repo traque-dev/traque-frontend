@@ -11,8 +11,12 @@ paths:
             schema:
               $ref: "#/components/schemas/PushNotificationTokenDTO"
       responses:
-        "201":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PushNotificationToken"
       tags:
         - User
   /api/v1/organizations/{organizationId}/projects/{projectId}/bugs:
@@ -294,6 +298,32 @@ paths:
               schema:
                 $ref: "#/components/schemas/PositiveResponseDto"
       summary: Report a bug using API Key
+      tags:
+        - Bugs
+  /api/v1/projects/{projectId}/bugs:
+    post:
+      description: Submit a bug report for a project without authentication.
+      operationId: BugCaptureController_captureBugByProjectId_v1
+      parameters:
+        - name: projectId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CaptureBugDTO"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
+      summary: Report a bug by project ID
       tags:
         - Bugs
   /api/v1/organizations/{organizationId}/projects/{projectId}/bugs/{bugId}/comments:
@@ -671,8 +701,14 @@ paths:
       operationId: OrganizationController_getOrganizations_v1
       parameters: []
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrganizationDTO"
       tags:
         - Organizations
   /api/v1/organizations/{organizationId}:
@@ -685,8 +721,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationDTO"
       tags:
         - Organizations
   /api/v1/organizations/{organizationId}/projects:
@@ -694,8 +734,14 @@ paths:
       operationId: ProjectController_getProjects_v1
       parameters: []
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProjectDTO"
       tags:
         - Projects
     post:
@@ -708,8 +754,12 @@ paths:
             schema:
               $ref: "#/components/schemas/ProjectDTO"
       responses:
-        "201":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectDTO"
       tags:
         - Projects
   /api/v1/organizations/{organizationId}/projects/{projectId}:
@@ -717,8 +767,12 @@ paths:
       operationId: ProjectController_getProjectById_v1
       parameters: []
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectDTO"
       tags:
         - Projects
   /api/v1/organizations/{organizationId}/api-keys:
@@ -768,6 +822,7 @@ paths:
                   enum:
                     - BUG
                     - ISSUE
+                    - FEEDBACK
                     - AI_CHAT
                     - AVATAR
                     - LOGO
@@ -819,6 +874,408 @@ paths:
       summary: Delete a file
       tags:
         - Files
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback:
+    get:
+      operationId: FeedbackController_getFeedback_v1
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FeedbackDTO"
+                  meta:
+                    type: object
+                    properties:
+                      currentPage:
+                        type: number
+                      itemCount:
+                        type: number
+                      itemsPerPage:
+                        type: number
+                      totalItems:
+                        type: number
+                      totalPages:
+                        type: number
+                    required:
+                      - currentPage
+                      - itemCount
+                      - itemsPerPage
+                      - totalItems
+                      - totalPages
+                required:
+                  - items
+                  - meta
+      summary: List feedback
+      tags:
+        - Feedback
+    post:
+      operationId: FeedbackController_createFeedback_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFeedbackDTO"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedbackDTO"
+      summary: Create feedback
+      tags:
+        - Feedback
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback/statistics:
+    get:
+      operationId: FeedbackController_getStatistics_v1
+      parameters: []
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedbackStatisticsDTO"
+      summary: Get feedback statistics
+      tags:
+        - Feedback
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback/{feedbackId}:
+    get:
+      operationId: FeedbackController_getFeedbackById_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedbackDTO"
+      summary: Get feedback by ID
+      tags:
+        - Feedback
+    patch:
+      operationId: FeedbackController_updateFeedback_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateFeedbackDTO"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedbackDTO"
+      summary: Update feedback
+      tags:
+        - Feedback
+    delete:
+      operationId: FeedbackController_deleteFeedback_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
+      summary: Delete feedback
+      tags:
+        - Feedback
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback/{feedbackId}/status:
+    put:
+      operationId: FeedbackController_changeFeedbackStatus_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangeFeedbackStatusDTO"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
+      summary: Change feedback status
+      tags:
+        - Feedback
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback/{feedbackId}/priority:
+    put:
+      operationId: FeedbackController_changeFeedbackPriority_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangeFeedbackPriorityDTO"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
+      summary: Change feedback priority
+      tags:
+        - Feedback
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback/{feedbackId}/assignee:
+    put:
+      operationId: FeedbackController_assignFeedback_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssignFeedbackDTO"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
+      summary: Assign or unassign feedback
+      tags:
+        - Feedback
+  /api/v1/projects/{projectId}/feedback:
+    post:
+      description: Allows anyone to submit feedback for a project without authentication.
+      operationId: FeedbackCaptureController_submitFeedback_v1
+      parameters:
+        - name: projectId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePublicFeedbackDTO"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
+      summary: Submit public feedback
+      tags:
+        - Feedback
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback/{feedbackId}/comments:
+    get:
+      operationId: FeedbackCommentController_getComments_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FeedbackCommentDTO"
+                  meta:
+                    type: object
+                    properties:
+                      currentPage:
+                        type: number
+                      itemCount:
+                        type: number
+                      itemsPerPage:
+                        type: number
+                      totalItems:
+                        type: number
+                      totalPages:
+                        type: number
+                    required:
+                      - currentPage
+                      - itemCount
+                      - itemsPerPage
+                      - totalItems
+                      - totalPages
+                required:
+                  - items
+                  - meta
+      summary: List comments for a feedback
+      tags:
+        - Feedback Comments
+    post:
+      operationId: FeedbackCommentController_createComment_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFeedbackCommentDTO"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedbackCommentDTO"
+      summary: Add a comment to feedback
+      tags:
+        - Feedback Comments
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback/{feedbackId}/comments/{commentId}:
+    patch:
+      operationId: FeedbackCommentController_updateComment_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: commentId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateFeedbackCommentDTO"
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedbackCommentDTO"
+      summary: Edit a feedback comment
+      tags:
+        - Feedback Comments
+    delete:
+      operationId: FeedbackCommentController_deleteComment_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: commentId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
+      summary: Delete a feedback comment
+      tags:
+        - Feedback Comments
+  /api/v1/organizations/{organizationId}/projects/{projectId}/feedback/{feedbackId}/activities:
+    get:
+      operationId: FeedbackActivityController_getActivities_v1
+      parameters:
+        - name: feedbackId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FeedbackActivityDTO"
+                  meta:
+                    type: object
+                    properties:
+                      currentPage:
+                        type: number
+                      itemCount:
+                        type: number
+                      itemsPerPage:
+                        type: number
+                      totalItems:
+                        type: number
+                      totalPages:
+                        type: number
+                    required:
+                      - currentPage
+                      - itemCount
+                      - itemsPerPage
+                      - totalItems
+                      - totalPages
+                required:
+                  - items
+                  - meta
+      summary: List feedback activity log
+      tags:
+        - Feedback Activities
   /api/v1/organizations/{organizationId}/projects/{projectId}/exceptions:
     get:
       description: Retrieve paginated list of exceptions for a specific project.
@@ -828,6 +1285,36 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ExceptionDTO"
+                  meta:
+                    type: object
+                    properties:
+                      currentPage:
+                        type: number
+                      itemCount:
+                        type: number
+                      itemsPerPage:
+                        type: number
+                      totalItems:
+                        type: number
+                      totalPages:
+                        type: number
+                    required:
+                      - currentPage
+                      - itemCount
+                      - itemsPerPage
+                      - totalItems
+                      - totalPages
+                required:
+                  - items
+                  - meta
       summary: Get project exceptions
       tags:
         - Exceptions
@@ -837,8 +1324,12 @@ paths:
       operationId: ExceptionController_getExceptionById_v1
       parameters: []
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExceptionDTO"
       summary: Get exception by ID
       tags:
         - Exceptions
@@ -853,8 +1344,12 @@ paths:
             schema:
               $ref: "#/components/schemas/ExceptionDTO"
       responses:
-        "201":
+        "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
       tags:
         - Exceptions
   /api/v1/organizations/{organizationId}/projects/{projectId}/exceptions/statistics/daily:
@@ -876,8 +1371,14 @@ paths:
             format: date-time
             type: string
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DailyExceptionStatisticDto"
       summary: Get exceptions count per day
       tags:
         - Exception Statistics
@@ -890,6 +1391,36 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/IssueDTO"
+                  meta:
+                    type: object
+                    properties:
+                      currentPage:
+                        type: number
+                      itemCount:
+                        type: number
+                      itemsPerPage:
+                        type: number
+                      totalItems:
+                        type: number
+                      totalPages:
+                        type: number
+                    required:
+                      - currentPage
+                      - itemCount
+                      - itemsPerPage
+                      - totalItems
+                      - totalPages
+                required:
+                  - items
+                  - meta
       summary: Get paginated list of project issues
       tags:
         - Issues
@@ -899,8 +1430,12 @@ paths:
       operationId: IssueController_getIssueById_v1
       parameters: []
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IssueDTO"
       summary: Get issue by ID
       tags:
         - Issues
@@ -917,8 +1452,12 @@ paths:
             schema:
               $ref: "#/components/schemas/ChangeIssueStatusDTO"
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
       summary: Change issue status
       tags:
         - Issues
@@ -935,8 +1474,12 @@ paths:
             schema:
               $ref: "#/components/schemas/ChangeIssueSeverityDTO"
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
       summary: Change issue severity
       tags:
         - Issues
@@ -945,8 +1488,12 @@ paths:
       operationId: AwsWafIntegrationController_getCredentials_v1
       parameters: []
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AwsWafCredentialsDTO"
       tags:
         - AWS WAF Integration
     post:
@@ -959,16 +1506,24 @@ paths:
             schema:
               $ref: "#/components/schemas/AwsWafCredentialsDTO"
       responses:
-        "201":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
       tags:
         - AWS WAF Integration
     delete:
       operationId: AwsWafIntegrationController_deleteCredentials_v1
       parameters: []
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PositiveResponseDto"
       tags:
         - AWS WAF Integration
   /api/v1/ip-details/{ip}:
@@ -981,8 +1536,12 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        default:
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IpAddressDTO"
       tags:
         - IP Details
   /api/v1/waitlist:
@@ -1044,6 +1603,36 @@ paths:
       responses:
         "200":
           description: ""
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/EventDto"
+                  meta:
+                    type: object
+                    properties:
+                      currentPage:
+                        type: number
+                      itemCount:
+                        type: number
+                      itemsPerPage:
+                        type: number
+                      totalItems:
+                        type: number
+                      totalPages:
+                        type: number
+                    required:
+                      - currentPage
+                      - itemCount
+                      - itemsPerPage
+                      - totalItems
+                      - totalPages
+                required:
+                  - items
+                  - meta
       summary: Get events
       tags:
         - Events
@@ -1714,6 +2303,9 @@ components:
         - createdAt
         - updatedAt
         - expoPushToken
+    PushNotificationToken:
+      type: object
+      properties: {}
     BugLabelDTO:
       type: object
       properties:
@@ -1780,6 +2372,7 @@ components:
           enum:
             - BUG
             - ISSUE
+            - FEEDBACK
             - AI_CHAT
             - AVATAR
             - LOGO
@@ -2241,6 +2834,33 @@ components:
         - newValue
         - actorId
         - actorName
+    OrganizationDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        name:
+          type: string
+        slug:
+          type: string
+        logo:
+          type: string
+        metadata:
+          type: string
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - name
+        - slug
+        - logo
+        - metadata
     ProjectDTO:
       type: object
       properties:
@@ -2278,6 +2898,308 @@ components:
           type: string
       required:
         - name
+    FeedbackDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        type:
+          type: string
+          enum:
+            - IDEA
+            - FEATURE_REQUEST
+            - IMPROVEMENT
+            - GENERAL
+        status:
+          type: string
+          enum:
+            - NEW
+            - UNDER_REVIEW
+            - PLANNED
+            - IN_PROGRESS
+            - COMPLETED
+            - DECLINED
+        priority:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+        impact:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+          nullable: true
+        source:
+          type: string
+          enum:
+            - DASHBOARD
+            - PUBLIC
+        submitterName:
+          type: string
+          nullable: true
+        submitterEmail:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          nullable: true
+        reporterId:
+          type: string
+          nullable: true
+        reporterName:
+          type: string
+          nullable: true
+        assigneeId:
+          type: string
+          nullable: true
+        assigneeName:
+          type: string
+          nullable: true
+        files:
+          nullable: true
+          type: array
+          items:
+            $ref: "#/components/schemas/FileDTO"
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - title
+        - description
+        - type
+        - status
+        - priority
+        - impact
+        - source
+        - submitterName
+        - submitterEmail
+        - metadata
+        - reporterId
+        - reporterName
+        - assigneeId
+        - assigneeName
+        - files
+    FeedbackStatisticsDTO:
+      type: object
+      properties:
+        byStatus:
+          type: object
+          additionalProperties:
+            type: number
+          example:
+            NEW: 3
+            UNDER_REVIEW: 1
+        byType:
+          type: object
+          additionalProperties:
+            type: number
+          example:
+            IDEA: 2
+            FEATURE_REQUEST: 1
+        byPriority:
+          type: object
+          additionalProperties:
+            type: number
+          example:
+            LOW: 1
+            MEDIUM: 2
+            HIGH: 0
+      required:
+        - byStatus
+        - byType
+        - byPriority
+    CreateFeedbackDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+            - IDEA
+            - FEATURE_REQUEST
+            - IMPROVEMENT
+            - GENERAL
+        priority:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+        fileIds:
+          description: IDs of pre-uploaded files to attach
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - type
+        - priority
+    UpdateFeedbackDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        impact:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+    ChangeFeedbackStatusDTO:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - NEW
+            - UNDER_REVIEW
+            - PLANNED
+            - IN_PROGRESS
+            - COMPLETED
+            - DECLINED
+      required:
+        - status
+    ChangeFeedbackPriorityDTO:
+      type: object
+      properties:
+        priority:
+          type: string
+          enum:
+            - LOW
+            - MEDIUM
+            - HIGH
+      required:
+        - priority
+    AssignFeedbackDTO:
+      type: object
+      properties:
+        assigneeId:
+          type: string
+          description: Set to null to unassign
+    CreatePublicFeedbackDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+            - IDEA
+            - FEATURE_REQUEST
+            - IMPROVEMENT
+            - GENERAL
+        submitterName:
+          type: string
+        submitterEmail:
+          type: string
+        fileIds:
+          description: IDs of pre-uploaded files to attach
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - type
+    FeedbackCommentDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        body:
+          type: string
+        authorId:
+          type: string
+        authorName:
+          type: string
+        parentId:
+          type: string
+          nullable: true
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - body
+        - authorId
+        - authorName
+        - parentId
+    CreateFeedbackCommentDTO:
+      type: object
+      properties:
+        body:
+          type: string
+        parentId:
+          type: string
+      required:
+        - body
+    UpdateFeedbackCommentDTO:
+      type: object
+      properties:
+        body:
+          type: string
+      required:
+        - body
+    FeedbackActivityDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        type:
+          type: string
+          enum:
+            - STATUS_CHANGED
+            - PRIORITY_CHANGED
+            - ASSIGNEE_CHANGED
+            - COMMENT_ADDED
+        oldValue:
+          type: string
+          nullable: true
+        newValue:
+          type: string
+          nullable: true
+        actorId:
+          type: string
+          nullable: true
+        actorName:
+          type: string
+          nullable: true
+      required:
+        - id
+        - createdAt
+        - type
+        - oldValue
+        - newValue
+        - actorId
+        - actorName
     HttpContextDTO:
       type: object
       properties:
@@ -2404,6 +3326,55 @@ components:
         - suggestion
         - httpContext
         - stacktrace
+    DailyExceptionStatisticDto:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the exception statistic
+          example: 2025-01-01
+        count:
+          type: number
+          description: The count of exceptions for the date
+          example: 10
+      required:
+        - date
+        - count
+    IssueDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        severity:
+          type: string
+        firstSeen:
+          format: date-time
+          type: string
+        lastSeen:
+          format: date-time
+          type: string
+        eventCount:
+          type: number
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - name
+        - status
+        - severity
+        - firstSeen
+        - lastSeen
+        - eventCount
     ChangeIssueStatusDTO:
       type: object
       properties:
@@ -2431,6 +3402,45 @@ components:
         - region
         - accessKeyId
         - secretAccessKey
+    IpAddressDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        ip:
+          type: string
+        city:
+          type: string
+        region:
+          type: string
+        country:
+          type: string
+        location:
+          type: string
+        organization:
+          type: string
+        postalCode:
+          type: string
+        timezone:
+          type: string
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - ip
+        - city
+        - region
+        - country
+        - location
+        - organization
+        - postalCode
+        - timezone
     WaitlistParticipantDTO:
       type: object
       properties:

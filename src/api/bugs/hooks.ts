@@ -21,6 +21,7 @@ import {
   addLabelToBug,
   assignBug,
   captureBug,
+  captureBugByProjectId,
   changeBugPriority,
   changeBugStatus,
   createBug,
@@ -114,6 +115,12 @@ export const useCreateBug = (
         queryKey: bugListKey(organizationId, projectId),
       });
     },
+  });
+};
+
+export const useCreateBugByProjectId = (projectId: Project['id']) => {
+  return useMutation({
+    mutationFn: (dto: CreateBugDTO) => captureBugByProjectId(projectId, dto),
   });
 };
 
