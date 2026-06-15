@@ -15,6 +15,7 @@ import { BugLinearIcon } from '@/components/icons/bug-linear';
 import { ChatRoundLineLinear } from '@/components/icons/chat-round-line-linear';
 import { GlobalLinearIcon } from '@/components/icons/global-linear';
 import { LightbulbBoltLinearIcon } from '@/components/icons/lightbulb-bolt-linear';
+import { LinkLinearIcon } from '@/components/icons/link-linear';
 import { ShieldWarningLinearIcon } from '@/components/icons/shield-warning-linear';
 import { NavUser } from '@/components/nav-user';
 import { OrganizationSwitcher } from '@/components/organization/organization-switcher';
@@ -91,6 +92,12 @@ const data = {
           title: 'Bugs',
           url: '/dashboard/bugs',
           icon: BugLinearIcon,
+        },
+        {
+          key: 'short-links',
+          title: 'Short Links',
+          url: '/dashboard/short-links',
+          icon: LinkLinearIcon,
         },
         {
           key: 'integrations',

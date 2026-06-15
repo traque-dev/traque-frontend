@@ -36,14 +36,17 @@ import { Route as AuthenticatedDashboardEventsRouteImport } from './routes/_auth
 import { Route as PortalProjectIdFeedbackIndexRouteImport } from './routes/portal/$projectId/feedback/index'
 import { Route as PortalProjectIdBugIndexRouteImport } from './routes/portal/$projectId/bug/index'
 import { Route as AuthenticatedSettingsOrganizationIndexRouteImport } from './routes/_authenticated/settings/organization/index'
+import { Route as AuthenticatedDashboardShortLinksIndexRouteImport } from './routes/_authenticated/dashboard/short-links/index'
 import { Route as AuthenticatedDashboardFeedbackIndexRouteImport } from './routes/_authenticated/dashboard/feedback/index'
 import { Route as AuthenticatedDashboardChatIndexRouteImport } from './routes/_authenticated/dashboard/chat/index'
 import { Route as AuthenticatedDashboardBugsIndexRouteImport } from './routes/_authenticated/dashboard/bugs/index'
 import { Route as AuthenticatedSettingsOrganizationBillingRouteImport } from './routes/_authenticated/settings/organization/billing'
+import { Route as AuthenticatedDashboardShortLinksNewRouteImport } from './routes/_authenticated/dashboard/short-links/new'
 import { Route as AuthenticatedDashboardProjectsNewRouteImport } from './routes/_authenticated/dashboard/projects_/new'
 import { Route as AuthenticatedDashboardChatChatIdRouteImport } from './routes/_authenticated/dashboard/chat/$chatId'
 import { Route as AuthenticatedDashboardUptimeMonitorsIndexRouteImport } from './routes/_authenticated/dashboard/uptime/monitors/index'
 import { Route as AuthenticatedDashboardUptimeIncidentsIndexRouteImport } from './routes/_authenticated/dashboard/uptime/incidents/index'
+import { Route as AuthenticatedDashboardShortLinksShortLinkIdIndexRouteImport } from './routes/_authenticated/dashboard/short-links/$shortLinkId/index'
 import { Route as AuthenticatedDashboardIssuesIssueIdIndexRouteImport } from './routes/_authenticated/dashboard/issues_/$issueId/index'
 import { Route as AuthenticatedDashboardFeedbackFeedbackIdIndexRouteImport } from './routes/_authenticated/dashboard/feedback/$feedbackId/index'
 import { Route as AuthenticatedDashboardBugsBugIdIndexRouteImport } from './routes/_authenticated/dashboard/bugs/$bugId/index'
@@ -202,6 +205,12 @@ const AuthenticatedSettingsOrganizationIndexRoute =
     path: '/organization/',
     getParentRoute: () => AuthenticatedSettingsRoute,
   } as any)
+const AuthenticatedDashboardShortLinksIndexRoute =
+  AuthenticatedDashboardShortLinksIndexRouteImport.update({
+    id: '/short-links/',
+    path: '/short-links/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardFeedbackIndexRoute =
   AuthenticatedDashboardFeedbackIndexRouteImport.update({
     id: '/feedback/',
@@ -226,6 +235,12 @@ const AuthenticatedSettingsOrganizationBillingRoute =
     path: '/organization/billing',
     getParentRoute: () => AuthenticatedSettingsRoute,
   } as any)
+const AuthenticatedDashboardShortLinksNewRoute =
+  AuthenticatedDashboardShortLinksNewRouteImport.update({
+    id: '/short-links/new',
+    path: '/short-links/new',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardProjectsNewRoute =
   AuthenticatedDashboardProjectsNewRouteImport.update({
     id: '/projects_/new',
@@ -248,6 +263,12 @@ const AuthenticatedDashboardUptimeIncidentsIndexRoute =
   AuthenticatedDashboardUptimeIncidentsIndexRouteImport.update({
     id: '/uptime/incidents/',
     path: '/uptime/incidents/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardShortLinksShortLinkIdIndexRoute =
+  AuthenticatedDashboardShortLinksShortLinkIdIndexRouteImport.update({
+    id: '/short-links/$shortLinkId/',
+    path: '/short-links/$shortLinkId/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardIssuesIssueIdIndexRoute =
@@ -337,10 +358,12 @@ export interface FileRoutesByFullPath {
   '/portal/$projectId': typeof PortalProjectIdIndexRoute
   '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/dashboard/projects/new': typeof AuthenticatedDashboardProjectsNewRoute
+  '/dashboard/short-links/new': typeof AuthenticatedDashboardShortLinksNewRoute
   '/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
   '/dashboard/bugs': typeof AuthenticatedDashboardBugsIndexRoute
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/dashboard/feedback': typeof AuthenticatedDashboardFeedbackIndexRoute
+  '/dashboard/short-links': typeof AuthenticatedDashboardShortLinksIndexRoute
   '/settings/organization': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/portal/$projectId/bug': typeof PortalProjectIdBugIndexRoute
   '/portal/$projectId/feedback': typeof PortalProjectIdFeedbackIndexRoute
@@ -349,6 +372,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/bugs/$bugId': typeof AuthenticatedDashboardBugsBugIdIndexRoute
   '/dashboard/feedback/$feedbackId': typeof AuthenticatedDashboardFeedbackFeedbackIdIndexRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/dashboard/short-links/$shortLinkId': typeof AuthenticatedDashboardShortLinksShortLinkIdIndexRoute
   '/dashboard/uptime/incidents': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
   '/dashboard/uptime/monitors': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
   '/dashboard/issues/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
@@ -382,10 +406,12 @@ export interface FileRoutesByTo {
   '/portal/$projectId': typeof PortalProjectIdIndexRoute
   '/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/dashboard/projects/new': typeof AuthenticatedDashboardProjectsNewRoute
+  '/dashboard/short-links/new': typeof AuthenticatedDashboardShortLinksNewRoute
   '/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
   '/dashboard/bugs': typeof AuthenticatedDashboardBugsIndexRoute
   '/dashboard/chat': typeof AuthenticatedDashboardChatIndexRoute
   '/dashboard/feedback': typeof AuthenticatedDashboardFeedbackIndexRoute
+  '/dashboard/short-links': typeof AuthenticatedDashboardShortLinksIndexRoute
   '/settings/organization': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/portal/$projectId/bug': typeof PortalProjectIdBugIndexRoute
   '/portal/$projectId/feedback': typeof PortalProjectIdFeedbackIndexRoute
@@ -394,6 +420,7 @@ export interface FileRoutesByTo {
   '/dashboard/bugs/$bugId': typeof AuthenticatedDashboardBugsBugIdIndexRoute
   '/dashboard/feedback/$feedbackId': typeof AuthenticatedDashboardFeedbackFeedbackIdIndexRoute
   '/dashboard/issues/$issueId': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/dashboard/short-links/$shortLinkId': typeof AuthenticatedDashboardShortLinksShortLinkIdIndexRoute
   '/dashboard/uptime/incidents': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
   '/dashboard/uptime/monitors': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
   '/dashboard/issues/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
@@ -430,10 +457,12 @@ export interface FileRoutesById {
   '/portal/$projectId/': typeof PortalProjectIdIndexRoute
   '/_authenticated/dashboard/chat/$chatId': typeof AuthenticatedDashboardChatChatIdRoute
   '/_authenticated/dashboard/projects_/new': typeof AuthenticatedDashboardProjectsNewRoute
+  '/_authenticated/dashboard/short-links/new': typeof AuthenticatedDashboardShortLinksNewRoute
   '/_authenticated/settings/organization/billing': typeof AuthenticatedSettingsOrganizationBillingRoute
   '/_authenticated/dashboard/bugs/': typeof AuthenticatedDashboardBugsIndexRoute
   '/_authenticated/dashboard/chat/': typeof AuthenticatedDashboardChatIndexRoute
   '/_authenticated/dashboard/feedback/': typeof AuthenticatedDashboardFeedbackIndexRoute
+  '/_authenticated/dashboard/short-links/': typeof AuthenticatedDashboardShortLinksIndexRoute
   '/_authenticated/settings/organization/': typeof AuthenticatedSettingsOrganizationIndexRoute
   '/portal/$projectId/bug/': typeof PortalProjectIdBugIndexRoute
   '/portal/$projectId/feedback/': typeof PortalProjectIdFeedbackIndexRoute
@@ -442,6 +471,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/bugs/$bugId/': typeof AuthenticatedDashboardBugsBugIdIndexRoute
   '/_authenticated/dashboard/feedback/$feedbackId/': typeof AuthenticatedDashboardFeedbackFeedbackIdIndexRoute
   '/_authenticated/dashboard/issues_/$issueId/': typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  '/_authenticated/dashboard/short-links/$shortLinkId/': typeof AuthenticatedDashboardShortLinksShortLinkIdIndexRoute
   '/_authenticated/dashboard/uptime/incidents/': typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
   '/_authenticated/dashboard/uptime/monitors/': typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
   '/_authenticated/dashboard/issues_/$issueId/exceptions/$exceptionId': typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
@@ -478,10 +508,12 @@ export interface FileRouteTypes {
     | '/portal/$projectId'
     | '/dashboard/chat/$chatId'
     | '/dashboard/projects/new'
+    | '/dashboard/short-links/new'
     | '/settings/organization/billing'
     | '/dashboard/bugs'
     | '/dashboard/chat'
     | '/dashboard/feedback'
+    | '/dashboard/short-links'
     | '/settings/organization'
     | '/portal/$projectId/bug'
     | '/portal/$projectId/feedback'
@@ -490,6 +522,7 @@ export interface FileRouteTypes {
     | '/dashboard/bugs/$bugId'
     | '/dashboard/feedback/$feedbackId'
     | '/dashboard/issues/$issueId'
+    | '/dashboard/short-links/$shortLinkId'
     | '/dashboard/uptime/incidents'
     | '/dashboard/uptime/monitors'
     | '/dashboard/issues/$issueId/exceptions/$exceptionId'
@@ -523,10 +556,12 @@ export interface FileRouteTypes {
     | '/portal/$projectId'
     | '/dashboard/chat/$chatId'
     | '/dashboard/projects/new'
+    | '/dashboard/short-links/new'
     | '/settings/organization/billing'
     | '/dashboard/bugs'
     | '/dashboard/chat'
     | '/dashboard/feedback'
+    | '/dashboard/short-links'
     | '/settings/organization'
     | '/portal/$projectId/bug'
     | '/portal/$projectId/feedback'
@@ -535,6 +570,7 @@ export interface FileRouteTypes {
     | '/dashboard/bugs/$bugId'
     | '/dashboard/feedback/$feedbackId'
     | '/dashboard/issues/$issueId'
+    | '/dashboard/short-links/$shortLinkId'
     | '/dashboard/uptime/incidents'
     | '/dashboard/uptime/monitors'
     | '/dashboard/issues/$issueId/exceptions/$exceptionId'
@@ -570,10 +606,12 @@ export interface FileRouteTypes {
     | '/portal/$projectId/'
     | '/_authenticated/dashboard/chat/$chatId'
     | '/_authenticated/dashboard/projects_/new'
+    | '/_authenticated/dashboard/short-links/new'
     | '/_authenticated/settings/organization/billing'
     | '/_authenticated/dashboard/bugs/'
     | '/_authenticated/dashboard/chat/'
     | '/_authenticated/dashboard/feedback/'
+    | '/_authenticated/dashboard/short-links/'
     | '/_authenticated/settings/organization/'
     | '/portal/$projectId/bug/'
     | '/portal/$projectId/feedback/'
@@ -582,6 +620,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/bugs/$bugId/'
     | '/_authenticated/dashboard/feedback/$feedbackId/'
     | '/_authenticated/dashboard/issues_/$issueId/'
+    | '/_authenticated/dashboard/short-links/$shortLinkId/'
     | '/_authenticated/dashboard/uptime/incidents/'
     | '/_authenticated/dashboard/uptime/monitors/'
     | '/_authenticated/dashboard/issues_/$issueId/exceptions/$exceptionId'
@@ -797,6 +836,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsOrganizationIndexRouteImport
       parentRoute: typeof AuthenticatedSettingsRoute
     }
+    '/_authenticated/dashboard/short-links/': {
+      id: '/_authenticated/dashboard/short-links/'
+      path: '/short-links'
+      fullPath: '/dashboard/short-links'
+      preLoaderRoute: typeof AuthenticatedDashboardShortLinksIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/feedback/': {
       id: '/_authenticated/dashboard/feedback/'
       path: '/feedback'
@@ -825,6 +871,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsOrganizationBillingRouteImport
       parentRoute: typeof AuthenticatedSettingsRoute
     }
+    '/_authenticated/dashboard/short-links/new': {
+      id: '/_authenticated/dashboard/short-links/new'
+      path: '/short-links/new'
+      fullPath: '/dashboard/short-links/new'
+      preLoaderRoute: typeof AuthenticatedDashboardShortLinksNewRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/projects_/new': {
       id: '/_authenticated/dashboard/projects_/new'
       path: '/projects/new'
@@ -851,6 +904,13 @@ declare module '@tanstack/react-router' {
       path: '/uptime/incidents'
       fullPath: '/dashboard/uptime/incidents'
       preLoaderRoute: typeof AuthenticatedDashboardUptimeIncidentsIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/short-links/$shortLinkId/': {
+      id: '/_authenticated/dashboard/short-links/$shortLinkId/'
+      path: '/short-links/$shortLinkId'
+      fullPath: '/dashboard/short-links/$shortLinkId'
+      preLoaderRoute: typeof AuthenticatedDashboardShortLinksShortLinkIdIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/issues_/$issueId/': {
@@ -936,14 +996,17 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedDashboardChatChatIdRoute: typeof AuthenticatedDashboardChatChatIdRoute
   AuthenticatedDashboardProjectsNewRoute: typeof AuthenticatedDashboardProjectsNewRoute
+  AuthenticatedDashboardShortLinksNewRoute: typeof AuthenticatedDashboardShortLinksNewRoute
   AuthenticatedDashboardBugsIndexRoute: typeof AuthenticatedDashboardBugsIndexRoute
   AuthenticatedDashboardChatIndexRoute: typeof AuthenticatedDashboardChatIndexRoute
   AuthenticatedDashboardFeedbackIndexRoute: typeof AuthenticatedDashboardFeedbackIndexRoute
+  AuthenticatedDashboardShortLinksIndexRoute: typeof AuthenticatedDashboardShortLinksIndexRoute
   AuthenticatedDashboardProjectsProjectIdSettingsRoute: typeof AuthenticatedDashboardProjectsProjectIdSettingsRoute
   AuthenticatedDashboardUptimeMonitorsNewRoute: typeof AuthenticatedDashboardUptimeMonitorsNewRoute
   AuthenticatedDashboardBugsBugIdIndexRoute: typeof AuthenticatedDashboardBugsBugIdIndexRoute
   AuthenticatedDashboardFeedbackFeedbackIdIndexRoute: typeof AuthenticatedDashboardFeedbackFeedbackIdIndexRoute
   AuthenticatedDashboardIssuesIssueIdIndexRoute: typeof AuthenticatedDashboardIssuesIssueIdIndexRoute
+  AuthenticatedDashboardShortLinksShortLinkIdIndexRoute: typeof AuthenticatedDashboardShortLinksShortLinkIdIndexRoute
   AuthenticatedDashboardUptimeIncidentsIndexRoute: typeof AuthenticatedDashboardUptimeIncidentsIndexRoute
   AuthenticatedDashboardUptimeMonitorsIndexRoute: typeof AuthenticatedDashboardUptimeMonitorsIndexRoute
   AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute: typeof AuthenticatedDashboardIssuesIssueIdExceptionsExceptionIdRoute
@@ -968,10 +1031,14 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
       AuthenticatedDashboardChatChatIdRoute,
     AuthenticatedDashboardProjectsNewRoute:
       AuthenticatedDashboardProjectsNewRoute,
+    AuthenticatedDashboardShortLinksNewRoute:
+      AuthenticatedDashboardShortLinksNewRoute,
     AuthenticatedDashboardBugsIndexRoute: AuthenticatedDashboardBugsIndexRoute,
     AuthenticatedDashboardChatIndexRoute: AuthenticatedDashboardChatIndexRoute,
     AuthenticatedDashboardFeedbackIndexRoute:
       AuthenticatedDashboardFeedbackIndexRoute,
+    AuthenticatedDashboardShortLinksIndexRoute:
+      AuthenticatedDashboardShortLinksIndexRoute,
     AuthenticatedDashboardProjectsProjectIdSettingsRoute:
       AuthenticatedDashboardProjectsProjectIdSettingsRoute,
     AuthenticatedDashboardUptimeMonitorsNewRoute:
@@ -982,6 +1049,8 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
       AuthenticatedDashboardFeedbackFeedbackIdIndexRoute,
     AuthenticatedDashboardIssuesIssueIdIndexRoute:
       AuthenticatedDashboardIssuesIssueIdIndexRoute,
+    AuthenticatedDashboardShortLinksShortLinkIdIndexRoute:
+      AuthenticatedDashboardShortLinksShortLinkIdIndexRoute,
     AuthenticatedDashboardUptimeIncidentsIndexRoute:
       AuthenticatedDashboardUptimeIncidentsIndexRoute,
     AuthenticatedDashboardUptimeMonitorsIndexRoute:
