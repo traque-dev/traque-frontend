@@ -28,8 +28,11 @@ type FilledPoint = {
 };
 
 /**
- * The API only returns buckets that have clicks. Build a continuous range of
- * empty buckets for the period and merge the recorded counts on top.
+ * The API only returns buckets that have clicks, and aggregates them in UTC.
+ * Build a continuous range of empty buckets in UTC and merge the recorded
+ * counts on top — bucketing in UTC keeps each count on the same day the server
+ * grouped it under (using local time here would shift counts across the day
+ * boundary for users whose offset crosses midnight).
  */
 function fillBuckets(
   data: ShortLinkTimePoint[],
@@ -40,11 +43,11 @@ function fillBuckets(
 
   const counts = new Map<string, number>();
   for (const point of data) {
-    const key = dayjs(point.date).startOf(unit).toISOString();
+    const key = dayjs.utc(point.date).startOf(unit).toISOString();
     counts.set(key, (counts.get(key) ?? 0) + point.clicks);
   }
 
-  const end = dayjs().startOf(unit);
+  const end = dayjs.utc().startOf(unit);
   const labelFormat = period === 'day' ? 'HH:mm' : 'MMM DD';
 
   return Array.from({ length: count }, (_, i) => {
