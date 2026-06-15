@@ -12,6 +12,7 @@ import {
   ExternalLink,
   MoreVertical,
   Plus,
+  QrCode,
   Search,
   SortAscIcon,
   SortDescIcon,
@@ -24,6 +25,7 @@ import { getShortLinksQueryOptions } from '@/api/short-links/query-options';
 import type { ShortLinkFilters } from '@/api/short-links/types';
 import { DataTable } from '@/components/data-table';
 import { LinkLinearIcon } from '@/components/icons/link-linear';
+import { ShortLinkQrDialog } from '@/components/short-link-qr-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -102,6 +104,7 @@ function ShortLinksPage() {
   const navigate = useNavigate({ from: Route.fullPath });
 
   const [searchInput, setSearchInput] = useState(search ?? '');
+  const [qrLink, setQrLink] = useState<ShortLink | null>(null);
 
   useEffect(() => {
     setSearchInput(search ?? '');
@@ -287,6 +290,14 @@ function ShortLinksPage() {
                       <ExternalLink className="size-4 mr-2" /> Open link
                     </a>
                   </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setQrLink(link);
+                    }}
+                  >
+                    <QrCode className="size-4 mr-2" /> Show QR code
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive focus:text-destructive"
@@ -316,7 +327,7 @@ function ShortLinksPage() {
         },
       },
     ],
-    [remove],
+    [remove, setQrLink],
   );
 
   const handleSortingChange = (next: SortingState) => {
@@ -483,6 +494,15 @@ function ShortLinksPage() {
           pageDataMeta={shortLinksPage?.meta}
         />
       )}
+
+      <ShortLinkQrDialog
+        open={qrLink !== null}
+        onOpenChange={(o) => {
+          if (!o) setQrLink(null);
+        }}
+        url={qrLink?.shortUrl ?? ''}
+        slug={qrLink?.slug ?? ''}
+      />
     </div>
   );
 }

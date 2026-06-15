@@ -12,6 +12,7 @@ import {
   ExternalLink,
   MousePointerClick,
   Pencil,
+  QrCode,
   Trash2,
   Users,
 } from 'lucide-react';
@@ -28,6 +29,7 @@ import {
 import { DataTable } from '@/components/data-table';
 import { ShortLinkClicksChart } from '@/components/short-link-clicks-chart';
 import { ShortLinkEditSheet } from '@/components/short-link-edit-sheet';
+import { ShortLinkQrDialog } from '@/components/short-link-qr-dialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -123,6 +125,7 @@ function ShortLinkDetailPage() {
   const [clicksPage, setClicksPage] = useState(1);
   const [clicksSize, setClicksSize] = useState(10);
   const [editOpen, setEditOpen] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
 
   const { data: link } = useSuspenseQuery(
     getShortLinkByIdQueryOptions(activeOrganization.id, shortLinkId),
@@ -299,6 +302,9 @@ function ShortLinkDetailPage() {
         </div>
 
         <div className="flex items-center gap-2">
+          <Button size="sm" variant="secondary" onClick={() => setQrOpen(true)}>
+            <QrCode className="size-4 mr-1" /> QR code
+          </Button>
           <Button
             size="sm"
             variant="secondary"
@@ -570,6 +576,13 @@ function ShortLinkDetailPage() {
         onOpenChange={setEditOpen}
         organizationId={activeOrganization.id}
         link={link}
+      />
+
+      <ShortLinkQrDialog
+        open={qrOpen}
+        onOpenChange={setQrOpen}
+        url={link.shortUrl}
+        slug={link.slug}
       />
     </div>
   );
