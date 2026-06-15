@@ -5,6 +5,7 @@ export * from './confetti-minimalistic-linear';
 export * from './danger-linear';
 export * from './flame-linear';
 export * from './hamburger-menu-linear';
+export * from './link-linear';
 export * from './logout-3-linear';
 export * from './settings-linear';
 export * from './trash-bin-minimalistic-2-linear';
